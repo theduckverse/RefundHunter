@@ -962,47 +962,67 @@ function updateUsageUI() {
     updateAuditButton();
 }
 
-    function updateAuditButton() {
-        const auditButton = document.getElementById("audit-button");
-        const freeUsesDisplay = document.getElementById("free-uses-display");
-        const remaining = AUDIT_LIMIT - auditsUsed;
-        const isFileReady = uploadedFileContent !== null;
+function updateAuditButton() {
+    const auditButton = document.getElementById("audit-button");
+    const freeUsesDisplay = document.getElementById("free-uses-display");
 
-        // Clean and reset click handler
-        auditButton.onclick = null;
+    const used = auditsUsed;
+    const remaining = AUDIT_LIMIT - used;
+    const isFileReady = uploadedFileContent !== null;
 
-        if (isPremium || remaining > 0) {
-            if (isPremium) {
-                auditButton.textContent = "Run Audit (PRO Unlimited)";
-                freeUsesDisplay.innerHTML =
-                    'You are a <strong>PRO Hunter</strong>. Unlimited audits unlocked!';
-            } else {
-                auditButton.textContent = `Audit Report (${remaining}/${AUDIT_LIMIT} FREE Uses Remaining)`;
-                freeUsesDisplay.innerHTML = `
-                    Your <strong>first ${AUDIT_LIMIT} audits are free</strong>.
-                    You have <strong>${remaining}</strong> left.
-                `;
-            }
+    // Reset previous onclick
+    auditButton.onclick = null;
 
-            auditButton.disabled = !isFileReady;
-            if (isFileReady) {
-                auditButton.onclick = processAuditWrapper;
-            }
-        } else {
-            auditButton.textContent = "Audit Report (Upgrade Required)";
-            freeUsesDisplay.innerHTML = `
-                You have used your <strong>${AUDIT_LIMIT} free audits</strong>.
-                Please upgrade below for unlimited use.
-            `;
+    // ---------- PRO USERS ----------
+    if (isPremium) {
+        auditButton.textContent = "Run Audit (PRO Unlimited)";
+        auditButton.disabled = !isFileReady;
 
-            if (isFileReady) {
-                auditButton.disabled = false;
-                auditButton.onclick = () => showUpgradeModal("audit_monthly");
-            } else {
-                auditButton.disabled = true;
-            }
+        if (isFileReady) {
+            auditButton.onclick = processAuditWrapper;
         }
+
+        if (freeUsesDisplay) {
+            freeUsesDisplay.innerHTML =
+                'You are a <strong>PRO Hunter</strong>. Unlimited audits unlocked!';
+        }
+
+        return;
     }
+
+    // ---------- TRIAL USERS WITH REMAINING USES ----------
+    if (remaining > 0) {
+        auditButton.textContent = `Audit Report (${remaining}/${AUDIT_LIMIT} FREE Uses Remaining)`;
+
+        auditButton.disabled = !isFileReady;
+
+        if (isFileReady) {
+            auditButton.onclick = processAuditWrapper;
+        }
+
+        if (freeUsesDisplay) {
+            freeUsesDisplay.innerHTML = `
+                Your first <strong>${AUDIT_LIMIT}</strong> audits are free.
+                You have <strong>${remaining}</strong> remaining.
+            `;
+        }
+
+        return;
+    }
+
+    // ---------- TRIAL USERS WITH ZERO USES LEFT ----------
+    auditButton.textContent = "Audit Report (Upgrade Required)";
+    auditButton.disabled = false;
+    auditButton.onclick = () => showUpgradeModal("audit_monthly");
+
+    if (freeUsesDisplay) {
+        freeUsesDisplay.innerHTML = `
+            You have used your <strong>${AUDIT_LIMIT}</strong> free audits.
+            Please upgrade below for unlimited use.
+        `;
+    }
+}
+
 
     document.addEventListener("DOMContentLoaded", () => {
         initFirebase();
@@ -1347,6 +1367,7 @@ function updateUsageUI() {
 </body>
 </html>
 <!-- force pages rebuild -->
+
 
 
 

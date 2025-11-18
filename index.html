@@ -96,47 +96,44 @@
 <nav class="backdrop-blur-lg bg-white/70 border-b border-gray-200/60 shadow-sm sticky top-0 z-50">
     <div class="max-w-7xl mx-auto px-4 lg:px-8 py-3 flex items-center justify-between">
 
-        <!-- LEFT: LOGO + BRAND -->
-        <div class="flex items-center space-x-3 group">
-            <div class="leading-tight">
-                <span class="text-xl font-extrabold text-[var(--rh-dark)] tracking-tight flex items-center">
-                    Refund Hunter
-                    <span class="ml-2 h-2 w-2 bg-[var(--rh-primary)] rounded-full animate-pulse opacity-80"></span>
-                </span>
-                <span class="text-xs text-gray-500">Stop losing money to Amazon’s errors</span>
-            </div>
+        <!-- LEFT: BRAND NAME -->
+        <div class="flex flex-col leading-tight">
+            <span class="text-2xl font-extrabold text-[var(--rh-dark)] tracking-tight">
+                Refund Hunter
+                <span class="ml-2 h-2 w-2 bg-[var(--rh-primary)] rounded-full inline-block opacity-80"></span>
+            </span>
+            <span class="text-xs text-gray-500">Stop losing money to Amazon’s errors</span>
         </div>
 
-        <!-- CENTER LINKS -->
+        <!-- CENTER NAV LINKS -->
         <div class="hidden md:flex items-center space-x-10 font-medium">
-            <a href="#upload-section" 
+            <a href="#upload-section"
                class="text-gray-600 hover:text-[var(--rh-primary)] transition-colors duration-200">
                 Dashboard
             </a>
-            <a href="#history-area" 
+            <a href="#history-area"
                class="text-gray-600 hover:text-[var(--rh-primary)] transition-colors duration-200">
                 History
             </a>
-            <a href="#pricing" 
+            <a href="#pricing"
                class="text-gray-600 hover:text-[var(--rh-primary)] transition-colors duration-200">
                 Pricing
             </a>
-            <a href="#profile-area" 
+            <a href="#profile-area"
                class="text-gray-600 hover:text-[var(--rh-primary)] transition-colors duration-200">
                 Account
             </a>
         </div>
 
-        <!-- RIGHT: CTA BUTTON -->
+        <!-- RIGHT: UPGRADE BUTTON -->
         <button
-            onclick="showUpgradeModal('audit_monthly')"
-            class="px-5 py-2.5 rounded-xl font-semibold text-white shadow-lg 
-                   bg-gradient-to-r from-[var(--rh-primary)] to-orange-500
-                   hover:shadow-xl hover:scale-[1.03] transition-all duration-200">
+            onclick="document.getElementById('pricing').scrollIntoView({ behavior: 'smooth' })"
+            class="bg-gradient-to-r from-orange-400 to-orange-600 text-white px-4 py-2 rounded-xl font-semibold shadow-md hover:shadow-lg transition-all">
             Upgrade
         </button>
     </div>
 </nav>
+
 <!-- HERO SECTION -->
 <section class="w-full bg-white py-16 px-4 md:px-10 border-b border-gray-100">
   <div class="max-w-6xl mx-auto text-center">
@@ -1343,6 +1340,7 @@
 </body>
 </html>
 <!-- force pages rebuild -->
+
 
 
 

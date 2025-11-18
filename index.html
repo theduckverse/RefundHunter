@@ -25,7 +25,51 @@
             },
         }
     </script>
-    
+    <script>
+// ------------------------------
+// FREE AUDIT LIMIT SYSTEM
+// ------------------------------
+
+const FREE_AUDIT_LIMIT = 5;
+
+// Check how many audits the user has done
+function getAuditCount() {
+    return parseInt(localStorage.getItem("audit_count") || "0");
+}
+
+// Add +1 audit
+function incrementAuditCount() {
+    const current = getAuditCount();
+    localStorage.setItem("audit_count", current + 1);
+}
+
+// Check if the user still has free audits
+function hasFreeAuditsLeft() {
+    return getAuditCount() < FREE_AUDIT_LIMIT;
+}
+
+// Update UI label
+function refreshAuditStatusUI() {
+    const used = getAuditCount();
+    const left = FREE_AUDIT_LIMIT - used;
+
+    const box = document.getElementById("usage-box");
+    if (box) {
+        box.innerHTML = `Free audits remaining: <strong>${left}</strong> / ${FREE_AUDIT_LIMIT}`;
+    }
+
+    // Disable button if maxed out
+    const auditBtn = document.getElementById("audit-btn");
+    if (auditBtn && left <= 0) {
+        auditBtn.disabled = true;
+        auditBtn.classList.add("opacity-50");
+    }
+}
+
+// Run on page load
+document.addEventListener("DOMContentLoaded", refreshAuditStatusUI);
+</script>
+
     <style>
         /* CSS variables for use in custom classes */
         :root {
@@ -1340,6 +1384,7 @@
 </body>
 </html>
 <!-- force pages rebuild -->
+
 
 
 

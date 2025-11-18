@@ -145,19 +145,16 @@
 
 <!-- MAIN APPLICATION CONTAINER -->
 <div class="min-h-screen flex flex-col items-center p-4">
-    <header class="<img src="assets/logo.jpg" alt="Refund Hunter Logo" class="h-12 mr-3 rounded-md shadow-md" />
-        <h1 class="text-4xl md:text-5xl font-extrabold text-[var(--rh-dark)] tracking-tighter">
-            <span class="text-[var(--rh-primary)]">Refund Hunter</span> | FBA Reimbursement Audit
-        </h1>
-        <p class="mt-3 text-lg text-slate-600">
-            Stop losing money to Amazon's errors. Upload your Inventory Report and instantly generate a list of exact, actionable reimbursement claims.
-        </p>
-        <div id="status-message" class="mt-4 text-sm text-slate-500">Loading user data...</div>
-        <div id="user-info" class="text-xs text-slate-400 mt-1 hidden">
-            User ID: <span id="display-user-id"></span>
-        </div>
-    </header>
+    <header class="flex items-center space-x-4 mb-6">
+    <img src="assets/logo.jpg" 
+         alt="Refund Hunter Logo" 
+         class="h-16 w-auto rounded-md shadow-md" />
 
+    <h1 class="text-4xl md:text-5xl font-extrabold text-[var(--rh-dark)] tracking-tight">
+        <span class="text-[var(--rh-primary)]">Refund Hunter</span> 
+        | FBA Reimbursement Audit
+    </h1>
+</header>
     <!-- FILE UPLOAD AND ACTION AREA -->
     <main class="w-full max-w-2xl bg-white p-8 rounded-3xl main-card-shadow border border-gray-200">
         <div id="upload-section">
@@ -1346,5 +1343,6 @@
 </body>
 </html>
 <!-- force pages rebuild -->
+
 
 

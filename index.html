@@ -915,45 +915,52 @@
         }
     };
 
-    // --- UI UPDATES ---
+  // --- UI UPDATES ---
+function updateUsageUI() {
+    const used = auditsUsed;
+    const remaining = AUDIT_LIMIT - used;
 
-    function updateProfileDisplay() {
-        const auditsUsedEl = document.getElementById("audits-used");
-        const auditsRemainingEl = document.getElementById("audits-remaining");
-        const usageBarEl = document.getElementById("usage-bar");
-        const subscriptionStatusEl = document.getElementById("subscription-status");
-
-        const remaining = AUDIT_LIMIT - auditsUsed;
-        const progress = isPremium ? 100 : (auditsUsed / AUDIT_LIMIT) * 100;
-
-        auditsUsedEl.textContent = auditsUsed;
-        auditsRemainingEl.textContent = remaining;
-        usageBarEl.style.width = `${progress}%`;
-
+    // --- HERO AREA MESSAGE ---
+    const freeUsesDisplay = document.getElementById("free-uses-display");
+    if (freeUsesDisplay) {
         if (isPremium) {
-            subscriptionStatusEl.textContent = "PRO Hunter (Unlimited)";
-            subscriptionStatusEl.classList.remove("text-gray-700");
-            subscriptionStatusEl.classList.add("text-[var(--rh-success)]");
-            document.getElementById("usage-display").innerHTML = `
-                <span id="audits-used">${auditsUsed}</span>
-                <span class="text-base font-normal text-blue-500">
-                    Audits Completed (Unlimited Plan)
-                </span>
-            `;
-            document.getElementById("usage-bar").classList.add("bg-[var(--rh-success)]");
+            freeUsesDisplay.innerHTML =
+                'You are a <strong>PRO Hunter</strong>. Unlimited audits unlocked!';
         } else {
-            subscriptionStatusEl.textContent = "Trial User";
-            subscriptionStatusEl.classList.remove("text-[var(--rh-success)]");
-            subscriptionStatusEl.classList.add("text-gray-700");
-            document.getElementById("usage-display").innerHTML = `
-                <span id="audits-used">${auditsUsed}</span> / ${AUDIT_LIMIT}
-                <span class="text-base font-normal text-blue-500">
-                    Free Audits Used
-                </span>
+            freeUsesDisplay.innerHTML = `
+                Your first <strong>${AUDIT_LIMIT}</strong> audits are free.
+                You have <strong>${remaining}</strong> remaining.
             `;
-            document.getElementById("usage-bar").classList.remove("bg-[var(--rh-success)]");
         }
     }
+
+    // --- PROFILE CARD ---
+    const auditsUsedEl = document.getElementById("audits-used");
+    const auditsRemainingEl = document.getElementById("audits-remaining");
+    const usageBarEl = document.getElementById("usage-bar");
+    const subscriptionStatusEl = document.getElementById("subscription-status");
+
+    if (auditsUsedEl) auditsUsedEl.textContent = used;
+    if (auditsRemainingEl) auditsRemainingEl.textContent = remaining;
+
+    const progress = isPremium ? 100 : (used / AUDIT_LIMIT) * 100;
+    if (usageBarEl) usageBarEl.style.width = `${progress}%`;
+
+    if (subscriptionStatusEl) {
+        if (isPremium) {
+            subscriptionStatusEl.textContent = "PRO Hunter (Unlimited)";
+            subscriptionStatusEl.classList.add("text-[var(--rh-success)]");
+            subscriptionStatusEl.classList.remove("text-gray-700");
+        } else {
+            subscriptionStatusEl.textContent = "Trial User";
+            subscriptionStatusEl.classList.add("text-gray-700");
+            subscriptionStatusEl.classList.remove("text-[var(--rh-success)]");
+        }
+    }
+
+    // Update audit button too
+    updateAuditButton();
+}
 
     function updateAuditButton() {
         const auditButton = document.getElementById("audit-button");
@@ -1340,6 +1347,7 @@
 </body>
 </html>
 <!-- force pages rebuild -->
+
 
 
 

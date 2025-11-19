@@ -829,32 +829,43 @@ window.logoutUser = async function () {
 
     // --- FIREBASE INITIALIZATION AND AUTHENTICATION ---
     function initFirebase() {
-        try {
-            console.log("Firebase Init: App ID =", appId);
-            console.log("Firebase Init: Config provided =", Object.keys(firebaseConfig).length > 0);
+    try {
+        console.log("Firebase Init: App ID =", appId);
+        console.log("Firebase Init: Config provided =", Object.keys(firebaseConfig).length > 0);
 
-            const app = initializeApp(firebaseConfig);
-            db = getFirestore(app);
-            auth = getAuth(app);
-onAuthStateChanged(auth, async (user) => {
-    const loginBtn = document.getElementById("nav-login-btn");
-    const logoutBtn = document.getElementById("nav-logout-btn");
+        // ❌ REMOVE DUPLICATE initializeApp()
+        // Firebase app is already initialized earlier in the script.
 
-    if (user) {
-        loginBtn.classList.add("hidden");
-        logoutBtn.classList.remove("hidden");
-    } else {
-        loginBtn.classList.remove("hidden");
-        logoutBtn.classList.add("hidden");
+        // ✔ Use the existing already-initialized app
+        db = getFirestore();
+        auth = getAuth();
+
+        // Watch auth state
+        onAuthStateChanged(auth, async (user) => {
+            const loginBtn = document.getElementById("nav-login-btn");
+            const logoutBtn = document.getElementById("nav-logout-btn");
+
+            if (user) {
+                loginBtn.classList.add("hidden");
+                logoutBtn.classList.remove("hidden");
+            } else {
+                loginBtn.classList.remove("hidden");
+                logoutBtn.classList.add("hidden");
+            }
+
+            // Load user data **after auth is confirmed**
+            if (user && !isAuthReady) {
+                isAuthReady = true;
+                userId = user.uid;
+                loadUserDataAndHistory();
+            }
+        });
+    } catch (e) {
+        console.error("Firebase init failed:", e);
+        alert("Firebase failed to initialize. Check your configuration.");
     }
+}
 
-    // Only load data AFTER auth is ready
-    if (user && !isAuthReady) {
-        isAuthReady = true;
-        userId = user.uid;
-        loadUserDataAndHistory();
-    }
-});
         } catch (err) {
             console.error("Firebase initialization error:", err);
         }
@@ -1610,6 +1621,7 @@ function updateAuditButton() {
 </body>
 </html>
 <!-- force pages rebuild -->
+
 
 
 

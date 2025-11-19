@@ -1056,44 +1056,57 @@ onAuthStateChanged(auth, (user) => {
 
     // --- FILE HANDLING ---
 
-    window.handleFileSelect = function (event) {
-        const file = event.target.files[0];
-        const auditButton = document.getElementById("audit-button");
-        const fileNameDisplay = document.getElementById("file-name-display");
+window.handleFileSelect = function (event) {
+    console.log("File select triggered");
 
-        document.getElementById("results-area").classList.add("hidden");
+    const file = event.target.files[0];
+    const auditButton = document.getElementById("audit-button");
+    const fileNameDisplay = document.getElementById("file-name-display");
 
-        if (file) {
-            if (file.type !== "text/csv" && !file.name.endsWith(".csv")) {
-                fileNameDisplay.textContent = "Error: Please upload a .csv file only.";
-                fileNameDisplay.classList.add("text-red-500");
-                auditButton.disabled = true;
-                return;
-            }
+    document.getElementById("results-area").classList.add("hidden");
 
-            selectedFileName = file.name;
-            fileNameDisplay.textContent = `File Selected: ${selectedFileName}`;
-            fileNameDisplay.classList.remove("text-red-500");
+    if (!file) {
+        console.log("No file selected");
+        uploadedFileContent = null;
+        fileNameDisplay.textContent = "No file selected.";
+        updateAuditButton();
+        return;
+    }
 
-            const reader = new FileReader();
-            reader.onload = (e) => {
-                uploadedFileContent = e.target.result;
-                updateAuditButton();
-            };
-            reader.onerror = () => {
-                fileNameDisplay.textContent = "Error reading file.";
-                fileNameDisplay.classList.add("text-red-500");
-                uploadedFileContent = null;
-                updateAuditButton();
-            };
-            reader.readAsText(file);
-        } else {
-            fileNameDisplay.textContent =
-                "Click to select your FBA Inventory Ledger or Daily Inventory Report (CSV file only)";
-            uploadedFileContent = null;
-            updateAuditButton();
-        }
+    if (file.type !== "text/csv" && !file.name.endsWith(".csv")) {
+        fileNameDisplay.textContent = "Error: Please upload a .csv file only.";
+        fileNameDisplay.classList.add("text-red-500");
+        uploadedFileContent = null;
+        updateAuditButton();
+        return;
+    }
+
+    selectedFileName = file.name;
+    fileNameDisplay.textContent = `File Selected: ${selectedFileName}`;
+    fileNameDisplay.classList.remove("text-red-500");
+
+    const reader = new FileReader();
+
+    reader.onload = (e) => {
+        console.log("CSV file successfully read.");
+        uploadedFileContent = e.target.result;
+
+        console.log("Preview:", uploadedFileContent.substring(0, 300));
+
+        updateAuditButton();
     };
+
+    reader.onerror = (e) => {
+        console.error("FileReader error", e);
+        uploadedFileContent = null;
+        fileNameDisplay.textContent = "Error reading file.";
+        fileNameDisplay.classList.add("text-red-500");
+        updateAuditButton();
+    };
+
+    reader.readAsText(file);
+};
+
 
   // --- UI UPDATES ---
 function updateUsageUI() {
@@ -1547,6 +1560,7 @@ function updateAuditButton() {
 </body>
 </html>
 <!-- force pages rebuild -->
+
 
 
 

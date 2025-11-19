@@ -845,6 +845,10 @@ onAuthStateChanged(auth, async (user) => {
         loadUserDataAndHistory();
     }
 });
+        } catch (err) {
+            console.error("Firebase initialization error:", err);
+        }
+    }
 
     // --- FIRESTORE DATA MANAGEMENT ---
 
@@ -1543,6 +1547,7 @@ function updateAuditButton() {
 </body>
 </html>
 <!-- force pages rebuild -->
+
 
 
 

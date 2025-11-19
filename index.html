@@ -125,14 +125,30 @@
             </a>
         </div>
 
-        <!-- RIGHT: UPGRADE BUTTON -->
-        <button
-            onclick="document.getElementById('pricing').scrollIntoView({ behavior: 'smooth' })"
-            class="bg-gradient-to-r from-orange-400 to-orange-600 text-white px-4 py-2 rounded-xl font-semibold shadow-md hover:shadow-lg transition-all">
-            Upgrade
-        </button>
-    </div>
-</nav>
+        <!-- RIGHT SIDE: LOGIN / LOGOUT / UPGRADE -->
+<div class="flex items-center space-x-4">
+
+    <!-- Logged-Out: Login Button -->
+    <button id="nav-login-btn"
+            class="text-[var(--rh-primary)] font-semibold hover:underline"
+            onclick="openLoginModal()">
+        Log In
+    </button>
+
+    <!-- Logged-In: Logout Button -->
+    <button id="nav-logout-btn"
+            class="hidden text-gray-600 font-semibold hover:underline"
+            onclick="logoutUser()">
+        Log Out
+    </button>
+
+    <!-- Upgrade always visible -->
+    <button
+        onclick="document.getElementById('pricing').scrollIntoView({ behavior: 'smooth' })"
+        class="bg-gradient-to-r from-orange-400 to-orange-600 text-white px-4 py-2 rounded-xl font-semibold shadow-md hover:shadow-lg transition-all">
+        Upgrade
+    </button>
+</div>
 
 <!-- HERO SECTION -->
 <section class="w-full bg-white py-16 px-4 md:px-10 border-b border-gray-100">
@@ -423,6 +439,63 @@
             </div>
         </div>
     </section>
+    
+<!-- LOGIN MODAL -->
+<div id="login-modal"
+     class="hidden fixed inset-0 bg-black/50 flex justify-center items-center z-50"
+     onclick="closeLogin(event)">
+  <div class="bg-white p-8 rounded-2xl w-full max-w-md relative"
+       onclick="event.stopPropagation()">
+
+    <button onclick="closeLogin()" class="absolute top-4 right-4 text-gray-400 hover:text-gray-600">
+      ✕
+    </button>
+
+    <h2 class="text-2xl font-bold text-center text-slate-800 mb-6">Sign In</h2>
+
+    <input id="login-email" type="email" placeholder="Email"
+           class="w-full p-3 border rounded-lg mb-4">
+
+    <input id="login-pass" type="password" placeholder="Password"
+           class="w-full p-3 border rounded-lg mb-4">
+
+    <button onclick="loginUser()"
+            class="rh-primary-btn w-full p-3 text-white rounded-lg font-bold">
+      Login
+    </button>
+
+    <p class="text-center text-sm text-slate-600 mt-4">
+      Don't have an account?
+      <a href="#" onclick="showSignup()" class="text-[var(--rh-primary)] font-medium">Create one</a>
+    </p>
+  </div>
+</div>
+    
+<!-- SIGNUP MODAL -->
+<div id="signup-modal"
+     class="hidden fixed inset-0 bg-black/50 flex justify-center items-center z-50"
+     onclick="closeSignup(event)">
+  <div class="bg-white p-8 rounded-2xl w-full max-w-md relative"
+       onclick="event.stopPropagation()">
+
+    <button onclick="closeSignup()" class="absolute top-4 right-4 text-gray-400 hover:text-gray-600">
+      ✕
+    </button>
+
+    <h2 class="text-2xl font-bold text-center text-slate-800 mb-6">Create Account</h2>
+
+    <input id="signup-email" type="email" placeholder="Email"
+           class="w-full p-3 border rounded-lg mb-4">
+
+    <input id="signup-pass" type="password" placeholder="Password (min 6 characters)"
+           class="w-full p-3 border rounded-lg mb-4">
+
+    <button onclick="signupUser()"
+            class="rh-secondary-btn w-full p-3 text-white rounded-lg font-bold">
+      Sign Up
+    </button>
+  </div>
+</div>
 
     <!-- FOOTER -->
     <footer class="py-8 bg-[var(--rh-dark)] text-center w-full text-slate-400 mt-10">
@@ -595,6 +668,88 @@
 </div>
 
 <!-- MAIN SCRIPT -->
+    <!-- AUTH MODALS (Login + Signup) -->
+<div id="auth-overlay"
+     class="hidden fixed inset-0 bg-black/50 flex justify-center items-center z-50 p-4"
+     onclick="closeModalOnOutsideClick(event)">
+    
+    <!-- LOGIN MODAL -->
+    <div id="login-modal"
+         class="hidden bg-white p-8 rounded-2xl max-w-md w-full shadow-xl"
+         onclick="event.stopPropagation()">
+
+        <button
+            onclick="closeAuthModals()"
+            class="absolute top-4 right-4 text-gray-400 hover:text-gray-600">
+            ✕
+        </button>
+
+        <h2 class="text-2xl font-bold mb-2 text-[var(--rh-dark)]">Log In</h2>
+        <p class="text-sm text-gray-600 mb-6">Access your Refund Hunter dashboard</p>
+
+        <input id="login-email"
+               type="email"
+               placeholder="Email"
+               class="w-full mb-3 p-3 rounded-lg border border-gray-300 rh-focus">
+
+        <input id="login-password"
+               type="password"
+               placeholder="Password"
+               class="w-full mb-4 p-3 rounded-lg border border-gray-300 rh-focus">
+
+        <button onclick="loginUser()"
+                class="rh-primary-btn w-full py-3 text-white rounded-xl font-bold">
+            Log In
+        </button>
+
+        <p class="text-sm mt-4 text-center text-gray-500">
+            Need an account?
+            <span onclick="switchToSignup()"
+                class="text-[var(--rh-primary)] font-semibold cursor-pointer">
+                Create one
+            </span>
+        </p>
+    </div>
+
+    <!-- SIGNUP MODAL -->
+    <div id="signup-modal"
+         class="hidden bg-white p-8 rounded-2xl max-w-md w-full shadow-xl"
+         onclick="event.stopPropagation()">
+
+        <button
+            onclick="closeAuthModals()"
+            class="absolute top-4 right-4 text-gray-400 hover:text-gray-600">
+            ✕
+        </button>
+
+        <h2 class="text-2xl font-bold mb-2 text-[var(--rh-dark)]">Create Account</h2>
+        <p class="text-sm text-gray-600 mb-6">Start tracking your reimbursements</p>
+
+        <input id="signup-email"
+               type="email"
+               placeholder="Email"
+               class="w-full mb-3 p-3 rounded-lg border border-gray-300 rh-focus">
+
+        <input id="signup-password"
+               type="password"
+               placeholder="Password"
+               class="w-full mb-4 p-3 rounded-lg border border-gray-300 rh-focus">
+
+        <button onclick="signupUser()"
+                class="rh-primary-btn w-full py-3 text-white rounded-xl font-bold">
+            Create Account
+        </button>
+
+        <p class="text-sm mt-4 text-center text-gray-500">
+            Already have an account?
+            <span onclick="switchToLogin()"
+                class="text-[var(--rh-primary)] font-semibold cursor-pointer">
+                Log in
+            </span>
+        </p>
+    </div>
+</div>
+
 <script type="module">
     // --- FIREBASE IMPORTS ---
     import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
@@ -604,6 +759,10 @@
         signInWithCustomToken,
         onAuthStateChanged
     } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+    import {
+    createUserWithEmailAndPassword,
+    signInWithEmailAndPassword
+} from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
     import {
         getFirestore,
         doc,
@@ -637,6 +796,83 @@
     );
     const initialAuthToken =
         typeof __initial_auth_token !== "undefined" ? __initial_auth_token : null;
+// --- AUTH MODALS ---
+window.openLoginModal = function () {
+    document.getElementById("auth-overlay").classList.remove("hidden");
+    document.getElementById("login-modal").classList.remove("hidden");
+    document.getElementById("signup-modal").classList.add("hidden");
+};
+
+window.openSignupModal = function () {
+    document.getElementById("auth-overlay").classList.remove("hidden");
+    document.getElementById("signup-modal").classList.remove("hidden");
+    document.getElementById("login-modal").classList.add("hidden");
+};
+
+window.switchToSignup = function () {
+    document.getElementById("login-modal").classList.add("hidden");
+    document.getElementById("signup-modal").classList.remove("hidden");
+};
+
+window.switchToLogin = function () {
+    document.getElementById("signup-modal").classList.add("hidden");
+    document.getElementById("login-modal").classList.remove("hidden");
+};
+
+window.closeAuthModals = function () {
+    document.getElementById("auth-overlay").classList.add("hidden");
+    document.getElementById("login-modal").classList.add("hidden");
+    document.getElementById("signup-modal").classList.add("hidden");
+};
+
+// --- LOGIN ---
+window.loginUser = async function () {
+    const email = document.getElementById("login-email").value.trim();
+    const password = document.getElementById("login-password").value.trim();
+
+    try {
+        await signInWithEmailAndPassword(auth, email, password);
+        closeAuthModals();
+    } catch (err) {
+        alert("Login failed: " + err.message);
+    }
+};
+
+// --- SIGNUP ---
+window.signupUser = async function () {
+    const email = document.getElementById("signup-email").value.trim();
+    const password = document.getElementById("signup-password").value.trim();
+
+    try {
+        await createUserWithEmailAndPassword(auth, email, password);
+        closeAuthModals();
+    } catch (err) {
+        alert("Signup failed: " + err.message);
+    }
+};
+
+// --- LOGOUT ---
+window.logoutUser = async function () {
+    try {
+        await auth.signOut();
+    } catch (err) {
+        alert("Logout failed: " + err.message);
+    }
+};
+
+// --- NAVBAR LOGIN/LOGOUT TOGGLING ---
+onAuthStateChanged(auth, (user) => {
+    const loginBtn = document.getElementById("nav-login-btn");
+    const logoutBtn = document.getElementById("nav-logout-btn");
+
+    if (user) {
+        loginBtn.classList.add("hidden");
+        logoutBtn.classList.remove("hidden");
+    } else {
+        loginBtn.classList.remove("hidden");
+        logoutBtn.classList.add("hidden");
+    }
+});
 
     // --- FIREBASE INITIALIZATION AND AUTHENTICATION ---
     function initFirebase() {
@@ -1368,6 +1604,7 @@ function updateAuditButton() {
 </body>
 </html>
 <!-- force pages rebuild -->
+
 
 
 

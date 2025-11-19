@@ -204,13 +204,13 @@
                         Click to select your FBA Inventory Ledger or Daily Inventory Report (CSV file only)
                     </p>
                 </label>
-                <input
-                    type="file"
-                    id="csv-file"
-                    accept=".csv"
-                    class="hidden"
-                    onchange="handleFileSelect(event)"
-                >
+               <input 
+  type="file"
+  id="csv-file"
+  accept=".csv"
+  class="hidden"
+  onchange="requireLoginThenSelectFile(event)"
+/>
             </div>
 
             <div class="flex items-center justify-between">
@@ -1675,6 +1675,7 @@ function updateAuditButton() {
 </body>
 </html>
 <!-- force pages rebuild -->
+
 
 
 

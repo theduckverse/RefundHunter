@@ -8,14 +8,13 @@
     <!-- Tailwind CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
-        // Custom Tailwind configuration for a professional, data-focused app
         tailwind.config = {
             theme: {
                 extend: {
                     colors: {
-                        'rh-primary': '#FE9900', // Amazon-inspired orange/gold for focus
-                        'rh-dark': '#232f3e',    // Deep slate blue for text and background
-                        'rh-success': '#4BB543', // Green for claims found
+                        'rh-primary': '#FE9900',
+                        'rh-dark': '#232f3e',
+                        'rh-success': '#4BB543',
                         'rh-bg-light': '#ffffff',
                     },
                     fontFamily: {
@@ -27,7 +26,6 @@
     </script>
 
     <style>
-        /* CSS variables for use in custom classes */
         :root {
             --rh-primary: #FE9900;
             --rh-success: #4BB543;
@@ -36,10 +34,9 @@
 
         body {
             font-family: 'Inter', sans-serif;
-            background-color: #f8fafc; /* Very light blue-gray background for subtle depth */
+            background-color: #f8fafc;
         }
 
-        /* Primary CTA button */
         .rh-primary-btn {
             background-color: var(--rh-primary);
             box-shadow: 0 4px 6px -1px rgba(254, 153, 0, 0.4);
@@ -50,14 +47,13 @@
             transform: translateY(-1px);
         }
 
-        /* Secondary CTA button */
         .rh-secondary-btn {
-            background-color: #3b82f6; /* Blue-600 */
+            background-color: #3b82f6;
             color: white;
             transition: all 0.2s ease-in-out;
         }
         .rh-secondary-btn:hover:not(:disabled) {
-            background-color: #2563eb; /* Blue-700 */
+            background-color: #2563eb;
             transform: translateY(-1px);
         }
 
@@ -74,13 +70,11 @@
                 inset 0 0 10px rgba(0, 0, 0, 0.02);
         }
 
-        /* Canvas height for chart drawing */
         #claim-chart {
             width: 100%;
             height: 250px;
         }
 
-        /* JSON display block */
         #claim-json-data {
             font-family: monospace;
             white-space: pre-wrap;
@@ -92,11 +86,9 @@
 </head>
 <body class="text-slate-800">
 
-<!-- ======= PREMIUM SAAS NAVBAR ======= -->
+<!-- ======= NAVBAR ======= -->
 <nav class="backdrop-blur-lg bg-white/70 border-b border-gray-200/60 shadow-sm sticky top-0 z-50">
     <div class="max-w-7xl mx-auto px-4 lg:px-8 py-3 flex items-center justify-between">
-
-        <!-- LEFT: BRAND NAME -->
         <div class="flex flex-col leading-tight">
             <span class="text-2xl font-extrabold text-[var(--rh-dark)] tracking-tight">
                 FBA Money Scout
@@ -105,67 +97,55 @@
             <span class="text-xs text-gray-500">Stop losing money to Amazon’s errors</span>
         </div>
 
-        <!-- CENTER NAV LINKS -->
         <div class="hidden md:flex items-center space-x-10 font-medium">
-            <a href="#upload-section"
-               class="text-gray-600 hover:text-[var(--rh-primary)] transition-colors duration-200">
+            <a href="#upload-section" class="text-gray-600 hover:text-[var(--rh-primary)] transition-colors duration-200">
                 Dashboard
             </a>
-            <a href="#history-area"
-               class="text-gray-600 hover:text-[var(--rh-primary)] transition-colors duration-200">
+            <a href="#history-area" class="text-gray-600 hover:text-[var(--rh-primary)] transition-colors duration-200">
                 History
             </a>
-            <a href="#pricing"
-               class="text-gray-600 hover:text-[var(--rh-primary)] transition-colors duration-200">
+            <a href="#pricing" class="text-gray-600 hover:text-[var(--rh-primary)] transition-colors duration-200">
                 Pricing
             </a>
-            <a href="#profile-area"
-               class="text-gray-600 hover:text-[var(--rh-primary)] transition-colors duration-200">
+            <a href="#profile-area" class="text-gray-600 hover:text-[var(--rh-primary)] transition-colors duration-200">
                 Account
             </a>
         </div>
 
-        <!-- RIGHT SIDE: LOGIN / LOGOUT / UPGRADE -->
-<div class="flex items-center space-x-4">
-
-    <!-- Logged-Out: Login Button -->
-    <button id="nav-login-btn"
-            class="text-[var(--rh-primary)] font-semibold hover:underline"
-            onclick="openLoginModal()">
-        Log In
-    </button>
-
-    <!-- Logged-In: Logout Button -->
-    <button id="nav-logout-btn"
-            class="hidden text-gray-600 font-semibold hover:underline"
-            onclick="logoutUser()">
-        Log Out
-    </button>
-
-    <!-- Upgrade always visible -->
-    <button
-        onclick="document.getElementById('pricing').scrollIntoView({ behavior: 'smooth' })"
-        class="bg-gradient-to-r from-orange-400 to-orange-600 text-white px-4 py-2 rounded-xl font-semibold shadow-md hover:shadow-lg transition-all">
-        Upgrade
-    </button>
-</div>
+        <div class="flex items-center space-x-4">
+            <button id="nav-login-btn"
+                    class="text-[var(--rh-primary)] font-semibold hover:underline"
+                    onclick="openLoginModal()">
+                Log In
+            </button>
+            <button id="nav-logout-btn"
+                    class="hidden text-gray-600 font-semibold hover:underline"
+                    onclick="logoutUser()">
+                Log Out
+            </button>
+            <button
+                onclick="document.getElementById('pricing').scrollIntoView({ behavior: 'smooth' })"
+                class="bg-gradient-to-r from-orange-400 to-orange-600 text-white px-4 py-2 rounded-xl font-semibold shadow-md hover:shadow-lg transition-all">
+                Upgrade
+            </button>
+        </div>
+    </div>
 </nav>
+
 <!-- HERO SECTION -->
 <section class="w-full bg-white py-16 px-4 md:px-10 border-b border-gray-100">
   <div class="max-w-6xl mx-auto text-center">
-
     <h1 class="text-4xl md:text-6xl font-extrabold text-[var(--rh-dark)] leading-tight">
       <span class="text-[var(--rh-primary)]">FBA Money Scout</span>
       <span class="text-[var(--rh-dark)]"> | FBA Reimbursement Audit</span>
     </h1>
-
     <p class="mt-4 text-lg md:text-xl text-gray-600 max-w-3xl mx-auto">
       Stop losing money to Amazon’s errors. Upload your Inventory Report and instantly generate
       a list of exact, actionable reimbursement claims.
     </p>
-
   </div>
 </section>
+
 <!-- MAIN APPLICATION CONTAINER -->
 <div class="min-h-screen flex flex-col items-center p-4">
     <!-- FILE UPLOAD AND ACTION AREA -->
@@ -176,7 +156,6 @@
             </h2>
             <p id="status-message" class="text-sm text-gray-500 mb-4"></p>
 
-            <!-- REPORT INSTRUCTIONS -->
             <div class="mt-4 mb-6 p-4 bg-blue-50 border-l-4 border-blue-400 rounded-lg">
                 <h3 class="font-bold text-blue-800 flex items-center">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
@@ -204,13 +183,13 @@
                         Click to select your FBA Inventory Ledger or Daily Inventory Report (CSV file only)
                     </p>
                 </label>
-               <input 
-  type="file"
-  id="csv-file"
-  accept=".csv"
-  class="hidden"
-  onchange="requireLoginThenSelectFile(event)"
-/>
+                <input 
+                    type="file"
+                    id="csv-file"
+                    accept=".csv"
+                    class="hidden"
+                    onchange="requireLoginThenSelectFile(event)"
+                />
             </div>
 
             <div class="flex items-center justify-between">
@@ -231,7 +210,6 @@
             </p>
         </div>
         
-        <!-- LOADING INDICATOR -->
         <div id="loading-indicator" class="hidden text-center py-8">
             <div class="animate-spin rounded-full h-12 w-12 border-4 border-t-4 border-[var(--rh-primary)] border-t-transparent mx-auto mb-4"></div>
             <p class="text-slate-700 font-medium">
@@ -250,7 +228,6 @@
             Actionable Reimbursement Claims Found
         </h2>
         
-        <!-- CHART VISUALIZATION AREA -->
         <div id="chart-container" class="mb-8 p-4 bg-gray-50 rounded-lg shadow-inner border border-gray-200">
             <h3 class="text-xl font-semibold text-slate-800 mb-4">
                 Claim Value Breakdown by Reason
@@ -258,9 +235,7 @@
             <canvas id="claim-chart"></canvas>
         </div>
         
-        <div id="claim-list" class="space-y-4">
-            <!-- Claims + File Claims button injected via JS -->
-        </div>
+        <div id="claim-list" class="space-y-4"></div>
 
         <div
             id="no-claims-found"
@@ -288,7 +263,6 @@
         </h2>
 
         <div class="grid md:grid-cols-2 gap-6 mt-4">
-            <!-- Usage Card -->
             <div class="bg-blue-50 p-5 rounded-xl border border-blue-200">
                 <h3 class="font-semibold text-lg text-blue-800 mb-2">Audit Limits</h3>
                 <p class="text-4xl font-extrabold text-blue-600 mb-3" id="usage-display">
@@ -303,7 +277,6 @@
                 </p>
             </div>
 
-            <!-- Subscription Card -->
             <div class="bg-white p-5 rounded-xl border border-gray-300 shadow">
                 <h3 class="font-semibold text-lg text-slate-800 mb-2">Subscription Status</h3>
                 <p class="text-xl font-bold text-gray-700" id="subscription-status">Trial User</p>
@@ -341,7 +314,6 @@
             </p>
 
             <div class="grid md:grid-cols-3 gap-8 max-w-4xl mx-auto">
-                <!-- 1. Free Tier -->
                 <div class="bg-gray-50 p-6 rounded-2xl border-2 border-gray-300 flex flex-col justify-between">
                     <div>
                         <p class="text-lg font-bold text-gray-700 mb-4">Trial Audit</p>
@@ -372,7 +344,6 @@
                     </button>
                 </div>
 
-                <!-- 2. Pay Per Audit -->
                 <div class="bg-white p-6 rounded-2xl shadow-xl border-2 border-gray-300 flex flex-col justify-between hover:border-blue-400 transition">
                     <div>
                         <p class="text-lg font-bold text-slate-800 mb-4">Single Audit Boost</p>
@@ -403,7 +374,6 @@
                     </button>
                 </div>
 
-                <!-- 3. Pro Subscription -->
                 <div class="relative bg-white p-6 rounded-2xl shadow-2xl border-4 border-[var(--rh-primary)] scale-[1.05] flex flex-col justify-between">
                     <div class="absolute top-0 right-0 -mt-3 -mr-3 bg-red-500 text-white text-xs font-bold py-1 px-3 rounded-full uppercase shadow-md">
                         Best Value
@@ -440,12 +410,11 @@
         </div>
     </section>
     
-    <!-- FOOTER -->
     <footer class="py-8 bg-[var(--rh-dark)] text-center w-full text-slate-400 mt-10">
         <p>© 2025 FBA Money Scout. Designed for FBA Sellers.</p>
     </footer>
 
-    <!-- UPGRADE / PAYMENT MODAL -->
+    <!-- UPGRADE MODAL -->
     <div
         id="upgrade-modal"
         class="hidden fixed inset-0 bg-black/50 flex justify-center items-center z-50 p-4 overflow-y-auto"
@@ -474,7 +443,6 @@
                     stroke="currentColor"
                     stroke-width="2"
                 >
-                    <!-- Placeholder icon path will be replaced by JS -->
                     <path stroke-linecap="round" stroke-linejoin="round"
                           d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8V4m0 16v-4m-6-3H4m16 0h-4"/>
                 </svg>
@@ -504,130 +472,121 @@
     </div>
 
     <!-- CLAIM FILING MODAL -->
-<div
-    id="claim-filing-modal"
-    class="hidden fixed inset-0 bg-black/50 flex justify-center items-start z-50 p-4 overflow-y-auto"
-    onclick="closeModalOnOutsideClick(event)"
->
     <div
-        class="bg-white p-8 rounded-2xl max-w-3xl w-full shadow-2xl my-10 relative"
-        onclick="event.stopPropagation()"
+        id="claim-filing-modal"
+        class="hidden fixed inset-0 bg-black/50 flex justify-center items-start z-50 p-4 overflow-y-auto"
+        onclick="closeModalOnOutsideClick(event)"
     >
-        <button
-            onclick="document.getElementById('claim-filing-modal').classList.add('hidden')"
-            class="absolute top-4 right-4 text-gray-400 hover:text-gray-600"
+        <div
+            class="bg-white p-8 rounded-2xl max-w-3xl w-full shadow-2xl my-10 relative"
+            onclick="event.stopPropagation()"
         >
-            <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                      d="M6 18L18 6M6 6l12 12"/>
-            </svg>
-        </button>
-        
-        <div class="text-center mb-6">
-            <h2 class="text-3xl font-bold mb-2 text-[var(--rh-dark)] flex items-center justify-center">
-                <svg
-                    class="h-8 w-8 text-[var(--rh-success)] mr-3"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                    stroke-width="2"
-                >
-                    <path stroke-linecap="round" stroke-linejoin="round"
-                          d="M9 12l2 2 4-4m5.618-4.27a8.68 8.68 0 00-4.088-3.957A8.68 8.68 0 0012 3a8.68 8.68 0 00-4.53 1.273A8.68 8.68 0 003.382 7.73 8.68 8.68 0 003 12a8.68 8.68 0 001.273 4.53 8.68 8.68 0 003.957 4.088A8.68 8.68 0 0012 21a8.68 8.68 0 004.53-1.273 8.68 8.68 0 004.088-3.957A8.68 8.68 0 0021 12a8.68 8.68 0 00-1.273-4.53z"/>
+            <button
+                onclick="document.getElementById('claim-filing-modal').classList.add('hidden')"
+                class="absolute top-4 right-4 text-gray-400 hover:text-gray-600"
+            >
+                <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                          d="M6 18L18 6M6 6l12 12"/>
                 </svg>
-                Claim Filing Guide: Get Reimbursed
-            </h2>
-            <p class="text-xl text-slate-600">
-                You are about to file
-                <span id="filing-claim-count" class="font-bold text-[var(--rh-primary)]"></span>
-                claims worth
-                <span id="filing-claim-value" class="font-bold text-[var(--rh-success)]"></span>.
-            </p>
-        </div>
-
-        <div class="grid md:grid-cols-2 gap-6">
-            <!-- Step 1 -->
-            <div>
-                <h3 class="text-xl font-bold mb-3 text-[var(--rh-dark)] border-b pb-2">
-                    Step 1: Copy Claim Data (JSON)
-                </h3>
-                <p class="text-sm text-slate-600 mb-2">
-                    Use this structured data to communicate the exact issue, SKU, and transaction ID to Amazon Support.
-                </p>
-
-                <div class="bg-gray-800 text-green-400 p-4 rounded-lg relative">
-                    <pre id="claim-json-data" class="text-xs"></pre>
-                    <button
-                        onclick="copyClaimData()"
-                        class="absolute top-2 right-2 p-2 bg-gray-700 rounded-lg text-white hover:bg-gray-600 transition text-xs font-medium"
+            </button>
+            
+            <div class="text-center mb-6">
+                <h2 class="text-3xl font-bold mb-2 text-[var(--rh-dark)] flex items-center justify-center">
+                    <svg
+                        class="h-8 w-8 text-[var(--rh-success)] mr-3"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                        stroke-width="2"
                     >
-                        <span id="copy-btn-text">Copy JSON</span>
-                    </button>
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                              d="M9 12l2 2 4-4m5.618-4.27a8.68 8.68 0 00-4.088-3.957A8.68 8.68 0 0012 3a8.68 8.68 0 00-4.53 1.273A8.68 8.68 0 003.382 7.73 8.68 8.68 0 003 12a8.68 8.68 0 001.273 4.53 8.68 8.68 0 003.957 4.088A8.68 8.68 0 0012 21a8.68 8.68 0 004.53-1.273 8.68 8.68 0 004.088-3.957A8.68 8.68 0 0021 12a8.68 8.68 0 00-1.273-4.53z"/>
+                    </svg>
+                    Claim Filing Guide: Get Reimbursed
+                </h2>
+                <p class="text-xl text-slate-600">
+                    You are about to file
+                    <span id="filing-claim-count" class="font-bold text-[var(--rh-primary)]"></span>
+                    claims worth
+                    <span id="filing-claim-value" class="font-bold text-[var(--rh-success)]"></span>.
+                </p>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-6">
+                <div>
+                    <h3 class="text-xl font-bold mb-3 text-[var(--rh-dark)] border-b pb-2">
+                        Step 1: Copy Claim Data (JSON)
+                    </h3>
+                    <p class="text-sm text-slate-600 mb-2">
+                        Use this structured data to communicate the exact issue, SKU, and transaction ID to Amazon Support.
+                    </p>
+
+                    <div class="bg-gray-800 text-green-400 p-4 rounded-lg relative">
+                        <pre id="claim-json-data" class="text-xs"></pre>
+                        <button
+                            onclick="copyClaimData()"
+                            class="absolute top-2 right-2 p-2 bg-gray-700 rounded-lg text-white hover:bg-gray-600 transition text-xs font-medium"
+                        >
+                            <span id="copy-btn-text">Copy JSON</span>
+                        </button>
+                    </div>
+                </div>
+
+                <div>
+                    <h3 class="text-xl font-bold mb-3 text-[var(--rh-dark)] border-b pb-2">
+                        Step 2: File on Seller Central
+                    </h3>
+                    <ol class="list-decimal list-inside space-y-3 text-sm text-slate-700">
+                        <li>
+                            Go to <strong>Seller Central Help</strong> →
+                            <a
+                                href="https://sellercentral.amazon.com/gp/contact-us/performance/ref=ag_contactus_foot_perfd_cont_201642190"
+                                target="_blank"
+                                class="text-blue-600 hover:underline font-medium"
+                            >
+                                Contact Us
+                            </a>
+                        </li>
+                        <li>Select “Selling on Amazon Issue” → “FBA Issue” → <strong>Investigate Missing / Damaged Units</strong>.</li>
+                        <li>Paste the JSON directly into the case description.</li>
+                        <li>Attach the original CSV as evidence.</li>
+                        <li>Submit the case and track reimbursements.</li>
+                    </ol>
                 </div>
             </div>
 
-            <!-- Step 2 -->
-            <div>
+            <div class="mt-10">
                 <h3 class="text-xl font-bold mb-3 text-[var(--rh-dark)] border-b pb-2">
-                    Step 2: File on Seller Central
+                    Step 3: Copy/Paste Ready-Made Amazon Case Messages
                 </h3>
-                <ol class="list-decimal list-inside space-y-3 text-sm text-slate-700">
-                    <li>
-                        Go to <strong>Seller Central Help</strong> →
-                        <a
-                            href="https://sellercentral.amazon.com/gp/contact-us/performance/ref=ag_contactus_foot_perfd_cont_201642190"
-                            target="_blank"
-                            class="text-blue-600 hover:underline font-medium"
-                        >
-                            Contact Us
-                        </a>
-                    </li>
-                    <li>Select “Selling on Amazon Issue” → “FBA Issue” → <strong>Investigate Missing / Damaged Units</strong>.</li>
-                    <li>Paste the JSON directly into the case description.</li>
-                    <li>Attach the original CSV as evidence.</li>
-                    <li>Submit the case and track reimbursements.</li>
-                </ol>
+
+                <p class="text-sm text-slate-600 mb-4">
+                    These are ready-to-send message templates for each claim. Paste into Seller Central.
+                </p>
+
+                <div
+                    id="claim-messages"
+                    class="space-y-4 max-h-64 overflow-y-auto text-left bg-gray-50 p-4 rounded-xl border border-gray-200"
+                ></div>
             </div>
-        </div>
 
-        <!-- ⭐⭐⭐ STEP 3 INSERTED CORRECTLY HERE ⭐⭐⭐ -->
-        <div class="mt-10">
-            <h3 class="text-xl font-bold mb-3 text-[var(--rh-dark)] border-b pb-2">
-                Step 3: Copy/Paste Ready-Made Amazon Case Messages
-            </h3>
-
-            <p class="text-sm text-slate-600 mb-4">
-                These are ready-to-send message templates for each claim. Paste into Seller Central.
-            </p>
-
-            <div
-                id="claim-messages"
-                class="space-y-4 max-h-64 overflow-y-auto text-left bg-gray-50 p-4 rounded-xl border border-gray-200"
+            <button
+                onclick="document.getElementById('claim-filing-modal').classList.add('hidden')"
+                class="rh-primary-btn mt-10 w-full py-3 text-white rounded-xl font-bold shadow-lg transition"
             >
-                <!-- Messages get injected here -->
-            </div>
+                I Understand – Close Guide
+            </button>
         </div>
-
-        <!-- CLOSE BUTTON -->
-        <button
-            onclick="document.getElementById('claim-filing-modal').classList.add('hidden')"
-            class="rh-primary-btn mt-10 w-full py-3 text-white rounded-xl font-bold shadow-lg transition"
-        >
-            I Understand – Close Guide
-        </button>
     </div>
-</div>
 
-
-<!-- MAIN SCRIPT -->
-    <!-- AUTH MODALS (Login + Signup) -->
+<!-- AUTH MODALS -->
 <div id="auth-overlay"
      class="hidden fixed inset-0 bg-black/50 flex justify-center items-center z-50 p-4"
      onclick="closeModalOnOutsideClick(event)">
     
-    <!-- LOGIN MODAL -->
     <div id="login-modal"
-         class="hidden bg-white p-8 rounded-2xl max-w-md w-full shadow-xl"
+         class="hidden bg-white p-8 rounded-2xl max-w-md w-full shadow-xl relative"
          onclick="event.stopPropagation()">
 
         <button
@@ -663,9 +622,8 @@
         </p>
     </div>
 
-    <!-- SIGNUP MODAL -->
     <div id="signup-modal"
-         class="hidden bg-white p-8 rounded-2xl max-w-md w-full shadow-xl"
+         class="hidden bg-white p-8 rounded-2xl max-w-md w-full shadow-xl relative"
          onclick="event.stopPropagation()">
 
         <button
@@ -703,18 +661,13 @@
 </div>
 
 <script type="module">
-    // --- FIREBASE IMPORTS ---
     import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
     import {
         getAuth,
-        signInAnonymously,
-        signInWithCustomToken,
-        onAuthStateChanged
+        onAuthStateChanged,
+        signInWithEmailAndPassword,
+        createUserWithEmailAndPassword
     } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-    import {
-    createUserWithEmailAndPassword,
-    signInWithEmailAndPassword
-} from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
     import {
         getFirestore,
         doc,
@@ -727,7 +680,6 @@
         runTransaction
     } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
-    // --- GLOBALS AND STATE ---
     const AUDIT_LIMIT = 5;
     let db, auth;
     let userId = null;
@@ -737,143 +689,121 @@
     let uploadedFileContent = null;
     let selectedFileName = "";
     let currentClaimsData = [];
-let currentTotalValue = 0;
-let currentClaimMessages = []; // 👈 NEW
-
+    let currentTotalValue = 0;
+    let currentClaimMessages = [];
 
     const API_BASE_URL = "https://refundhunter-backend.onrender.com";
-
-    // These globals are injected by the host environment if present
     const appId = typeof __app_id !== "undefined" ? __app_id : "default-app-id";
-  // Import the functions you need from the SDKs you need
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
 
-// Import the functions you need from the SDKs you need
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
+    const firebaseConfig = {
+      apiKey: "AIzaSyAwPijZtG54zmRN_vfdFwF_aURZiYJR58s",
+      authDomain: "fbamoneyscout.firebaseapp.com",
+      projectId: "fbamoneyscout-e0487",
+      storageBucket: "fbamoneyscout.firebasestorage.app",
+      messagingSenderId: "1072177597124",
+      appId: "1:1072177597124:web:bee84507aa63dd827f9791"
+    };
 
-// Your web app's Firebase configuration
-const firebaseConfig = {
-  apiKey: "AIzaSyAwPijZtG54zmRN_vfdFwF_aURZiYJR58s",
-  authDomain: "fbamoneyscout.firebaseapp.com",
-  projectId: "fbamoneyscout-e0487",
-  storageBucket: "fbamoneyscout.firebasestorage.app",
-  messagingSenderId: "1072177597124",
-  appId: "1:1072177597124:web:bee84507aa63dd827f9791"
-};
+    // ✅ Proper Firebase initialization
+    const firebaseApp = initializeApp(firebaseConfig);
+    auth = getAuth(firebaseApp);
+    db = getFirestore(firebaseApp);
 
-// --- AUTH MODALS ---
-window.openLoginModal = function () {
-    document.getElementById("auth-overlay").classList.remove("hidden");
-    document.getElementById("login-modal").classList.remove("hidden");
-    document.getElementById("signup-modal").classList.add("hidden");
-};
+    // --- AUTH MODALS ---
+    window.openLoginModal = function () {
+        document.getElementById("auth-overlay").classList.remove("hidden");
+        document.getElementById("login-modal").classList.remove("hidden");
+        document.getElementById("signup-modal").classList.add("hidden");
+    };
 
-window.openSignupModal = function () {
-    document.getElementById("auth-overlay").classList.remove("hidden");
-    document.getElementById("signup-modal").classList.remove("hidden");
-    document.getElementById("login-modal").classList.add("hidden");
-};
+    window.openSignupModal = function () {
+        document.getElementById("auth-overlay").classList.remove("hidden");
+        document.getElementById("signup-modal").classList.remove("hidden");
+        document.getElementById("login-modal").classList.add("hidden");
+    };
 
-window.switchToSignup = function () {
-    document.getElementById("login-modal").classList.add("hidden");
-    document.getElementById("signup-modal").classList.remove("hidden");
-};
+    window.switchToSignup = function () {
+        document.getElementById("login-modal").classList.add("hidden");
+        document.getElementById("signup-modal").classList.remove("hidden");
+    };
 
-window.switchToLogin = function () {
-    document.getElementById("signup-modal").classList.add("hidden");
-    document.getElementById("login-modal").classList.remove("hidden");
-};
+    window.switchToLogin = function () {
+        document.getElementById("signup-modal").classList.add("hidden");
+        document.getElementById("login-modal").classList.remove("hidden");
+    };
 
-window.closeAuthModals = function () {
-    document.getElementById("auth-overlay").classList.add("hidden");
-    document.getElementById("login-modal").classList.add("hidden");
-    document.getElementById("signup-modal").classList.add("hidden");
-};
+    window.closeAuthModals = function () {
+        document.getElementById("auth-overlay").classList.add("hidden");
+        document.getElementById("login-modal").classList.add("hidden");
+        document.getElementById("signup-modal").classList.add("hidden");
+    };
 
-// --- LOGIN ---
-window.loginUser = async function () {
-    const email = document.getElementById("login-email").value.trim();
-    const password = document.getElementById("login-password").value.trim();
+    window.loginUser = async function () {
+        const email = document.getElementById("login-email").value.trim();
+        const password = document.getElementById("login-password").value.trim();
 
-    try {
-        await signInWithEmailAndPassword(auth, email, password);
-        closeAuthModals();
-    } catch (err) {
-        alert("Login failed: " + err.message);
-    }
-};
+        try {
+            await signInWithEmailAndPassword(auth, email, password);
+            closeAuthModals();
+        } catch (err) {
+            alert("Login failed: " + err.message);
+        }
+    };
 
-// --- SIGNUP ---
-window.signupUser = async function () {
-    const email = document.getElementById("signup-email").value.trim();
-    const password = document.getElementById("signup-password").value.trim();
+    window.signupUser = async function () {
+        const email = document.getElementById("signup-email").value.trim();
+        const password = document.getElementById("signup-password").value.trim();
 
-    try {
-        await createUserWithEmailAndPassword(auth, email, password);
-        closeAuthModals();
-    } catch (err) {
-        alert("Signup failed: " + err.message);
-    }
-};
+        try {
+            await createUserWithEmailAndPassword(auth, email, password);
+            closeAuthModals();
+        } catch (err) {
+            alert("Signup failed: " + err.message);
+        }
+    };
 
-// --- LOGOUT ---
-window.logoutUser = async function () {
-    try {
-        await auth.signOut();
-    } catch (err) {
-        alert("Logout failed: " + err.message);
-    }
-};
+    window.logoutUser = async function () {
+        try {
+            await auth.signOut();
+        } catch (err) {
+            alert("Logout failed: " + err.message);
+        }
+    };
 
-    // --- FIREBASE INITIALIZATION AND AUTHENTICATION ---
     function initFirebase() {
-    try {
-        console.log("Firebase Init: App ID =", appId);
-        console.log("Firebase Init: Config provided =", Object.keys(firebaseConfig).length > 0);
+        try {
+            console.log("Firebase Init: App ID =", appId);
+            console.log("Firebase Init: Auth ready =", !!auth);
+            console.log("Firebase Init: DB ready =", !!db);
 
-        // ❌ REMOVE DUPLICATE initializeApp()
-        // Firebase app is already initialized earlier in the script.
+            onAuthStateChanged(auth, async (user) => {
+                const loginBtn = document.getElementById("nav-login-btn");
+                const logoutBtn = document.getElementById("nav-logout-btn");
 
-        // ✔ Use the existing already-initialized app
-        db = getFirestore();
-        auth = getAuth();
-
-        // Watch auth state
-        onAuthStateChanged(auth, async (user) => {
-            const loginBtn = document.getElementById("nav-login-btn");
-            const logoutBtn = document.getElementById("nav-logout-btn");
-
-            if (user) {
-                loginBtn.classList.add("hidden");
-                logoutBtn.classList.remove("hidden");
-            } else {
-                loginBtn.classList.remove("hidden");
-                logoutBtn.classList.add("hidden");
-            }
-
-            // Load user data **after auth is confirmed**
-            if (user && !isAuthReady) {
-                isAuthReady = true;
-                userId = user.uid;
-                loadUserDataAndHistory();
-            }
-        });
-    } catch (e) {
-        console.error("Firebase init failed:", e);
-        alert("Firebase failed to initialize. Check your configuration.");
+                if (user) {
+                    loginBtn.classList.add("hidden");
+                    logoutBtn.classList.remove("hidden");
+                    userId = user.uid;
+                    if (!isAuthReady) {
+                        isAuthReady = true;
+                        loadUserDataAndHistory();
+                    }
+                } else {
+                    userId = null;
+                    loginBtn.classList.remove("hidden");
+                    logoutBtn.classList.add("hidden");
+                }
+            });
+        } catch (e) {
+            console.error("Firebase init failed:", e);
+            alert("Firebase failed to initialize. Check your configuration.");
+        }
     }
-}
 
-    // --- FIRESTORE DATA MANAGEMENT ---
-
-    // Load User Limits and Audit History
     function loadUserDataAndHistory() {
         if (!db || !userId) return;
         console.log("Loading user data and history for user:", userId);
 
-        // Limits doc (usage + premium flag)
         const limitsDocRef = doc(db, `artifacts/fbamoneyscout/users/${userId}/user_data/limits`);
 
         onSnapshot(
@@ -884,7 +814,6 @@ window.logoutUser = async function () {
                     auditsUsed = data.auditsUsed || 0;
                     isPremium = data.isPremium || false;
                 } else {
-                    console.log("Limits document not found, initializing to defaults.");
                     auditsUsed = 0;
                     isPremium = false;
                     setDoc(
@@ -903,8 +832,10 @@ window.logoutUser = async function () {
             }
         );
 
-        // Audit history
-        const historyCollectionRef = collection(db,`artifacts/fbamoneyscout/users/${userId}/user_data/audit_history`);
+        const historyCollectionRef = collection(
+            db,
+            `artifacts/fbamoneyscout/users/${userId}/user_data/audit_history`
+        );
         const historyQuery = query(historyCollectionRef, orderBy("createdAt", "desc"));
 
         onSnapshot(
@@ -921,7 +852,6 @@ window.logoutUser = async function () {
         );
     }
 
-    // Save an audit result to history
     async function saveAuditResult(fileName, claims, totalValue) {
         if (!db || !userId) return;
 
@@ -947,90 +877,77 @@ window.logoutUser = async function () {
         }
     }
 
-    // ------------------------------
-// PREMIUM-AWARE AUDIT COUNTER
-// ------------------------------
-async function incrementAuditCounter() {
-    if (!db || !userId) return false;
+    async function incrementAuditCounter() {
+        if (!db || !userId) return false;
 
-   const limitsDocRef = doc(db, `artifacts/fbamoneyscout/users/${userId}/user_data/limits`);
+        const limitsDocRef = doc(db, `artifacts/fbamoneyscout/users/${userId}/user_data/limits`);
 
-    try {
-        await runTransaction(db, async (transaction) => {
-            const docSnap = await transaction.get(limitsDocRef);
+        try {
+            await runTransaction(db, async (transaction) => {
+                const docSnap = await transaction.get(limitsDocRef);
 
-            // If user has NO limits doc yet → create one
-            if (!docSnap.exists()) {
-                transaction.set(limitsDocRef, {
-                    auditsUsed: 1,
-                    isPremium: false
-                });
-                auditsUsed = 1;
-                return;
+                if (!docSnap.exists()) {
+                    transaction.set(limitsDocRef, {
+                        auditsUsed: 1,
+                        isPremium: false
+                    });
+                    auditsUsed = 1;
+                    return;
+                }
+
+                const data = docSnap.data();
+
+                if (data.isPremium === true) {
+                    auditsUsed = 0;
+                    return;
+                }
+
+                const newCount = (data.auditsUsed || 0) + 1;
+                transaction.update(limitsDocRef, { auditsUsed: newCount });
+                auditsUsed = newCount;
+            });
+
+            updateAuditButton();
+            updateProfileDisplay();
+            return true;
+
+        } catch (error) {
+            console.error("Transaction failed (incrementAuditCounter):", error);
+            document.getElementById("status-message").textContent =
+                "Fatal Error: Failed to track usage.";
+            return false;
+        }
+    }
+
+    function updateProfileDisplay() {
+        try {
+            const auditsUsedEl = document.getElementById("audits-used");
+            const auditsRemainingEl = document.getElementById("audits-remaining");
+            const usageBarEl = document.getElementById("usage-bar");
+            const subscriptionStatusEl = document.getElementById("subscription-status");
+
+            const used = auditsUsed || 0;
+            const remaining = AUDIT_LIMIT - used;
+            const isPro = isPremium || false;
+
+            if (auditsUsedEl) auditsUsedEl.textContent = used;
+            if (auditsRemainingEl) auditsRemainingEl.textContent = remaining;
+
+            if (usageBarEl) {
+                const pct = isPro ? 100 : Math.min((used / AUDIT_LIMIT) * 100, 100);
+                usageBarEl.style.width = pct + "%";
             }
 
-            const data = docSnap.data();
-
-            // ⭐ PREMIUM OVERRIDE — unlimited audits
-            if (data.isPremium === true) {
-                auditsUsed = 0; // always show full access
-                return; // DO NOT increase audit count
+            if (subscriptionStatusEl) {
+                subscriptionStatusEl.textContent = isPro
+                    ? "PRO Hunter (Unlimited)"
+                    : "Trial User";
             }
 
-            // NOT PREMIUM → increment
-            const newCount = (data.auditsUsed || 0) + 1;
-            transaction.update(limitsDocRef, { auditsUsed: newCount });
-            auditsUsed = newCount;
-        });
-
-        updateAuditButton();
-        updateProfileDisplay();
-        return true;
-
-    } catch (error) {
-        console.error("Transaction failed (incrementAuditCounter):", error);
-        document.getElementById("status-message").textContent =
-            "Fatal Error: Failed to track usage.";
-        return false;
-    }
-}
-
-function updateProfileDisplay() {
-    try {
-        // These DOM elements control your UI display
-        const auditsUsedEl = document.getElementById("audits-used");
-        const auditsRemainingEl = document.getElementById("audits-remaining");
-        const usageBarEl = document.getElementById("usage-bar");
-        const subscriptionStatusEl = document.getElementById("subscription-status");
-
-        // Make sure Firestore-loaded globals exist
-        const used = auditsUsed || 0;
-        const remaining = AUDIT_LIMIT - used;
-        const isPro = isPremium || false;
-
-        // Update numbers
-        if (auditsUsedEl) auditsUsedEl.textContent = used;
-        if (auditsRemainingEl) auditsRemainingEl.textContent = remaining;
-
-        // Update bar
-        if (usageBarEl) {
-            const pct = isPro ? 100 : Math.min((used / AUDIT_LIMIT) * 100, 100);
-            usageBarEl.style.width = pct + "%";
+        } catch (err) {
+            console.error("updateProfileDisplay failed:", err);
         }
-
-        // Update plan label
-        if (subscriptionStatusEl) {
-            subscriptionStatusEl.textContent = isPro
-                ? "PRO Hunter (Unlimited)"
-                : "Trial User";
-        }
-
-    } catch (err) {
-        console.error("updateProfileDisplay failed:", err);
     }
-}
-
-    // --- RENDERING FUNCTIONS ---
 
     function renderHistory(docs) {
         const listContainer = document.getElementById("history-list");
@@ -1078,11 +995,10 @@ function updateProfileDisplay() {
         });
     }
 
-    // View a single history item
     window.viewHistoryItem = function (docId) {
         const docRef = doc(
             db,
-            `artifacts/fbamoneyscout/users/${userId}/user_data/${docId}`
+            `artifacts/fbamoneyscout/users/${userId}/user_data/audit_history/${docId}`
         );
 
         onSnapshot(
@@ -1105,204 +1021,140 @@ function updateProfileDisplay() {
             }
         );
     };
-window.requireLoginThenSelectFile = function (event) {
-    if (!auth.currentUser) {
-        openLoginModal();
-        return;
-    }
-    handleFileSelect(event);
-};
 
-    // --- FILE HANDLING ---
-
-window.handleFileSelect = function (event) {
-    console.log("File select triggered");
-
-    const file = event.target.files[0];
-    const auditButton = document.getElementById("audit-button");
-    const fileNameDisplay = document.getElementById("file-name-display");
-
-    document.getElementById("results-area").classList.add("hidden");
-
-    if (!file) {
-        console.log("No file selected");
-        uploadedFileContent = null;
-        fileNameDisplay.textContent = "No file selected.";
-        updateAuditButton();
-        return;
-    }
-
-    if (file.type !== "text/csv" && !file.name.endsWith(".csv")) {
-        fileNameDisplay.textContent = "Error: Please upload a .csv file only.";
-        fileNameDisplay.classList.add("text-red-500");
-        uploadedFileContent = null;
-        updateAuditButton();
-        return;
-    }
-
-    selectedFileName = file.name;
-    fileNameDisplay.textContent = `File Selected: ${selectedFileName}`;
-    fileNameDisplay.classList.remove("text-red-500");
-
-    const reader = new FileReader();
-
-    reader.onload = (e) => {
-        console.log("CSV file successfully read.");
-        uploadedFileContent = e.target.result;
-
-        console.log("Preview:", uploadedFileContent.substring(0, 300));
-
-        updateAuditButton();
+    // 🔒 Require login before file select
+    window.requireLoginThenSelectFile = function (event) {
+        if (!auth.currentUser) {
+            openLoginModal();
+            return;
+        }
+        handleFileSelect(event);
     };
 
-    reader.onerror = (e) => {
-        console.error("FileReader error", e);
-        uploadedFileContent = null;
-        fileNameDisplay.textContent = "Error reading file.";
-        fileNameDisplay.classList.add("text-red-500");
-        updateAuditButton();
+    window.handleFileSelect = function (event) {
+        console.log("File select triggered");
+
+        const file = event.target.files[0];
+        const fileNameDisplay = document.getElementById("file-name-display");
+
+        document.getElementById("results-area").classList.add("hidden");
+
+        if (!file) {
+            uploadedFileContent = null;
+            fileNameDisplay.textContent = "No file selected.";
+            updateAuditButton();
+            return;
+        }
+
+        if (file.type !== "text/csv" && !file.name.endsWith(".csv")) {
+            fileNameDisplay.textContent = "Error: Please upload a .csv file only.";
+            fileNameDisplay.classList.add("text-red-500");
+            uploadedFileContent = null;
+            updateAuditButton();
+            return;
+        }
+
+        selectedFileName = file.name;
+        fileNameDisplay.textContent = `File Selected: ${selectedFileName}`;
+        fileNameDisplay.classList.remove("text-red-500");
+
+        const reader = new FileReader();
+
+        reader.onload = (e) => {
+            uploadedFileContent = e.target.result;
+            updateAuditButton();
+        };
+
+        reader.onerror = (e) => {
+            console.error("FileReader error", e);
+            uploadedFileContent = null;
+            fileNameDisplay.textContent = "Error reading file.";
+            fileNameDisplay.classList.add("text-red-500");
+            updateAuditButton();
+        };
+
+        reader.readAsText(file);
     };
 
-    reader.readAsText(file);
-};
+    function updateAuditButton() {
+        const auditButton = document.getElementById("audit-button");
+        const freeUsesDisplay = document.getElementById("free-uses-display");
 
+        const used = auditsUsed;
+        const remaining = AUDIT_LIMIT - used;
+        const isFileReady = uploadedFileContent !== null;
 
-  // --- UI UPDATES ---
-function updateUsageUI() {
-    const used = auditsUsed;
-    const remaining = AUDIT_LIMIT - used;
+        auditButton.onclick = null;
 
-    // --- HERO AREA MESSAGE ---
-    const freeUsesDisplay = document.getElementById("free-uses-display");
-    if (freeUsesDisplay) {
         if (isPremium) {
-            freeUsesDisplay.innerHTML =
-                'You are a <strong>PRO Hunter</strong>. Unlimited audits unlocked!';
-        } else {
-            freeUsesDisplay.innerHTML = `
-                Your first <strong>${AUDIT_LIMIT}</strong> audits are free.
-                You have <strong>${remaining}</strong> remaining.
-            `;
-        }
-    }
+            auditButton.textContent = "Run Audit (PRO Unlimited)";
+            auditButton.disabled = !isFileReady;
 
-    // --- PROFILE CARD ---
-    const auditsUsedEl = document.getElementById("audits-used");
-    const auditsRemainingEl = document.getElementById("audits-remaining");
-    const usageBarEl = document.getElementById("usage-bar");
-    const subscriptionStatusEl = document.getElementById("subscription-status");
+            if (isFileReady) {
+                auditButton.onclick = processAuditWrapper;
+            }
 
-    if (auditsUsedEl) auditsUsedEl.textContent = used;
-    if (auditsRemainingEl) auditsRemainingEl.textContent = remaining;
+            if (freeUsesDisplay) {
+                freeUsesDisplay.innerHTML =
+                    'You are a <strong>PRO Hunter</strong>. Unlimited audits unlocked!';
+            }
 
-    const progress = isPremium ? 100 : (used / AUDIT_LIMIT) * 100;
-    if (usageBarEl) usageBarEl.style.width = `${progress}%`;
-
-    if (subscriptionStatusEl) {
-        if (isPremium) {
-            subscriptionStatusEl.textContent = "PRO Hunter (Unlimited)";
-            subscriptionStatusEl.classList.add("text-[var(--rh-success)]");
-            subscriptionStatusEl.classList.remove("text-gray-700");
-        } else {
-            subscriptionStatusEl.textContent = "Trial User";
-            subscriptionStatusEl.classList.add("text-gray-700");
-            subscriptionStatusEl.classList.remove("text-[var(--rh-success)]");
-        }
-    }
-
-    // Update audit button too
-    updateAuditButton();
-}
-
-function updateAuditButton() {
-    const auditButton = document.getElementById("audit-button");
-    const freeUsesDisplay = document.getElementById("free-uses-display");
-
-    const used = auditsUsed;
-    const remaining = AUDIT_LIMIT - used;
-    const isFileReady = uploadedFileContent !== null;
-
-    // Reset previous onclick
-    auditButton.onclick = null;
-
-    // ---------- PRO USERS ----------
-    if (isPremium) {
-        auditButton.textContent = "Run Audit (PRO Unlimited)";
-        auditButton.disabled = !isFileReady;
-
-        if (isFileReady) {
-            auditButton.onclick = processAuditWrapper;
+            return;
         }
 
-        if (freeUsesDisplay) {
-            freeUsesDisplay.innerHTML =
-                'You are a <strong>PRO Hunter</strong>. Unlimited audits unlocked!';
+        if (remaining > 0) {
+            auditButton.textContent = `Audit Report (${remaining}/${AUDIT_LIMIT} FREE Uses Remaining)`;
+            auditButton.disabled = !isFileReady;
+
+            if (isFileReady) {
+                auditButton.onclick = processAuditWrapper;
+            }
+
+            if (freeUsesDisplay) {
+                freeUsesDisplay.innerHTML = `
+                    Your first <strong>${AUDIT_LIMIT}</strong> audits are free.
+                    You have <strong>${remaining}</strong> remaining.
+                `;
+            }
+
+            return;
         }
 
-        return;
-    }
-
-    // ---------- TRIAL USERS WITH REMAINING USES ----------
-    if (remaining > 0) {
-        auditButton.textContent = `Audit Report (${remaining}/${AUDIT_LIMIT} FREE Uses Remaining)`;
-
-        auditButton.disabled = !isFileReady;
-
-        if (isFileReady) {
-            auditButton.onclick = processAuditWrapper;
-        }
+        auditButton.textContent = "Audit Report (Upgrade Required)";
+        auditButton.disabled = false;
+        auditButton.onclick = () => showUpgradeModal("audit_monthly");
 
         if (freeUsesDisplay) {
             freeUsesDisplay.innerHTML = `
-                Your first <strong>${AUDIT_LIMIT}</strong> audits are free.
-                You have <strong>${remaining}</strong> remaining.
+                You have used your <strong>${AUDIT_LIMIT}</strong> free audits.
+                Please upgrade below for unlimited use.
             `;
         }
-
-        return;
     }
-
-    // ---------- TRIAL USERS WITH ZERO USES LEFT ----------
-    auditButton.textContent = "Audit Report (Upgrade Required)";
-    auditButton.disabled = false;
-    auditButton.onclick = () => showUpgradeModal("audit_monthly");
-
-    if (freeUsesDisplay) {
-        freeUsesDisplay.innerHTML = `
-            You have used your <strong>${AUDIT_LIMIT}</strong> free audits.
-            Please upgrade below for unlimited use.
-        `;
-    }
-}
-
 
     document.addEventListener("DOMContentLoaded", () => {
         initFirebase();
-        // Initial hookup; updateAuditButton will override as needed
         const auditButton = document.getElementById("audit-button");
         if (auditButton) {
             auditButton.onclick = processAuditWrapper;
         }
     });
 
-    // Wrapper for checking limits before audit
     function processAuditWrapper() {
+        if (!userId) {
+            openLoginModal();
+            return;
+        }
 
-    // 🚨 Block auditing if not logged in
-    if (!userId) {
-        openLoginModal();
-        return;
-    }
+        if (!isPremium && auditsUsed >= AUDIT_LIMIT) {
+            showUpgradeModal("audit_monthly");
+            return;
+        }
 
-    if (!isPremium && auditsUsed >= AUDIT_LIMIT) {
-        showUpgradeModal("audit_monthly");
-        return;
+        if (uploadedFileContent) {
+            processAudit(uploadedFileContent, selectedFileName);
+        }
     }
-
-    if (uploadedFileContent) {
-        processAudit(uploadedFileContent, selectedFileName);
-    }
-}
 
     function finishAuditDisplay() {
         document.getElementById("loading-indicator").classList.add("hidden");
@@ -1321,12 +1173,11 @@ function updateAuditButton() {
             "Audit Complete. Ready for next report.";
     }
 
-    // --- MODALS / PAYMENT ---
-
     window.closeModalOnOutsideClick = function (event) {
-        if (event.target.id === "upgrade-modal" || event.target.id === "claim-filing-modal") {
+        if (event.target.id === "upgrade-modal" || event.target.id === "claim-filing-modal" || event.target.id === "auth-overlay") {
             document.getElementById("upgrade-modal").classList.add("hidden");
             document.getElementById("claim-filing-modal").classList.add("hidden");
+            document.getElementById("auth-overlay").classList.add("hidden");
         }
     };
 
@@ -1337,8 +1188,6 @@ function updateAuditButton() {
         const description = document.getElementById("modal-description");
         const checkoutLink = document.getElementById("modal-checkout-link");
         const modalIconPath = modal.querySelector("#modal-icon path");
-
-        const currentUserId = userId || "anonymous";
 
         const productDetails =
             {
@@ -1375,67 +1224,61 @@ function updateAuditButton() {
         modal.classList.remove("hidden");
     };
 
-    // --- CLAIM FILING MODAL ---
+    window.showClaimFilingModal = function (claims, totalValue) {
+        const modal = document.getElementById("claim-filing-modal");
+        const claimCountDisplay = document.getElementById("filing-claim-count");
+        const claimValueDisplay = document.getElementById("filing-claim-value");
+        const jsonDataBlock = document.getElementById("claim-json-data");
+        const copyBtnText = document.getElementById("copy-btn-text");
+        const messagesContainer = document.getElementById("claim-messages");
 
-   window.showClaimFilingModal = function (claims, totalValue) {
-  const modal = document.getElementById("claim-filing-modal");
-  const claimCountDisplay = document.getElementById("filing-claim-count");
-  const claimValueDisplay = document.getElementById("filing-claim-value");
-  const jsonDataBlock = document.getElementById("claim-json-data");
-  const copyBtnText = document.getElementById("copy-btn-text");
-  const messagesContainer = document.getElementById("claim-messages");
+        claimCountDisplay.textContent = `${claims.length}`;
+        claimValueDisplay.textContent = `$${totalValue.toFixed(2)}`;
 
-  // Top summary
-  claimCountDisplay.textContent = `${claims.length}`;
-  claimValueDisplay.textContent = `$${totalValue.toFixed(2)}`;
+        const jsonClaims = JSON.stringify(claims, null, 2);
+        jsonDataBlock.textContent = jsonClaims;
 
-  // JSON block
-  const jsonClaims = JSON.stringify(claims, null, 2);
-  jsonDataBlock.textContent = jsonClaims;
+        copyBtnText.textContent = "Copy JSON";
 
-  copyBtnText.textContent = "Copy JSON";
+        if (messagesContainer) {
+            messagesContainer.innerHTML = "";
 
-  // Messages block (Step 3)
-  if (messagesContainer) {
-    messagesContainer.innerHTML = "";
+            if (!currentClaimMessages || currentClaimMessages.length === 0) {
+                messagesContainer.innerHTML =
+                    "<p class='text-sm text-slate-500 italic'>No pre-written messages were generated for this audit. You can still use the JSON and filing steps above.</p>";
+            } else {
+                currentClaimMessages.forEach((msg, index) => {
+                    const card = document.createElement("div");
+                    card.className =
+                        "bg-gray-50 border border-gray-200 rounded-lg p-3";
 
-    if (!currentClaimMessages || currentClaimMessages.length === 0) {
-      messagesContainer.innerHTML =
-        "<p class='text-sm text-slate-500 italic'>No pre-written messages were generated for this audit. You can still use the JSON and filing steps above.</p>";
-    } else {
-      currentClaimMessages.forEach((msg, index) => {
-        const card = document.createElement("div");
-        card.className =
-          "bg-gray-50 border border-gray-200 rounded-lg p-3";
+                    const skuLabel = msg.sku ? `SKU: ${msg.sku}` : "";
+                    const reasonLabel = msg.reason ? `Reason: ${msg.reason}` : "";
 
-        const skuLabel = msg.sku ? `SKU: ${msg.sku}` : "";
-        const reasonLabel = msg.reason ? `Reason: ${msg.reason}` : "";
+                    card.innerHTML = `
+                      <div class="flex justify-between items-center mb-2">
+                        <span class="text-sm font-semibold text-slate-800">
+                          Case Message #${index + 1}
+                        </span>
+                        <span class="text-xs text-slate-500">
+                          ${skuLabel}
+                          ${reasonLabel ? "&nbsp;&bull;&nbsp;" + reasonLabel : ""}
+                        </span>
+                      </div>
+                      <textarea
+                        class="w-full text-xs p-2 rounded-md border border-gray-300 bg-white"
+                        rows="5"
+                        readonly
+                      >${(msg.message || "").trim()}</textarea>
+                    `;
 
-        card.innerHTML = `
-          <div class="flex justify-between items-center mb-2">
-            <span class="text-sm font-semibold text-slate-800">
-              Case Message #${index + 1}
-            </span>
-            <span class="text-xs text-slate-500">
-              ${skuLabel}
-              ${reasonLabel ? "&nbsp;&bull;&nbsp;" + reasonLabel : ""}
-            </span>
-          </div>
-          <textarea
-            class="w-full text-xs p-2 rounded-md border border-gray-300 bg-white"
-            rows="5"
-            readonly
-          >${(msg.message || "").trim()}</textarea>
-        `;
+                    messagesContainer.appendChild(card);
+                });
+            }
+        }
 
-        messagesContainer.appendChild(card);
-      });
-    }
-  }
-
-  modal.classList.remove("hidden");
-};
-
+        modal.classList.remove("hidden");
+    };
 
     window.copyClaimData = function () {
         const jsonDataBlock = document.getElementById("claim-json-data");
@@ -1458,8 +1301,6 @@ function updateAuditButton() {
             copyBtnText.textContent = "Error Copying!";
         }
     };
-
-    // --- AI GENERATION / BACKEND CALL ---
 
     async function processAudit(csvContent, fileName) {
         if (!isPremium && auditsUsed >= AUDIT_LIMIT) {
@@ -1494,7 +1335,6 @@ function updateAuditButton() {
             currentTotalValue = data.totalEstimatedValue || 0;
             currentClaimMessages = data.messages || [];
 
-
             if (!isPremium) {
                 await incrementAuditCounter();
             }
@@ -1516,8 +1356,6 @@ function updateAuditButton() {
         finishAuditDisplay();
     }
 
-    // --- CHART RENDERING ---
-
     let lastClaimsData = null;
 
     function renderClaimChart(data, total) {
@@ -1531,7 +1369,7 @@ function updateAuditButton() {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
 
         if (total === 0 || !Object.keys(data).length) {
-            ctx.fillStyle = "#94a3b8"; // slate-400
+            ctx.fillStyle = "#94a3b8";
             ctx.font = "16px Inter";
             ctx.textAlign = "center";
             ctx.fillText("No claims found to chart.", canvas.width / 2, canvas.height / 2);
@@ -1671,45 +1509,3 @@ function updateAuditButton() {
 </script>
 </body>
 </html>
-<!-- force pages rebuild -->
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

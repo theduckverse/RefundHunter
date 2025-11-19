@@ -1225,14 +1225,22 @@ function updateAuditButton() {
 
     // Wrapper for checking limits before audit
     function processAuditWrapper() {
-        if (!isPremium && auditsUsed >= AUDIT_LIMIT) {
-            showUpgradeModal("audit_monthly");
-            return;
-        }
-        if (uploadedFileContent) {
-            processAudit(uploadedFileContent, selectedFileName);
-        }
+
+    // 🚨 Block auditing if not logged in
+    if (!userId) {
+        openLoginModal();
+        return;
     }
+
+    if (!isPremium && auditsUsed >= AUDIT_LIMIT) {
+        showUpgradeModal("audit_monthly");
+        return;
+    }
+
+    if (uploadedFileContent) {
+        processAudit(uploadedFileContent, selectedFileName);
+    }
+}
 
     function finishAuditDisplay() {
         document.getElementById("loading-indicator").classList.add("hidden");
@@ -1602,6 +1610,7 @@ function updateAuditButton() {
 </body>
 </html>
 <!-- force pages rebuild -->
+
 
 
 

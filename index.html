@@ -826,42 +826,25 @@ onAuthStateChanged(auth, (user) => {
             const app = initializeApp(firebaseConfig);
             db = getFirestore(app);
             auth = getAuth(app);
+onAuthStateChanged(auth, async (user) => {
+    const loginBtn = document.getElementById("nav-login-btn");
+    const logoutBtn = document.getElementById("nav-logout-btn");
 
-            console.log("Firebase services initialized.");
-
-            onAuthStateChanged(auth, async (user) => {
-                if (user) {
-                    userId = user.uid;
-                    document.getElementById("display-user-id").textContent = userId;
-                    document.getElementById("user-info").classList.remove("hidden");
-                    isAuthReady = true;
-
-                    console.log("Auth State Changed: Signed in as user:", userId);
-
-                    // Load user data and history
-                    loadUserDataAndHistory();
-                } else {
-                    console.log("Auth State Changed: No user. Attempting sign-in...");
-                    if (initialAuthToken) {
-                        console.log("Attempting sign-in with custom token.");
-                        await signInWithCustomToken(auth, initialAuthToken).catch((e) => {
-                            console.error("Custom Token Sign-In Failed:", e);
-                        });
-                    } else {
-                        console.log("Attempting anonymous sign-in.");
-                        await signInAnonymously(auth).catch((e) => {
-                            console.error("Anonymous Sign-In Failed:", e);
-                        });
-                    }
-                }
-                document.getElementById("status-message").textContent = "Awaiting file upload...";
-            });
-        } catch (error) {
-            console.error("FIREBASE FATAL ERROR:", error);
-            document.getElementById("status-message").textContent =
-                "Error loading app. See console for details.";
-        }
+    if (user) {
+        loginBtn.classList.add("hidden");
+        logoutBtn.classList.remove("hidden");
+    } else {
+        loginBtn.classList.remove("hidden");
+        logoutBtn.classList.add("hidden");
     }
+
+    // Only load data AFTER auth is ready
+    if (user && !isAuthReady) {
+        isAuthReady = true;
+        userId = user.uid;
+        loadUserDataAndHistory();
+    }
+});
 
     // --- FIRESTORE DATA MANAGEMENT ---
 
@@ -1560,6 +1543,7 @@ function updateAuditButton() {
 </body>
 </html>
 <!-- force pages rebuild -->
+
 
 
 

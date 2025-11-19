@@ -1,1 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <title>Thank You – FBA Money Scout</title>
+    <script src="https://cdn.tailwindcss.com"></script>
 
+    <!-- Firebase -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { 
+            getAuth, 
+            onAuthStateChanged 
+        } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { 
+            getFirestore, 
+            doc, 
+            setDoc 
+        } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+
+        // Your Firebase config
+        const firebaseConfig = {
+          apiKey: "AIzaSyDp0fml-Hnhf-_CdHPNQ7DgPY-mIrzaxGY",
+          authDomain: "refundhunter-1cfc8.firebaseapp.com",
+          projectId: "refundhunter-1cfc8",
+          storageBucket: "refundhunter-1cfc8.firebasestorage.app",
+          messagingSenderId: "46690732306",
+          appId: "1:46690732306:web:adc5943bf2cda1611b0bcb"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth();
+        const db = getFirestore();
+
+        const urlParams = new URLSearchParams(window.location.search);
+        const plan = urlParams.get("plan"); // premium / single / whatever
+
+        onAuthStateChanged(auth, async (user) => {
+            if (!user) {
+                document.getElementById("status").innerText =
+                    "Please log in to activate your premium account.";
+                return;
+            }
+
+            const userId = user.uid;
+            const appId = "default-app-id"; // your code uses this fallback
+
+            if (plan === "premium") {
+                await setDoc(
+                    doc(db, `artifacts/${appId}/users/${userId}/user_data/limits`),
+                    { isPremium: true },
+                    { merge: true }
+                );
+
+                document.getElementById("status").innerText =
+                    "🎉 Your Pro Hunter plan is now active!";
+            } else {
+                document.getElementById("status").innerText =
+                    "Thank you! Your purchase was received.";
+            }
+        });
+    </script>
+</head>
+
+<body class="bg-gray-50 flex items-center justify-center h-screen">
+    <div class="text-center p-10 bg-white rounded-xl shadow-lg max-w-md">
+        <h1 class="text-3xl font-bold text-orange-600">Thank You!</h1>
+        <p class="mt-4 text-gray-700" id="status">Activating your account…</p>
+
+        <a href="/" class="mt-6 inline-block text-blue-600 hover:underline">
+            Return to Dashboard
+        </a>
+    </div>
+</body>
+</html>

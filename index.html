@@ -734,9 +734,23 @@
 
     // These globals are injected by the host environment if present
     const appId = typeof __app_id !== "undefined" ? __app_id : "default-app-id";
-    const firebaseConfig = JSON.parse(
-        typeof __firebase_config !== "undefined" ? __firebase_config : "{}"
-    );
+  // Import the functions you need from the SDKs you need
+import { initializeApp } from "firebase/app";
+// TODO: Add SDKs for Firebase products that you want to use
+// https://firebase.google.com/docs/web/setup#available-libraries
+
+// Your web app's Firebase configuration
+const firebaseConfig = {
+  apiKey: "AIzaSyDp0fml-Hnhf-_CdHPNQ7DgPY-mIrzaxGY",
+  authDomain: "refundhunter-1cfc8.firebaseapp.com",
+  projectId: "refundhunter-1cfc8",
+  storageBucket: "refundhunter-1cfc8.firebasestorage.app",
+  messagingSenderId: "46690732306",
+  appId: "1:46690732306:web:adc5943bf2cda1611b0bcb"
+};
+
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
     const initialAuthToken =
         typeof __initial_auth_token !== "undefined" ? __initial_auth_token : null;
 // --- AUTH MODALS ---
@@ -1533,6 +1547,7 @@ function updateAuditButton() {
 </body>
 </html>
 <!-- force pages rebuild -->
+
 
 
 

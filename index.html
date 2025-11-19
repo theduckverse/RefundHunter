@@ -440,63 +440,6 @@
         </div>
     </section>
     
-<!-- LOGIN MODAL -->
-<div id="login-modal"
-     class="hidden fixed inset-0 bg-black/50 flex justify-center items-center z-50"
-     onclick="closeLogin(event)">
-  <div class="bg-white p-8 rounded-2xl w-full max-w-md relative"
-       onclick="event.stopPropagation()">
-
-    <button onclick="closeLogin()" class="absolute top-4 right-4 text-gray-400 hover:text-gray-600">
-      ✕
-    </button>
-
-    <h2 class="text-2xl font-bold text-center text-slate-800 mb-6">Sign In</h2>
-
-    <input id="login-email" type="email" placeholder="Email"
-           class="w-full p-3 border rounded-lg mb-4">
-
-    <input id="login-pass" type="password" placeholder="Password"
-           class="w-full p-3 border rounded-lg mb-4">
-
-    <button onclick="loginUser()"
-            class="rh-primary-btn w-full p-3 text-white rounded-lg font-bold">
-      Login
-    </button>
-
-    <p class="text-center text-sm text-slate-600 mt-4">
-      Don't have an account?
-      <a href="#" onclick="showSignup()" class="text-[var(--rh-primary)] font-medium">Create one</a>
-    </p>
-  </div>
-</div>
-    
-<!-- SIGNUP MODAL -->
-<div id="signup-modal"
-     class="hidden fixed inset-0 bg-black/50 flex justify-center items-center z-50"
-     onclick="closeSignup(event)">
-  <div class="bg-white p-8 rounded-2xl w-full max-w-md relative"
-       onclick="event.stopPropagation()">
-
-    <button onclick="closeSignup()" class="absolute top-4 right-4 text-gray-400 hover:text-gray-600">
-      ✕
-    </button>
-
-    <h2 class="text-2xl font-bold text-center text-slate-800 mb-6">Create Account</h2>
-
-    <input id="signup-email" type="email" placeholder="Email"
-           class="w-full p-3 border rounded-lg mb-4">
-
-    <input id="signup-pass" type="password" placeholder="Password (min 6 characters)"
-           class="w-full p-3 border rounded-lg mb-4">
-
-    <button onclick="signupUser()"
-            class="rh-secondary-btn w-full p-3 text-white rounded-lg font-bold">
-      Sign Up
-    </button>
-  </div>
-</div>
-
     <!-- FOOTER -->
     <footer class="py-8 bg-[var(--rh-dark)] text-center w-full text-slate-400 mt-10">
         <p>© 2025 Refund Hunter. Designed for FBA Sellers.</p>
@@ -1604,6 +1547,7 @@ function updateAuditButton() {
 </body>
 </html>
 <!-- force pages rebuild -->
+
 
 
 

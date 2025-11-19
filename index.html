@@ -881,7 +881,8 @@ window.logoutUser = async function () {
         console.log("Loading user data and history for user:", userId);
 
         // Limits doc (usage + premium flag)
-        const limitsDocRef = doc(db, `artifacts/${appId}/users/${userId}/user_data/limits`);
+        const limitsDocRef = doc(db, `artifacts/fbamoneyscout/users/${user.uid}/user_data/limits`);
+
         onSnapshot(
             limitsDocRef,
             (docSnap) => {
@@ -912,7 +913,7 @@ window.logoutUser = async function () {
         // Audit history
         const historyCollectionRef = collection(
             db,
-            `artifacts/${appId}/users/${userId}/audit_history`
+            `artifacts/fbamoneyscout/users/${user.uid}/user_data/audit_history`
         );
         const historyQuery = query(historyCollectionRef, orderBy("createdAt", "desc"));
 
@@ -937,7 +938,7 @@ window.logoutUser = async function () {
         try {
             const historyCollectionRef = collection(
                 db,
-                `artifacts/${appId}/users/${userId}/audit_history`
+                `artifacts/fbamoneyscout/users/${user.uid}/user_data/audit_history`
             );
 
             await setDoc(doc(historyCollectionRef), {
@@ -962,7 +963,7 @@ window.logoutUser = async function () {
 async function incrementAuditCounter() {
     if (!db || !userId) return false;
 
-    const limitsDocRef = doc(db, `artifacts/${appId}/users/${userId}/user_data/limits`);
+    const limitsDocRef = doc(db, `artifacts/fbamoneyscout/users/${user.uid}/user_data/limits`);
 
     try {
         await runTransaction(db, async (transaction) => {
@@ -1091,7 +1092,7 @@ function updateProfileDisplay() {
     window.viewHistoryItem = function (docId) {
         const docRef = doc(
             db,
-            `artifacts/${appId}/users/${userId}/audit_history/${docId}`
+            `artifacts/fbamoneyscout/users/${user.uid}/user_data/${docId}`
         );
 
         onSnapshot(
@@ -1674,6 +1675,7 @@ function updateAuditButton() {
 </body>
 </html>
 <!-- force pages rebuild -->
+
 
 
 

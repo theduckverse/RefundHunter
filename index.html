@@ -302,6 +302,21 @@
                     <span id="audits-remaining">5</span> audits remaining before upgrade is suggested.
                 </p>
             </div>
+<div class="mt-8">
+  <h3 class="text-xl font-bold mb-3 text-[var(--rh-dark)] border-b pb-2">
+    Step 3: Copy/Paste Ready-Made Amazon Case Messages
+  </h3>
+  <p class="text-sm text-slate-600 mb-2">
+    Use these messages (one per case) when opening tickets in Seller Central. You can tweak names, dates, or amounts if needed.
+  </p>
+
+  <div
+    id="claim-messages"
+    class="space-y-4 max-h-64 overflow-y-auto text-left"
+  >
+    <!-- Messages will be injected here by JS -->
+  </div>
+</div>
 
             <!-- Subscription Card -->
             <div class="bg-white p-5 rounded-xl border border-gray-300 shadow">
@@ -728,7 +743,9 @@
     let uploadedFileContent = null;
     let selectedFileName = "";
     let currentClaimsData = [];
-    let currentTotalValue = 0;
+let currentTotalValue = 0;
+let currentClaimMessages = []; // 👈 NEW
+
 
     const API_BASE_URL = "https://refundhunter-backend.onrender.com";
 
@@ -1296,22 +1313,65 @@ function updateAuditButton() {
 
     // --- CLAIM FILING MODAL ---
 
-    window.showClaimFilingModal = function (claims, totalValue) {
-        const modal = document.getElementById("claim-filing-modal");
-        const claimCountDisplay = document.getElementById("filing-claim-count");
-        const claimValueDisplay = document.getElementById("filing-claim-value");
-        const jsonDataBlock = document.getElementById("claim-json-data");
-        const copyBtnText = document.getElementById("copy-btn-text");
+   window.showClaimFilingModal = function (claims, totalValue) {
+  const modal = document.getElementById("claim-filing-modal");
+  const claimCountDisplay = document.getElementById("filing-claim-count");
+  const claimValueDisplay = document.getElementById("filing-claim-value");
+  const jsonDataBlock = document.getElementById("claim-json-data");
+  const copyBtnText = document.getElementById("copy-btn-text");
+  const messagesContainer = document.getElementById("claim-messages");
 
-        claimCountDisplay.textContent = `${claims.length}`;
-        claimValueDisplay.textContent = `$${totalValue.toFixed(2)}`;
+  // Top summary
+  claimCountDisplay.textContent = `${claims.length}`;
+  claimValueDisplay.textContent = `$${totalValue.toFixed(2)}`;
 
-        const jsonClaims = JSON.stringify(claims, null, 2);
-        jsonDataBlock.textContent = jsonClaims;
+  // JSON block
+  const jsonClaims = JSON.stringify(claims, null, 2);
+  jsonDataBlock.textContent = jsonClaims;
 
-        copyBtnText.textContent = "Copy JSON";
-        modal.classList.remove("hidden");
-    };
+  copyBtnText.textContent = "Copy JSON";
+
+  // Messages block (Step 3)
+  if (messagesContainer) {
+    messagesContainer.innerHTML = "";
+
+    if (!currentClaimMessages || currentClaimMessages.length === 0) {
+      messagesContainer.innerHTML =
+        "<p class='text-sm text-slate-500 italic'>No pre-written messages were generated for this audit. You can still use the JSON and filing steps above.</p>";
+    } else {
+      currentClaimMessages.forEach((msg, index) => {
+        const card = document.createElement("div");
+        card.className =
+          "bg-gray-50 border border-gray-200 rounded-lg p-3";
+
+        const skuLabel = msg.sku ? `SKU: ${msg.sku}` : "";
+        const reasonLabel = msg.reason ? `Reason: ${msg.reason}` : "";
+
+        card.innerHTML = `
+          <div class="flex justify-between items-center mb-2">
+            <span class="text-sm font-semibold text-slate-800">
+              Case Message #${index + 1}
+            </span>
+            <span class="text-xs text-slate-500">
+              ${skuLabel}
+              ${reasonLabel ? "&nbsp;&bull;&nbsp;" + reasonLabel : ""}
+            </span>
+          </div>
+          <textarea
+            class="w-full text-xs p-2 rounded-md border border-gray-300 bg-white"
+            rows="5"
+            readonly
+          >${(msg.message || "").trim()}</textarea>
+        `;
+
+        messagesContainer.appendChild(card);
+      });
+    }
+  }
+
+  modal.classList.remove("hidden");
+};
+
 
     window.copyClaimData = function () {
         const jsonDataBlock = document.getElementById("claim-json-data");
@@ -1368,6 +1428,8 @@ function updateAuditButton() {
 
             currentClaimsData = data.claims || [];
             currentTotalValue = data.totalEstimatedValue || 0;
+            currentClaimMessages = data.messages || [];
+
 
             if (!isPremium) {
                 await incrementAuditCounter();
@@ -1546,6 +1608,7 @@ function updateAuditButton() {
 </body>
 </html>
 <!-- force pages rebuild -->
+
 
 
 

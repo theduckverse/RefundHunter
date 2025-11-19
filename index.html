@@ -763,13 +763,6 @@ const firebaseConfig = {
   appId: "1:1072177597124:web:bee84507aa63dd827f9791"
 };
 
-// ------------------------------
-// FIREBASE INITIALIZATION
-// ------------------------------
-const firebaseApp = initializeApp(firebaseConfig);
-auth = getAuth(firebaseApp);
-db = getFirestore(firebaseApp);
-
 // --- AUTH MODALS ---
 window.openLoginModal = function () {
     document.getElementById("auth-overlay").classList.remove("hidden");
@@ -881,7 +874,7 @@ window.logoutUser = async function () {
         console.log("Loading user data and history for user:", userId);
 
         // Limits doc (usage + premium flag)
-        const limitsDocRef = doc(db, `artifacts/fbamoneyscout/users/${user.uid}/user_data/limits`);
+        const limitsDocRef = doc(db, `artifacts/fbamoneyscout/users/${userId}/user_data/limits`);
 
         onSnapshot(
             limitsDocRef,
@@ -911,10 +904,7 @@ window.logoutUser = async function () {
         );
 
         // Audit history
-        const historyCollectionRef = collection(
-            db,
-            `artifacts/fbamoneyscout/users/${user.uid}/user_data/audit_history`
-        );
+        const historyCollectionRef = collection(db,`artifacts/fbamoneyscout/users/${userId}/user_data/audit_history`);
         const historyQuery = query(historyCollectionRef, orderBy("createdAt", "desc"));
 
         onSnapshot(
@@ -938,7 +928,7 @@ window.logoutUser = async function () {
         try {
             const historyCollectionRef = collection(
                 db,
-                `artifacts/fbamoneyscout/users/${user.uid}/user_data/audit_history`
+                `artifacts/fbamoneyscout/users/${userId}/user_data/audit_history`
             );
 
             await setDoc(doc(historyCollectionRef), {
@@ -963,7 +953,7 @@ window.logoutUser = async function () {
 async function incrementAuditCounter() {
     if (!db || !userId) return false;
 
-    const limitsDocRef = doc(db, `artifacts/fbamoneyscout/users/${user.uid}/user_data/limits`);
+   const limitsDocRef = doc(db, `artifacts/fbamoneyscout/users/${userId}/user_data/limits`);
 
     try {
         await runTransaction(db, async (transaction) => {
@@ -1092,7 +1082,7 @@ function updateProfileDisplay() {
     window.viewHistoryItem = function (docId) {
         const docRef = doc(
             db,
-            `artifacts/fbamoneyscout/users/${user.uid}/user_data/${docId}`
+            `artifacts/fbamoneyscout/users/${userId}/user_data/${docId}`
         );
 
         onSnapshot(
@@ -1115,6 +1105,13 @@ function updateProfileDisplay() {
             }
         );
     };
+window.requireLoginThenSelectFile = function (event) {
+    if (!auth.currentUser) {
+        openLoginModal();
+        return;
+    }
+    handleFileSelect(event);
+};
 
     // --- FILE HANDLING ---
 
@@ -1675,6 +1672,7 @@ function updateAuditButton() {
 </body>
 </html>
 <!-- force pages rebuild -->
+
 
 
 

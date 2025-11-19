@@ -984,6 +984,40 @@ window.logoutUser = async function () {
             return false;
         }
     }
+function updateProfileDisplay() {
+    try {
+        // These DOM elements control your UI display
+        const auditsUsedEl = document.getElementById("audits-used");
+        const auditsRemainingEl = document.getElementById("audits-remaining");
+        const usageBarEl = document.getElementById("usage-bar");
+        const subscriptionStatusEl = document.getElementById("subscription-status");
+
+        // Make sure Firestore-loaded globals exist
+        const used = auditsUsed || 0;
+        const remaining = AUDIT_LIMIT - used;
+        const isPro = isPremium || false;
+
+        // Update numbers
+        if (auditsUsedEl) auditsUsedEl.textContent = used;
+        if (auditsRemainingEl) auditsRemainingEl.textContent = remaining;
+
+        // Update bar
+        if (usageBarEl) {
+            const pct = isPro ? 100 : Math.min((used / AUDIT_LIMIT) * 100, 100);
+            usageBarEl.style.width = pct + "%";
+        }
+
+        // Update plan label
+        if (subscriptionStatusEl) {
+            subscriptionStatusEl.textContent = isPro
+                ? "PRO Hunter (Unlimited)"
+                : "Trial User";
+        }
+
+    } catch (err) {
+        console.error("updateProfileDisplay failed:", err);
+    }
+}
 
     // --- RENDERING FUNCTIONS ---
 
@@ -1620,6 +1654,7 @@ function updateAuditButton() {
 </body>
 </html>
 <!-- force pages rebuild -->
+
 
 
 

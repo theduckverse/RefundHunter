@@ -803,20 +803,6 @@ window.logoutUser = async function () {
     }
 };
 
-// --- NAVBAR LOGIN/LOGOUT TOGGLING ---
-onAuthStateChanged(auth, (user) => {
-    const loginBtn = document.getElementById("nav-login-btn");
-    const logoutBtn = document.getElementById("nav-logout-btn");
-
-    if (user) {
-        loginBtn.classList.add("hidden");
-        logoutBtn.classList.remove("hidden");
-    } else {
-        loginBtn.classList.remove("hidden");
-        logoutBtn.classList.add("hidden");
-    }
-});
-
     // --- FIREBASE INITIALIZATION AND AUTHENTICATION ---
     function initFirebase() {
         try {
@@ -1547,6 +1533,7 @@ function updateAuditButton() {
 </body>
 </html>
 <!-- force pages rebuild -->
+
 
 
 

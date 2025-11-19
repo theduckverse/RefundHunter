@@ -763,10 +763,13 @@ const firebaseConfig = {
   appId: "1:1072177597124:web:bee84507aa63dd827f9791"
 };
 
-// Initialize Firebase
-const app = initializeApp(firebaseConfig);
-    const initialAuthToken =
-        typeof __initial_auth_token !== "undefined" ? __initial_auth_token : null;
+// ------------------------------
+// FIREBASE INITIALIZATION
+// ------------------------------
+const firebaseApp = initializeApp(firebaseConfig);
+auth = getAuth(firebaseApp);
+db = getFirestore(firebaseApp);
+
 // --- AUTH MODALS ---
 window.openLoginModal = function () {
     document.getElementById("auth-overlay").classList.remove("hidden");
@@ -953,37 +956,54 @@ window.logoutUser = async function () {
         }
     }
 
-    // Increment the audit counter in a transaction
-    async function incrementAuditCounter() {
-        if (!db || !userId) return false;
+    // ------------------------------
+// PREMIUM-AWARE AUDIT COUNTER
+// ------------------------------
+async function incrementAuditCounter() {
+    if (!db || !userId) return false;
 
-        const limitsDocRef = doc(db, `artifacts/${appId}/users/${userId}/user_data/limits`);
+    const limitsDocRef = doc(db, `artifacts/${appId}/users/${userId}/user_data/limits`);
 
-        try {
-            await runTransaction(db, async (transaction) => {
-                const docSnap = await transaction.get(limitsDocRef);
-                if (!docSnap.exists()) {
-                    transaction.set(limitsDocRef, { auditsUsed: 1, isPremium: false });
-                    auditsUsed = 1;
-                } else {
-                    if (!docSnap.data().isPremium) {
-                        const newCount = (docSnap.data().auditsUsed || 0) + 1;
-                        transaction.update(limitsDocRef, { auditsUsed: newCount });
-                        auditsUsed = newCount;
-                    }
-                }
-            });
+    try {
+        await runTransaction(db, async (transaction) => {
+            const docSnap = await transaction.get(limitsDocRef);
 
-            updateAuditButton();
-            updateProfileDisplay();
-            return true;
-        } catch (error) {
-            console.error("Transaction failed (incrementAuditCounter):", error);
-            document.getElementById("status-message").textContent =
-                "Fatal Error: Failed to track usage.";
-            return false;
-        }
+            // If user has NO limits doc yet → create one
+            if (!docSnap.exists()) {
+                transaction.set(limitsDocRef, {
+                    auditsUsed: 1,
+                    isPremium: false
+                });
+                auditsUsed = 1;
+                return;
+            }
+
+            const data = docSnap.data();
+
+            // ⭐ PREMIUM OVERRIDE — unlimited audits
+            if (data.isPremium === true) {
+                auditsUsed = 0; // always show full access
+                return; // DO NOT increase audit count
+            }
+
+            // NOT PREMIUM → increment
+            const newCount = (data.auditsUsed || 0) + 1;
+            transaction.update(limitsDocRef, { auditsUsed: newCount });
+            auditsUsed = newCount;
+        });
+
+        updateAuditButton();
+        updateProfileDisplay();
+        return true;
+
+    } catch (error) {
+        console.error("Transaction failed (incrementAuditCounter):", error);
+        document.getElementById("status-message").textContent =
+            "Fatal Error: Failed to track usage.";
+        return false;
     }
+}
+
 function updateProfileDisplay() {
     try {
         // These DOM elements control your UI display
@@ -1654,6 +1674,7 @@ function updateAuditButton() {
 </body>
 </html>
 <!-- force pages rebuild -->
+
 
 
 

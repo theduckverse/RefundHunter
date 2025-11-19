@@ -749,15 +749,23 @@ let currentClaimMessages = []; // 👈 NEW
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
+// Import the functions you need from the SDKs you need
+import { initializeApp } from "firebase/app";
+// TODO: Add SDKs for Firebase products that you want to use
+// https://firebase.google.com/docs/web/setup#available-libraries
+
 // Your web app's Firebase configuration
 const firebaseConfig = {
-  apiKey: "AIzaSyDp0fml-Hnhf-_CdHPNQ7DgPY-mIrzaxGY",
-  authDomain: "refundhunter-1cfc8.firebaseapp.com",
-  projectId: "refundhunter-1cfc8",
-  storageBucket: "refundhunter-1cfc8.firebasestorage.app",
-  messagingSenderId: "46690732306",
-  appId: "1:46690732306:web:adc5943bf2cda1611b0bcb"
+  apiKey: "AIzaSyAwPijZtG54zmRN_vfdFwF_aURZiYJR58s",
+  authDomain: "fbamoneyscout.firebaseapp.com",
+  projectId: "fbamoneyscout",
+  storageBucket: "fbamoneyscout.firebasestorage.app",
+  messagingSenderId: "1072177597124",
+  appId: "1:1072177597124:web:bee84507aa63dd827f9791"
 };
+
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
@@ -1621,6 +1629,7 @@ function updateAuditButton() {
 </body>
 </html>
 <!-- force pages rebuild -->
+
 
 
 

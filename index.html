@@ -877,40 +877,6 @@ window.updateUsageDisplay = function () {
             alert("Firebase failed to initialize. Check your configuration.");
         }
     }
-// --- USER DATA & HISTORY LOADER ---
-async function loadUserDataAndHistory() {
-    // 1. Set up the Real-time Listener for Audit Limits
-    const limitsDocRef = doc(db, 'artifacts/fbamoneyscout/users', userId, 'user_data', 'limits');
-    
-    // Use onSnapshot to listen for changes to the user's audit limits document
-    onSnapshot(limitsDocRef, (docSnap) => {
-        if (docSnap.exists()) {
-            const data = docSnap.data();
-            auditsUsed = data.auditsUsed || 0;
-            isPremium = data.isPremium || false;
-        } else {
-            // Document does not exist (first time user). Set defaults.
-            auditsUsed = 0;
-            isPremium = false;
-            // Optionally, create the document right away
-            setDoc(limitsDocRef, { auditsUsed: 0, isPremium: false }, { merge: true });
-        }
-        
-        // Call the function to update the HTML display with the latest data
-        updateUsageDisplay(); 
-        
-    }, (error) => {
-        console.error("Error listening to limits: ", error);
-        // Default to max usage on error to be safe
-        auditsUsed = AUDIT_LIMIT; 
-        updateUsageDisplay(); 
-    });
-
-    // 2. Fetch Audit History (The rest of your original logic goes here, 
-    //    e.g., fetchAuditHistory() if you have that function defined)
-    // fetchAuditHistory(); // Assuming you have this elsewhere
-}
-// -----------------------------
     function loadUserDataAndHistory() {
         if (!db || !userId) return;
         console.log("Loading user data and history for user:", userId);
@@ -1620,6 +1586,7 @@ async function loadUserDataAndHistory() {
 </script>
 </body>
 </html>
+
 
 
 

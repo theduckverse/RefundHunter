@@ -849,54 +849,6 @@ window.updateUsageDisplay = function () {
             alert("Logout failed: " + err.message);
         }
     };
-// --- USAGE DISPLAY HANDLER ---
-window.updateUsageDisplay = function () {
-    const auditsUsedElement = document.getElementById('audits-used');
-    const auditsRemainingElement = document.getElementById('audits-remaining');
-    const usageBar = document.getElementById('usage-bar');
-    const freeUsesDisplay = document.getElementById('free-uses-display');
-    const subscriptionStatusElement = document.getElementById('subscription-status');
-    const auditButton = document.getElementById('audit-button');
-    
-    // 1. Calculate remaining and percentage
-    const remaining = Math.max(0, AUDIT_LIMIT - auditsUsed);
-    const percentage = (auditsUsed / AUDIT_LIMIT) * 100;
-    const isOverLimit = auditsUsed >= AUDIT_LIMIT && !isPremium;
-
-    // 2. Update Subscription Status text
-    if (subscriptionStatusElement) {
-        subscriptionStatusElement.textContent = isPremium ? 'Pro Hunter (Unlimited)' : 'Trial User';
-    }
-
-    // 3. Update text fields
-    if (auditsUsedElement) {
-        auditsUsedElement.textContent = auditsUsed;
-    }
-    if (auditsRemainingElement) {
-        auditsRemainingElement.textContent = remaining;
-    }
-
-    if (freeUsesDisplay) {
-        if (isPremium) {
-             freeUsesDisplay.textContent = "You have Unlimited Audits!";
-        } else if (isOverLimit) {
-            freeUsesDisplay.textContent = `You have used all ${AUDIT_LIMIT} free audits. Please upgrade for more!`;
-        } else {
-            freeUsesDisplay.textContent = `Your first ${remaining} audits are free.`;
-        }
-    }
-
-    // 4. Update Progress Bar
-    if (usageBar) {
-        usageBar.style.width = `${Math.min(100, percentage)}%`;
-    }
-    
-    // 5. Update Audit Button state
-    if (auditButton) {
-        auditButton.disabled = isOverLimit;
-        auditButton.textContent = isOverLimit ? 'Upgrade to Audit' : 'Audit Report';
-    }
-}
     function initFirebase() {
         try {
             console.log("Firebase Init: App ID =", appId);
@@ -1667,6 +1619,7 @@ async function loadUserDataAndHistory() {
 </script>
 </body>
 </html>
+
 
 
 

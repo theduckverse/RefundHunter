@@ -722,6 +722,55 @@ window.closeModalOnOutsideClick = function(event) {
         event.target.classList.add('hidden');
     }
 }
+ // --- USAGE DISPLAY HANDLER ---
+window.updateUsageDisplay = function () {
+    const auditsUsedElement = document.getElementById('audits-used');
+    const auditsRemainingElement = document.getElementById('audits-remaining');
+    const usageBar = document.getElementById('usage-bar');
+    const freeUsesDisplay = document.getElementById('free-uses-display');
+    const subscriptionStatusElement = document.getElementById('subscription-status');
+    const auditButton = document.getElementById('audit-button');
+    
+    // 1. Calculate remaining and percentage
+    const remaining = Math.max(0, AUDIT_LIMIT - auditsUsed);
+    const percentage = (auditsUsed / AUDIT_LIMIT) * 100;
+    const isOverLimit = auditsUsed >= AUDIT_LIMIT && !isPremium;
+
+    // 2. Update Subscription Status text
+    if (subscriptionStatusElement) {
+        subscriptionStatusElement.textContent = isPremium ? 'Pro Hunter (Unlimited)' : 'Trial User';
+    }
+
+    // 3. Update text fields (e.g., "3 / 5" used)
+    if (auditsUsedElement) {
+        auditsUsedElement.textContent = auditsUsed;
+    }
+    if (auditsRemainingElement) {
+        auditsRemainingElement.textContent = remaining;
+    }
+
+    if (freeUsesDisplay) {
+        if (isPremium) {
+             freeUsesDisplay.textContent = "You have Unlimited Audits!";
+        } else if (isOverLimit) {
+            freeUsesDisplay.textContent = `You have used all ${AUDIT_LIMIT} free audits. Please upgrade for more!`;
+        } else {
+            freeUsesDisplay.textContent = `Your first ${remaining} audits are free.`;
+        }
+    }
+
+    // 4. Update Progress Bar
+    if (usageBar) {
+        // Sets the width of the blue bar based on usage
+        usageBar.style.width = `${Math.min(100, percentage)}%`; 
+    }
+    
+    // 5. Update Audit Button state (Disable if they are out of audits)
+    if (auditButton) {
+        auditButton.disabled = isOverLimit;
+        auditButton.textContent = isOverLimit ? 'Upgrade to Audit' : 'Audit Report';
+    }
+}   
 // ----------------------------
     const API_BASE_URL = "https://refundhunter-backend.onrender.com";
     const appId = typeof __app_id !== "undefined" ? __app_id : "default-app-id";
@@ -877,6 +926,38 @@ window.updateUsageDisplay = function () {
             alert("Firebase failed to initialize. Check your configuration.");
         }
     }
+    // --- USER DATA & HISTORY LOADER ---
+// This function runs once the user is confirmed logged in.
+async function loadUserDataAndHistory() {
+    // 1. Set up the Real-time Listener for Audit Limits
+    const limitsDocRef = doc(db, 'artifacts/fbamoneyscout/users', userId, 'user_data', 'limits');
+    
+    // onSnapshot is the "listener" that watches the database in real-time.
+    onSnapshot(limitsDocRef, (docSnap) => {
+        if (docSnap.exists()) {
+            const data = docSnap.data();
+            // Update the global variables with the latest numbers from the database
+            auditsUsed = data.auditsUsed || 0;
+            isPremium = data.isPremium || false;
+        } else {
+            // First time user, set defaults
+            auditsUsed = 0;
+            isPremium = false;
+        }
+        
+        // **CRITICAL STEP:** Call the display function to show the new numbers
+        updateUsageDisplay(); 
+        
+    }, (error) => {
+        console.error("Error listening to limits: ", error);
+        // Fallback on error
+        auditsUsed = AUDIT_LIMIT; 
+        updateUsageDisplay(); 
+    });
+
+    // 2. You can keep any existing code here, like fetching history.
+    // fetchAuditHistory(); 
+}
     function loadUserDataAndHistory() {
         if (!db || !userId) return;
         console.log("Loading user data and history for user:", userId);
@@ -1586,6 +1667,7 @@ window.updateUsageDisplay = function () {
 </script>
 </body>
 </html>
+
 
 
 

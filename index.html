@@ -665,7 +665,8 @@
         getAuth,
         onAuthStateChanged,
         signInWithEmailAndPassword,
-        createUserWithEmailAndPassword
+        createUserWithEmailAndPassword,
+        signOut
     } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
     import {
         getFirestore,
@@ -685,111 +686,36 @@
     let auditsUsed = 0;
     let isPremium = false;
     let isAuthReady = false;
+
     let uploadedFileContent = null;
     let selectedFileName = "";
     let currentClaimsData = [];
     let currentTotalValue = 0;
     let currentClaimMessages = [];
-// --- AUTH MODAL HANDLERS ---
-window.openLoginModal = function() {
-    document.getElementById('auth-overlay').classList.remove('hidden');
-    document.getElementById('login-modal').classList.remove('hidden');
-    document.getElementById('signup-modal').classList.add('hidden');
-    // Clear file selection if login is required
-    document.getElementById('csv-file').value = null; 
-}
+    let lastClaimsData = null;
 
-window.closeAuthModals = function() {
-    document.getElementById('auth-overlay').classList.add('hidden');
-    document.getElementById('login-modal').classList.add('hidden');
-    document.getElementById('signup-modal').classList.add('hidden');
-}
-
-// You also need to define the modal switching functions used inside the modals
-window.switchToSignup = function() {
-    document.getElementById('login-modal').classList.add('hidden');
-    document.getElementById('signup-modal').classList.remove('hidden');
-}
-
-window.switchToLogin = function() {
-    document.getElementById('signup-modal').classList.add('hidden');
-    document.getElementById('login-modal').classList.remove('hidden');
-}
-
-// Function to close any modal if the user clicks the dark background
-window.closeModalOnOutsideClick = function(event) {
-    if (event.target.id === 'auth-overlay' || event.target.id === 'upgrade-modal' || event.target.id === 'claim-filing-modal') {
-        event.target.classList.add('hidden');
-    }
-}
- // --- USAGE DISPLAY HANDLER ---
-window.updateUsageDisplay = function () {
-    const auditsUsedElement = document.getElementById('audits-used');
-    const auditsRemainingElement = document.getElementById('audits-remaining');
-    const usageBar = document.getElementById('usage-bar');
-    const freeUsesDisplay = document.getElementById('free-uses-display');
-    const subscriptionStatusElement = document.getElementById('subscription-status');
-    const auditButton = document.getElementById('audit-button');
-    
-    // 1. Calculate remaining and percentage
-    const remaining = Math.max(0, AUDIT_LIMIT - auditsUsed);
-    const percentage = (auditsUsed / AUDIT_LIMIT) * 100;
-    const isOverLimit = auditsUsed >= AUDIT_LIMIT && !isPremium;
-
-    // 2. Update Subscription Status text
-    if (subscriptionStatusElement) {
-        subscriptionStatusElement.textContent = isPremium ? 'Pro Hunter (Unlimited)' : 'Trial User';
-    }
-
-    // 3. Update text fields (e.g., "3 / 5" used)
-    if (auditsUsedElement) {
-        auditsUsedElement.textContent = auditsUsed;
-    }
-    if (auditsRemainingElement) {
-        auditsRemainingElement.textContent = remaining;
-    }
-
-    if (freeUsesDisplay) {
-        if (isPremium) {
-             freeUsesDisplay.textContent = "You have Unlimited Audits!";
-        } else if (isOverLimit) {
-            freeUsesDisplay.textContent = `You have used all ${AUDIT_LIMIT} free audits. Please upgrade for more!`;
-        } else {
-            freeUsesDisplay.textContent = `Your first ${remaining} audits are free.`;
-        }
-    }
-
-    // 4. Update Progress Bar
-    if (usageBar) {
-        // Sets the width of the blue bar based on usage
-        usageBar.style.width = `${Math.min(100, percentage)}%`; 
-    }
-    
-    // 5. Update Audit Button state (Disable if they are out of audits)
-    if (auditButton) {
-        auditButton.disabled = isOverLimit;
-        auditButton.textContent = isOverLimit ? 'Upgrade to Audit' : 'Audit Report';
-    }
-}   
-// ----------------------------
     const API_BASE_URL = "https://refundhunter-backend.onrender.com";
     const appId = typeof __app_id !== "undefined" ? __app_id : "default-app-id";
 
     const firebaseConfig = {
-      apiKey: "AIzaSyAwPijZtG54zmRN_vfdFwF_aURZiYJR58s",
-      authDomain: "fbamoneyscout.firebaseapp.com",
-      projectId: "fbamoneyscout-e0487",
-      storageBucket: "fbamoneyscout.firebasestorage.app",
-      messagingSenderId: "1072177597124",
-      appId: "1:1072177597124:web:bee84507aa63dd827f9791"
+        apiKey: "AIzaSyAwPijZtG54zmRN_vfdFwF_aURZiYJR58s",
+        authDomain: "fbamoneyscout.firebaseapp.com",
+        projectId: "fbamoneyscout-e0487",
+        storageBucket: "fbamoneyscout.firebasestorage.app",
+        messagingSenderId: "1072177597124",
+        appId: "1:1072177597124:web:bee84507aa63dd827f9791"
     };
 
-    // ✅ Proper Firebase initialization
+    // ============================
+    //  FIREBASE INIT
+    // ============================
     const firebaseApp = initializeApp(firebaseConfig);
     auth = getAuth(firebaseApp);
     db = getFirestore(firebaseApp);
 
-    // --- AUTH MODALS ---
+    // ============================
+    //  AUTH MODAL HANDLERS (GLOBAL)
+    // ============================
     window.openLoginModal = function () {
         document.getElementById("auth-overlay").classList.remove("hidden");
         document.getElementById("login-modal").classList.remove("hidden");
@@ -818,6 +744,17 @@ window.updateUsageDisplay = function () {
         document.getElementById("signup-modal").classList.add("hidden");
     };
 
+    // Close any modal when clicking the dark backdrop
+    window.closeModalOnOutsideClick = function (event) {
+        const id = event.target.id;
+        if (id === "auth-overlay" || id === "upgrade-modal" || id === "claim-filing-modal") {
+            document.getElementById(id).classList.add("hidden");
+        }
+    };
+
+    // ============================
+    //  AUTH ACTIONS
+    // ============================
     window.loginUser = async function () {
         const email = document.getElementById("login-email").value.trim();
         const password = document.getElementById("login-password").value.trim();
@@ -844,59 +781,12 @@ window.updateUsageDisplay = function () {
 
     window.logoutUser = async function () {
         try {
-            await auth.signOut();
+            await signOut(auth);
         } catch (err) {
             alert("Logout failed: " + err.message);
         }
     };
-// --- USAGE DISPLAY HANDLER ---
-window.updateUsageDisplay = function () {
-    const auditsUsedElement = document.getElementById('audits-used');
-    const auditsRemainingElement = document.getElementById('audits-remaining');
-    const usageBar = document.getElementById('usage-bar');
-    const freeUsesDisplay = document.getElementById('free-uses-display');
-    const subscriptionStatusElement = document.getElementById('subscription-status');
-    const auditButton = document.getElementById('audit-button');
-    
-    // 1. Calculate remaining and percentage
-    const remaining = Math.max(0, AUDIT_LIMIT - auditsUsed);
-    const percentage = (auditsUsed / AUDIT_LIMIT) * 100;
-    const isOverLimit = auditsUsed >= AUDIT_LIMIT && !isPremium;
 
-    // 2. Update Subscription Status text
-    if (subscriptionStatusElement) {
-        subscriptionStatusElement.textContent = isPremium ? 'Pro Hunter (Unlimited)' : 'Trial User';
-    }
-
-    // 3. Update text fields
-    if (auditsUsedElement) {
-        auditsUsedElement.textContent = auditsUsed;
-    }
-    if (auditsRemainingElement) {
-        auditsRemainingElement.textContent = remaining;
-    }
-
-    if (freeUsesDisplay) {
-        if (isPremium) {
-             freeUsesDisplay.textContent = "You have Unlimited Audits!";
-        } else if (isOverLimit) {
-            freeUsesDisplay.textContent = `You have used all ${AUDIT_LIMIT} free audits. Please upgrade for more!`;
-        } else {
-            freeUsesDisplay.textContent = `Your first ${remaining} audits are free.`;
-        }
-    }
-
-    // 4. Update Progress Bar
-    if (usageBar) {
-        usageBar.style.width = `${Math.min(100, percentage)}%`;
-    }
-    
-    // 5. Update Audit Button state
-    if (auditButton) {
-        auditButton.disabled = isOverLimit;
-        auditButton.textContent = isOverLimit ? 'Upgrade to Audit' : 'Audit Report';
-    }
-}
     function initFirebase() {
         try {
             console.log("Firebase Init: App ID =", appId);
@@ -919,6 +809,7 @@ window.updateUsageDisplay = function () {
                     userId = null;
                     loginBtn.classList.remove("hidden");
                     logoutBtn.classList.add("hidden");
+                    updateAuditButton(); // disable audit if logged out
                 }
             });
         } catch (e) {
@@ -926,43 +817,41 @@ window.updateUsageDisplay = function () {
             alert("Firebase failed to initialize. Check your configuration.");
         }
     }
-    // --- USER DATA & HISTORY LOADER ---
-// This function runs once the user is confirmed logged in.
-async function loadUserDataAndHistory() {
-    // 1. Set up the Real-time Listener for Audit Limits
-    const limitsDocRef = doc(db, 'artifacts/fbamoneyscout/users', userId, 'user_data', 'limits');
-    
-    // onSnapshot is the "listener" that watches the database in real-time.
-    onSnapshot(limitsDocRef, (docSnap) => {
-        if (docSnap.exists()) {
-            const data = docSnap.data();
-            // Update the global variables with the latest numbers from the database
-            auditsUsed = data.auditsUsed || 0;
-            isPremium = data.isPremium || false;
-        } else {
-            // First time user, set defaults
-            auditsUsed = 0;
-            isPremium = false;
-        }
-        
-        // **CRITICAL STEP:** Call the display function to show the new numbers
-        updateUsageDisplay(); 
-        
-    }, (error) => {
-        console.error("Error listening to limits: ", error);
-        // Fallback on error
-        auditsUsed = AUDIT_LIMIT; 
-        updateUsageDisplay(); 
-    });
 
-    // 2. You can keep any existing code here, like fetching history.
-    // fetchAuditHistory(); 
-}
+    // ============================
+    //  USER DATA + HISTORY
+    // ============================
+    function getLimitsDocRef() {
+        // artifacts/fbamoneyscout/users/{uid}/user_data/limits
+        return doc(
+            db,
+            "artifacts",
+            "fbamoneyscout",
+            "users",
+            userId,
+            "user_data",
+            "limits"
+        );
+    }
+
+    function getHistoryCollectionRef() {
+        // artifacts/fbamoneyscout/users/{uid}/user_data/audit_history
+        return collection(
+            db,
+            "artifacts",
+            "fbamoneyscout",
+            "users",
+            userId,
+            "user_data",
+            "audit_history"
+        );
+    }
+
     function loadUserDataAndHistory() {
         if (!db || !userId) return;
         console.log("Loading user data and history for user:", userId);
 
-        const limitsDocRef = doc(db, `artifacts/fbamoneyscout/users/${userId}/user_data/limits`);
+        const limitsDocRef = getLimitsDocRef();
 
         onSnapshot(
             limitsDocRef,
@@ -990,10 +879,7 @@ async function loadUserDataAndHistory() {
             }
         );
 
-        const historyCollectionRef = collection(
-            db,
-            `artifacts/fbamoneyscout/users/${userId}/user_data/audit_history`
-        );
+        const historyCollectionRef = getHistoryCollectionRef();
         const historyQuery = query(historyCollectionRef, orderBy("createdAt", "desc"));
 
         onSnapshot(
@@ -1014,10 +900,7 @@ async function loadUserDataAndHistory() {
         if (!db || !userId) return;
 
         try {
-            const historyCollectionRef = collection(
-                db,
-                `artifacts/fbamoneyscout/users/${userId}/user_data/audit_history`
-            );
+            const historyCollectionRef = getHistoryCollectionRef();
 
             await setDoc(doc(historyCollectionRef), {
                 fileName: fileName,
@@ -1038,7 +921,7 @@ async function loadUserDataAndHistory() {
     async function incrementAuditCounter() {
         if (!db || !userId) return false;
 
-        const limitsDocRef = doc(db, `artifacts/fbamoneyscout/users/${userId}/user_data/limits`);
+        const limitsDocRef = getLimitsDocRef();
 
         try {
             await runTransaction(db, async (transaction) => {
@@ -1056,7 +939,8 @@ async function loadUserDataAndHistory() {
                 const data = docSnap.data();
 
                 if (data.isPremium === true) {
-                    auditsUsed = 0;
+                    auditsUsed = data.auditsUsed || 0;
+                    isPremium = true;
                     return;
                 }
 
@@ -1068,7 +952,6 @@ async function loadUserDataAndHistory() {
             updateAuditButton();
             updateProfileDisplay();
             return true;
-
         } catch (error) {
             console.error("Transaction failed (incrementAuditCounter):", error);
             document.getElementById("status-message").textContent =
@@ -1085,8 +968,8 @@ async function loadUserDataAndHistory() {
             const subscriptionStatusEl = document.getElementById("subscription-status");
 
             const used = auditsUsed || 0;
-            const remaining = AUDIT_LIMIT - used;
-            const isPro = isPremium || false;
+            const remaining = Math.max(AUDIT_LIMIT - used, 0);
+            const isPro = !!isPremium;
 
             if (auditsUsedEl) auditsUsedEl.textContent = used;
             if (auditsRemainingEl) auditsRemainingEl.textContent = remaining;
@@ -1101,7 +984,6 @@ async function loadUserDataAndHistory() {
                     ? "PRO Hunter (Unlimited)"
                     : "Trial User";
             }
-
         } catch (err) {
             console.error("updateProfileDisplay failed:", err);
         }
@@ -1156,7 +1038,13 @@ async function loadUserDataAndHistory() {
     window.viewHistoryItem = function (docId) {
         const docRef = doc(
             db,
-            `artifacts/fbamoneyscout/users/${userId}/user_data/audit_history/${docId}`
+            "artifacts",
+            "fbamoneyscout",
+            "users",
+            userId,
+            "user_data",
+            "audit_history",
+            docId
         );
 
         onSnapshot(
@@ -1169,7 +1057,7 @@ async function loadUserDataAndHistory() {
                     currentClaimsData = claims;
                     currentTotalValue = data.totalEstimatedValue || 0;
 
-                    displayClaims(claims, data.totalEstimatedValue || 0, data.fileName);
+                    displayClaims(claims, currentTotalValue, data.fileName || "Audit Report");
                 }
             },
             (error) => {
@@ -1180,16 +1068,22 @@ async function loadUserDataAndHistory() {
         );
     };
 
-    // 🔒 Require login before file select
+    // ============================
+    //  FILE UPLOAD (LOGIN-GATED)
+    // ============================
+    // Require login before letting user pick a file
     window.requireLoginThenSelectFile = function (event) {
         if (!auth.currentUser) {
+            // reset the input so same file can be re-selected after login
+            event.target.value = null;
             openLoginModal();
             return;
         }
         handleFileSelect(event);
     };
 
-    window.handleFileSelect = function (event) {
+    // STREAMING FILE READER (better for big CSVs)
+    window.handleFileSelect = async function (event) {
         console.log("File select triggered");
 
         const file = event.target.files[0];
@@ -1216,33 +1110,59 @@ async function loadUserDataAndHistory() {
         fileNameDisplay.textContent = `File Selected: ${selectedFileName}`;
         fileNameDisplay.classList.remove("text-red-500");
 
-        const reader = new FileReader();
+        try {
+            uploadedFileContent = "";
 
-        reader.onload = (e) => {
-            uploadedFileContent = e.target.result;
+            const decoder = new TextDecoder("utf-8");
+            const reader = file.stream().getReader();
+
+            while (true) {
+                const { value, done } = await reader.read();
+                if (done) break;
+                uploadedFileContent += decoder.decode(value, { stream: true });
+            }
+
+            // finalize decoding
+            uploadedFileContent += decoder.decode();
             updateAuditButton();
-        };
-
-        reader.onerror = (e) => {
-            console.error("FileReader error", e);
+        } catch (e) {
+            console.error("File streaming error", e);
             uploadedFileContent = null;
             fileNameDisplay.textContent = "Error reading file.";
             fileNameDisplay.classList.add("text-red-500");
             updateAuditButton();
-        };
-
-        reader.readAsText(file);
+        }
     };
 
+    // ============================
+    //  AUDIT BUTTON / STATE
+    // ============================
     function updateAuditButton() {
         const auditButton = document.getElementById("audit-button");
         const freeUsesDisplay = document.getElementById("free-uses-display");
 
-        const used = auditsUsed;
-        const remaining = AUDIT_LIMIT - used;
+        if (!auditButton) return;
+
+        const used = auditsUsed || 0;
+        const remaining = Math.max(AUDIT_LIMIT - used, 0);
         const isFileReady = uploadedFileContent !== null;
+        const loggedIn = !!userId;
 
         auditButton.onclick = null;
+
+        // Not logged in
+        if (!loggedIn) {
+            auditButton.textContent = "Log in to run an audit";
+            auditButton.disabled = false;
+            auditButton.onclick = openLoginModal;
+            if (freeUsesDisplay) {
+                freeUsesDisplay.innerHTML = `
+                    Your first <strong>${AUDIT_LIMIT}</strong> audits are free.
+                    Log in to start using them.
+                `;
+            }
+            return;
+        }
 
         if (isPremium) {
             auditButton.textContent = "Run Audit (PRO Unlimited)";
@@ -1260,6 +1180,7 @@ async function loadUserDataAndHistory() {
             return;
         }
 
+        // Free tier
         if (remaining > 0) {
             auditButton.textContent = `Audit Report (${remaining}/${AUDIT_LIMIT} FREE Uses Remaining)`;
             auditButton.disabled = !isFileReady;
@@ -1278,6 +1199,7 @@ async function loadUserDataAndHistory() {
             return;
         }
 
+        // Free limit exceeded
         auditButton.textContent = "Audit Report (Upgrade Required)";
         auditButton.disabled = false;
         auditButton.onclick = () => showUpgradeModal("audit_monthly");
@@ -1318,7 +1240,7 @@ async function loadUserDataAndHistory() {
         document.getElementById("loading-indicator").classList.add("hidden");
         document.getElementById("upload-section").classList.remove("hidden");
 
-        displayClaims(currentClaimsData, currentTotalValue, selectedFileName);
+        displayClaims(currentClaimsData, currentTotalValue, selectedFileName || "Audit Report");
 
         uploadedFileContent = null;
         selectedFileName = "";
@@ -1331,14 +1253,9 @@ async function loadUserDataAndHistory() {
             "Audit Complete. Ready for next report.";
     }
 
-    window.closeModalOnOutsideClick = function (event) {
-        if (event.target.id === "upgrade-modal" || event.target.id === "claim-filing-modal" || event.target.id === "auth-overlay") {
-            document.getElementById("upgrade-modal").classList.add("hidden");
-            document.getElementById("claim-filing-modal").classList.add("hidden");
-            document.getElementById("auth-overlay").classList.add("hidden");
-        }
-    };
-
+    // ============================
+    //  UPGRADE / CLAIM MODALS
+    // ============================
     window.showUpgradeModal = function (productName) {
         const modal = document.getElementById("upgrade-modal");
         const title = document.getElementById("modal-title");
@@ -1460,6 +1377,9 @@ async function loadUserDataAndHistory() {
         }
     };
 
+    // ============================
+    //  BACKEND AUDIT CALL
+    // ============================
     async function processAudit(csvContent, fileName) {
         if (!isPremium && auditsUsed >= AUDIT_LIMIT) {
             showUpgradeModal("audit_monthly");
@@ -1499,7 +1419,7 @@ async function loadUserDataAndHistory() {
             await saveAuditResult(fileName, currentClaimsData, currentTotalValue);
         } catch (err) {
             console.error("BACKEND ERROR:", err);
-            alert("Error analyzing your report. Please try again.");
+            alert("Error analyzing your report. Please try again with a smaller date range if the file is very large.");
 
             currentClaimsData = [];
             currentTotalValue = 0;
@@ -1514,8 +1434,9 @@ async function loadUserDataAndHistory() {
         finishAuditDisplay();
     }
 
-    let lastClaimsData = null;
-
+    // ============================
+    //  CHART + CLAIM DISPLAY
+    // ============================
     function renderClaimChart(data, total) {
         const canvas = document.getElementById("claim-chart");
         const ctx = canvas.getContext("2d");
@@ -1667,6 +1588,7 @@ async function loadUserDataAndHistory() {
 </script>
 </body>
 </html>
+
 
 
 

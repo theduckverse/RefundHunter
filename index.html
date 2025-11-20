@@ -691,7 +691,39 @@
     let currentClaimsData = [];
     let currentTotalValue = 0;
     let currentClaimMessages = [];
+// --- AUTH MODAL HANDLERS ---
+window.openLoginModal = function() {
+    document.getElementById('auth-overlay').classList.remove('hidden');
+    document.getElementById('login-modal').classList.remove('hidden');
+    document.getElementById('signup-modal').classList.add('hidden');
+    // Clear file selection if login is required
+    document.getElementById('csv-file').value = null; 
+}
 
+window.closeAuthModals = function() {
+    document.getElementById('auth-overlay').classList.add('hidden');
+    document.getElementById('login-modal').classList.add('hidden');
+    document.getElementById('signup-modal').classList.add('hidden');
+}
+
+// You also need to define the modal switching functions used inside the modals
+window.switchToSignup = function() {
+    document.getElementById('login-modal').classList.add('hidden');
+    document.getElementById('signup-modal').classList.remove('hidden');
+}
+
+window.switchToLogin = function() {
+    document.getElementById('signup-modal').classList.add('hidden');
+    document.getElementById('login-modal').classList.remove('hidden');
+}
+
+// Function to close any modal if the user clicks the dark background
+window.closeModalOnOutsideClick = function(event) {
+    if (event.target.id === 'auth-overlay' || event.target.id === 'upgrade-modal' || event.target.id === 'claim-filing-modal') {
+        event.target.classList.add('hidden');
+    }
+}
+// ----------------------------
     const API_BASE_URL = "https://refundhunter-backend.onrender.com";
     const appId = typeof __app_id !== "undefined" ? __app_id : "default-app-id";
 
@@ -1509,3 +1541,4 @@
 </script>
 </body>
 </html>
+

@@ -131,6 +131,7 @@
         </div>
     </div>
 </nav>
+
 <!-- HERO SECTION -->
 <section class="w-full bg-white py-16 px-4 md:px-10 border-b border-gray-100">
   <div class="max-w-6xl mx-auto text-center">
@@ -302,7 +303,7 @@
         </div>
     </section>
 
-    <!-- PRICING SECTION -->
+        <!-- PRICING SECTION -->
     <section id="pricing" class="py-16 bg-white mt-10 w-full border-t border-gray-200">
         <div class="max-w-6xl mx-auto px-6 text-center">
             <h2 class="text-3xl font-bold mb-3 text-slate-900">
@@ -313,6 +314,7 @@
             </p>
 
             <div class="grid md:grid-cols-3 gap-8 max-w-4xl mx-auto">
+                <!-- Trial Plan -->
                 <div class="bg-gray-50 p-6 rounded-2xl border-2 border-gray-300 flex flex-col justify-between">
                     <div>
                         <p class="text-lg font-bold text-gray-700 mb-4">Trial Audit</p>
@@ -343,6 +345,7 @@
                     </button>
                 </div>
 
+                <!-- Single Audit Plan -->
                 <div class="bg-white p-6 rounded-2xl shadow-xl border-2 border-gray-300 flex flex-col justify-between hover:border-blue-400 transition">
                     <div>
                         <p class="text-lg font-bold text-slate-800 mb-4">Single Audit Boost</p>
@@ -365,17 +368,46 @@
                             </li>
                         </ul>
                     </div>
-                   <button
-    onclick="startPurchase('https://buy.stripe.com/28EbJ0bvZ0rF4BuaYS7EQ01')"
-    class="mt-8 w-full py-3 rounded-xl rh-secondary-btn font-bold">
-    Purchase Single Audit
-</button>
-                  <button
-    onclick="startPurchase('https://buy.stripe.com/bJe3cuarVa2f4Buc2W7EQ00')"
-    class="mt-8 w-full py-3 rounded-xl rh-primary-btn font-bold">
-    Upgrade to Monthly Unlimited
-</button>
 
+                    <button
+                        onclick="startPurchase('https://buy.stripe.com/28EbJ0bvZ0rF4BuaYS7EQ01')"
+                        class="mt-8 w-full py-3 rounded-xl rh-secondary-btn font-bold">
+                        Purchase Single Audit
+                    </button>
+                </div>
+
+                <!-- Pro Monthly Plan -->
+                <div class="relative bg-white p-6 rounded-2xl shadow-2xl border-4 border-[var(--rh-primary)] scale-[1.05] flex flex-col justify-between">
+                    <div class="absolute top-0 right-0 -mt-3 -mr-3 bg-red-500 text-white text-xs font-bold py-1 px-3 rounded-full uppercase shadow-md">
+                        Best Value
+                    </div>
+                    <div>
+                        <p class="text-lg font-bold text-slate-800 mb-4">Pro Hunter Monthly</p>
+                        <p class="text-5xl font-extrabold text-slate-900 mb-2">$199</p>
+                        <p class="text-sm font-medium text-slate-500 mb-6">
+                            Billed Monthly for serious sellers
+                        </p>
+                        <ul class="text-left space-y-3 text-sm text-slate-700">
+                            <li class="flex items-center">
+                                <span class="text-[var(--rh-success)] mr-2 font-bold text-lg">&check;</span>
+                                <strong>Unlimited</strong> Audits
+                            </li>
+                            <li class="flex items-center">
+                                <span class="text-[var(--rh-success)] mr-2 font-bold text-lg">&check;</span>
+                                JSON/CSV Claim Export (Mock)
+                            </li>
+                            <li class="flex items-center">
+                                <span class="text-[var(--rh-success)] mr-2 font-bold text-lg">&check;</span>
+                                Priority Support
+                            </li>
+                        </ul>
+                    </div>
+                    <button
+                        onclick="startPurchase('https://buy.stripe.com/bJe3cuarVa2f4Buc2W7EQ00')"
+                        class="mt-8 rh-primary-btn w-full text-white p-3 rounded-xl font-bold transition"
+                    >
+                        Go Pro: Start Unlimited
+                    </button>
                 </div>
             </div>
         </div>
@@ -551,1086 +583,1087 @@
         </div>
     </div>
 
-<!-- AUTH MODALS -->
-<div id="auth-overlay"
-     class="hidden fixed inset-0 bg-black/50 flex justify-center items-center z-50 p-4"
-     onclick="closeModalOnOutsideClick(event)">
-    
-    <div id="login-modal"
-         class="hidden bg-white p-8 rounded-2xl max-w-md w-full shadow-xl relative"
-         onclick="event.stopPropagation()">
+    <!-- AUTH MODALS -->
+    <div id="auth-overlay"
+         class="hidden fixed inset-0 bg-black/50 flex justify-center items-center z-50 p-4"
+         onclick="closeModalOnOutsideClick(event)">
+        
+        <div id="login-modal"
+             class="hidden bg-white p-8 rounded-2xl max-w-md w-full shadow-xl relative"
+             onclick="event.stopPropagation()">
 
-        <button
-            onclick="closeAuthModals()"
-            class="absolute top-4 right-4 text-gray-400 hover:text-gray-600">
-            ✕
-        </button>
+            <button
+                onclick="closeAuthModals()"
+                class="absolute top-4 right-4 text-gray-400 hover:text-gray-600">
+                ✕
+            </button>
 
-        <h2 class="text-2xl font-bold mb-2 text-[var(--rh-dark)]">Log In</h2>
-        <p class="text-sm text-gray-600 mb-6">Access your FBA Money Scout dashboard</p>
+            <h2 class="text-2xl font-bold mb-2 text-[var(--rh-dark)]">Log In</h2>
+            <p class="text-sm text-gray-600 mb-6">Access your FBA Money Scout dashboard</p>
 
-        <input id="login-email"
-               type="email"
-               placeholder="Email"
-               class="w-full mb-3 p-3 rounded-lg border border-gray-300 rh-focus">
+            <input id="login-email"
+                   type="email"
+                   placeholder="Email"
+                   class="w-full mb-3 p-3 rounded-lg border border-gray-300 rh-focus">
 
-        <input id="login-password"
-               type="password"
-               placeholder="Password"
-               class="w-full mb-4 p-3 rounded-lg border border-gray-300 rh-focus">
+            <input id="login-password"
+                   type="password"
+                   placeholder="Password"
+                   class="w-full mb-4 p-3 rounded-lg border border-gray-300 rh-focus">
 
-        <button onclick="loginUser()"
-                class="rh-primary-btn w-full py-3 text-white rounded-xl font-bold">
-            Log In
-        </button>
+            <button onclick="loginUser()"
+                    class="rh-primary-btn w-full py-3 text-white rounded-xl font-bold">
+                Log In
+            </button>
 
-        <p class="text-sm mt-4 text-center text-gray-500">
-            Need an account?
-            <span onclick="switchToSignup()"
-                class="text-[var(--rh-primary)] font-semibold cursor-pointer">
-                Create one
-            </span>
-        </p>
+            <p class="text-sm mt-4 text-center text-gray-500">
+                Need an account?
+                <span onclick="switchToSignup()"
+                    class="text-[var(--rh-primary)] font-semibold cursor-pointer">
+                    Create one
+                </span>
+            </p>
+        </div>
+
+        <div id="signup-modal"
+             class="hidden bg-white p-8 rounded-2xl max-w-md w-full shadow-xl relative"
+             onclick="event.stopPropagation()">
+
+            <button
+                onclick="closeAuthModals()"
+                class="absolute top-4 right-4 text-gray-400 hover:text-gray-600">
+                ✕
+            </button>
+
+            <h2 class="text-2xl font-bold mb-2 text-[var(--rh-dark)]">Create Account</h2>
+            <p class="text-sm text-gray-600 mb-6">Start tracking your reimbursements</p>
+
+            <input id="signup-email"
+                   type="email"
+                   placeholder="Email"
+                   class="w-full mb-3 p-3 rounded-lg border border-gray-300 rh-focus">
+
+            <input id="signup-password"
+                   type="password"
+                   placeholder="Password"
+                   class="w-full mb-4 p-3 rounded-lg border border-gray-300 rh-focus">
+
+            <button onclick="signupUser()"
+                    class="rh-primary-btn w-full py-3 text-white rounded-xl font-bold">
+                Create Account
+            </button>
+
+            <p class="text-sm mt-4 text-center text-gray-500">
+                Already have an account?
+                <span onclick="switchToLogin()"
+                    class="text-[var(--rh-primary)] font-semibold cursor-pointer">
+                    Log in
+                </span>
+            </p>
+        </div>
     </div>
 
-    <div id="signup-modal"
-         class="hidden bg-white p-8 rounded-2xl max-w-md w-full shadow-xl relative"
-         onclick="event.stopPropagation()">
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import {
+            getAuth,
+            onAuthStateChanged,
+            signInWithEmailAndPassword,
+            createUserWithEmailAndPassword,
+            signOut
+        } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import {
+            getFirestore,
+            doc,
+            setDoc,
+            onSnapshot,
+            collection,
+            query,
+            orderBy,
+            serverTimestamp
+        } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
-        <button
-            onclick="closeAuthModals()"
-            class="absolute top-4 right-4 text-gray-400 hover:text-gray-600">
-            ✕
-        </button>
+        // ============================
+        //  CONSTANTS & GLOBAL STATE
+        // ============================
+        const AUDIT_LIMIT = 5;
+        const LOCAL_USAGE_PREFIX = "fba_audits_used_";
 
-        <h2 class="text-2xl font-bold mb-2 text-[var(--rh-dark)]">Create Account</h2>
-        <p class="text-sm text-gray-600 mb-6">Start tracking your reimbursements</p>
+        let db, auth;
+        let userId = null;
+        let auditsUsed = 0;
+        let isPremium = false;
+        let isAuthReady = false;
 
-        <input id="signup-email"
-               type="email"
-               placeholder="Email"
-               class="w-full mb-3 p-3 rounded-lg border border-gray-300 rh-focus">
+        let uploadedFileContent = null;
+        let selectedFileName = "";
+        let currentClaimsData = [];
+        let currentTotalValue = 0;
+        let currentClaimMessages = [];
+        let lastClaimsData = null;
 
-        <input id="signup-password"
-               type="password"
-               placeholder="Password"
-               class="w-full mb-4 p-3 rounded-lg border border-gray-300 rh-focus">
+        const API_BASE_URL = "https://refundhunter-backend.onrender.com";
+        const appId = typeof __app_id !== "undefined" ? __app_id : "default-app-id";
 
-        <button onclick="signupUser()"
-                class="rh-primary-btn w-full py-3 text-white rounded-xl font-bold">
-            Create Account
-        </button>
+        const firebaseConfig = {
+            apiKey: "AIzaSyAwPijZtG54zmRN_vfdFwF_aURZiYJR58s",
+            authDomain: "fbamoneyscout.firebaseapp.com",
+            projectId: "fbamoneyscout-e0487",
+            storageBucket: "fbamoneyscout.firebasestorage.app",
+            messagingSenderId: "1072177597124",
+            appId: "1:1072177597124:web:bee84507aa63dd827f9791"
+        };
 
-        <p class="text-sm mt-4 text-center text-gray-500">
-            Already have an account?
-            <span onclick="switchToLogin()"
-                class="text-[var(--rh-primary)] font-semibold cursor-pointer">
-                Log in
-            </span>
-        </p>
-    </div>
-</div>
-
-<script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
-    import {
-        getAuth,
-        onAuthStateChanged,
-        signInWithEmailAndPassword,
-        createUserWithEmailAndPassword,
-        signOut
-    } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-    import {
-        getFirestore,
-        doc,
-        setDoc,
-        onSnapshot,
-        collection,
-        query,
-        orderBy,
-        serverTimestamp
-    } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
-// -------------------------
-// STRIPE PURCHASE HANDLER
-// -------------------------
-function startPurchase(stripeLink) {
-    if (!auth.currentUser) {
-        alert("Please log in first to upgrade.");
-        return;
-    }
-
-    const uid = auth.currentUser.uid;
-
-    // Attach Firebase UID → Stripe → Webhook → Firestore upgrade
-    const checkoutUrl = `${stripeLink}?client_reference_id=${uid}`;
-
-    console.log("Redirecting to Stripe checkout:", checkoutUrl);
-    window.location.href = checkoutUrl;
-}
-    // ============================
-    //  CONSTANTS & GLOBAL STATE
-    // ============================
-    const AUDIT_LIMIT = 5;
-    const LOCAL_USAGE_PREFIX = "fba_audits_used_";
-
-    let db, auth;
-    let userId = null;
-    let auditsUsed = 0;
-    let isPremium = false;
-    let isAuthReady = false;
-
-    let uploadedFileContent = null;
-    let selectedFileName = "";
-    let currentClaimsData = [];
-    let currentTotalValue = 0;
-    let currentClaimMessages = [];
-    let lastClaimsData = null;
-
-    const API_BASE_URL = "https://refundhunter-backend.onrender.com";
-    const appId = typeof __app_id !== "undefined" ? __app_id : "default-app-id";
-
-    const firebaseConfig = {
-        apiKey: "AIzaSyAwPijZtG54zmRN_vfdFwF_aURZiYJR58s",
-        authDomain: "fbamoneyscout.firebaseapp.com",
-        projectId: "fbamoneyscout-e0487",
-        storageBucket: "fbamoneyscout.firebasestorage.app",
-        messagingSenderId: "1072177597124",
-        appId: "1:1072177597124:web:bee84507aa63dd827f9791"
-    };
-
-    // ============================
-    //  LOCAL STORAGE HELPERS
-    // ============================
-    function loadLocalAuditUsage(uid) {
-        try {
-            const raw = localStorage.getItem(`${LOCAL_USAGE_PREFIX}${uid}`);
-            const n = parseInt(raw, 10);
-            return Number.isFinite(n) && n >= 0 ? n : 0;
-        } catch (_) {
-            return 0;
+        // ============================
+        //  LOCAL STORAGE HELPERS
+        // ============================
+        function loadLocalAuditUsage(uid) {
+            try {
+                const raw = localStorage.getItem(`${LOCAL_USAGE_PREFIX}${uid}`);
+                const n = parseInt(raw, 10);
+                return Number.isFinite(n) && n >= 0 ? n : 0;
+            } catch (_) {
+                return 0;
+            }
         }
-    }
 
-    function saveLocalAuditUsage(uid, used) {
-        try {
-            localStorage.setItem(`${LOCAL_USAGE_PREFIX}${uid}`, String(used));
-        } catch (e) {
-            console.warn("Failed to persist usage locally:", e);
+        function saveLocalAuditUsage(uid, used) {
+            try {
+                localStorage.setItem(`${LOCAL_USAGE_PREFIX}${uid}`, String(used));
+            } catch (e) {
+                console.warn("Failed to persist usage locally:", e);
+            }
         }
-    }
 
-    // ============================
-    //  FIREBASE INIT
-    // ============================
-    const firebaseApp = initializeApp(firebaseConfig);
-    auth = getAuth(firebaseApp);
-    db = getFirestore(firebaseApp);
+        // ============================
+        //  FIREBASE INIT
+        // ============================
+        const firebaseApp = initializeApp(firebaseConfig);
+        auth = getAuth(firebaseApp);
+        db = getFirestore(firebaseApp);
 
-    // ============================
-    //  AUTH MODAL HANDLERS (GLOBAL)
-    // ============================
-    window.openLoginModal = function () {
-        document.getElementById("auth-overlay").classList.remove("hidden");
-        document.getElementById("login-modal").classList.remove("hidden");
-        document.getElementById("signup-modal").classList.add("hidden");
-    };
+        // -------------------------
+        // STRIPE PURCHASE HANDLER
+        // -------------------------
+        window.startPurchase = function (stripeLink) {
+            if (!auth.currentUser) {
+                alert("Please log in first to upgrade.");
+                return;
+            }
 
-    window.openSignupModal = function () {
-        document.getElementById("auth-overlay").classList.remove("hidden");
-        document.getElementById("signup-modal").classList.remove("hidden");
-        document.getElementById("login-modal").classList.add("hidden");
-    };
+            const uid = auth.currentUser.uid;
 
-    window.switchToSignup = function () {
-        document.getElementById("login-modal").classList.add("hidden");
-        document.getElementById("signup-modal").classList.remove("hidden");
-    };
+            // Attach Firebase UID → Stripe Payment Link → Webhook → Firestore upgrade
+            const checkoutUrl = `${stripeLink}?client_reference_id=${encodeURIComponent(uid)}`;
 
-    window.switchToLogin = function () {
-        document.getElementById("signup-modal").classList.add("hidden");
-        document.getElementById("login-modal").classList.remove("hidden");
-    };
+            console.log("Redirecting to Stripe checkout:", checkoutUrl);
+            window.location.href = checkoutUrl;
+        };
 
-    window.closeAuthModals = function () {
-        document.getElementById("auth-overlay").classList.add("hidden");
-        document.getElementById("login-modal").classList.add("hidden");
-        document.getElementById("signup-modal").classList.add("hidden");
-    };
+        // ============================
+        //  AUTH MODAL HANDLERS (GLOBAL)
+        // ============================
+        window.openLoginModal = function () {
+            document.getElementById("auth-overlay").classList.remove("hidden");
+            document.getElementById("login-modal").classList.remove("hidden");
+            document.getElementById("signup-modal").classList.add("hidden");
+        };
 
-    // Close any modal when clicking the dark backdrop
-    window.closeModalOnOutsideClick = function (event) {
-        const id = event.target.id;
-        if (id === "auth-overlay" || id === "upgrade-modal" || id === "claim-filing-modal") {
-            document.getElementById(id).classList.add("hidden");
-        }
-    };
+        window.openSignupModal = function () {
+            document.getElementById("auth-overlay").classList.remove("hidden");
+            document.getElementById("signup-modal").classList.remove("hidden");
+            document.getElementById("login-modal").classList.add("hidden");
+        };
 
-    // ============================
-    //  AUTH ACTIONS
-    // ============================
-    window.loginUser = async function () {
-        const email = document.getElementById("login-email").value.trim();
-        const password = document.getElementById("login-password").value.trim();
+        window.switchToSignup = function () {
+            document.getElementById("login-modal").classList.add("hidden");
+            document.getElementById("signup-modal").classList.remove("hidden");
+        };
 
-        try {
-            await signInWithEmailAndPassword(auth, email, password);
-            closeAuthModals();
-        } catch (err) {
-            alert("Login failed: " + err.message);
-        }
-    };
+        window.switchToLogin = function () {
+            document.getElementById("signup-modal").classList.add("hidden");
+            document.getElementById("login-modal").classList.remove("hidden");
+        };
 
-    window.signupUser = async function () {
-        const email = document.getElementById("signup-email").value.trim();
-        const password = document.getElementById("signup-password").value.trim();
+        window.closeAuthModals = function () {
+            document.getElementById("auth-overlay").classList.add("hidden");
+            document.getElementById("login-modal").classList.add("hidden");
+            document.getElementById("signup-modal").classList.add("hidden");
+        };
 
-        try {
-            await createUserWithEmailAndPassword(auth, email, password);
-            closeAuthModals();
-        } catch (err) {
-            alert("Signup failed: " + err.message);
-        }
-    };
+        // Close any modal when clicking the dark backdrop
+        window.closeModalOnOutsideClick = function (event) {
+            const id = event.target.id;
+            if (id === "auth-overlay" || id === "upgrade-modal" || id === "claim-filing-modal") {
+                document.getElementById(id).classList.add("hidden");
+            }
+        };
 
-    window.logoutUser = async function () {
-        try {
-            await signOut(auth);
-            userId = null;
-            auditsUsed = 0;
-            isPremium = false;
-            updateAuditButton();
-            updateProfileDisplay();
-        } catch (err) {
-            alert("Logout failed: " + err.message);
-        }
-    };
+        // ============================
+        //  AUTH ACTIONS
+        // ============================
+        window.loginUser = async function () {
+            const email = document.getElementById("login-email").value.trim();
+            const password = document.getElementById("login-password").value.trim();
 
-    function initFirebase() {
-        try {
-            console.log("Firebase Init: App ID =", appId);
-            console.log("Firebase Init: Auth ready =", !!auth);
-            console.log("Firebase Init: DB ready =", !!db);
+            try {
+                await signInWithEmailAndPassword(auth, email, password);
+                closeAuthModals();
+            } catch (err) {
+                alert("Login failed: " + err.message);
+            }
+        };
 
-            onAuthStateChanged(auth, async (user) => {
-                const loginBtn = document.getElementById("nav-login-btn");
-                const logoutBtn = document.getElementById("nav-logout-btn");
+        window.signupUser = async function () {
+            const email = document.getElementById("signup-email").value.trim();
+            const password = document.getElementById("signup-password").value.trim();
 
-                if (user) {
-                    userId = user.uid;
-                    // Load local usage immediately so UI updates even if Firestore is grumpy
-                    auditsUsed = loadLocalAuditUsage(userId);
-                    if (loginBtn) loginBtn.classList.add("hidden");
-                    if (logoutBtn) logoutBtn.classList.remove("hidden");
-                    updateAuditButton();
-                    updateProfileDisplay();
+            try {
+                await createUserWithEmailAndPassword(auth, email, password);
+                closeAuthModals();
+            } catch (err) {
+                alert("Signup failed: " + err.message);
+            }
+        };
 
-                    if (!isAuthReady) {
-                        isAuthReady = true;
-                        loadUserDataAndHistory();
+        window.logoutUser = async function () {
+            try {
+                await signOut(auth);
+                userId = null;
+                auditsUsed = 0;
+                isPremium = false;
+                updateAuditButton();
+                updateProfileDisplay();
+            } catch (err) {
+                alert("Logout failed: " + err.message);
+            }
+        };
+
+        function initFirebase() {
+            try {
+                console.log("Firebase Init: App ID =", appId);
+                console.log("Firebase Init: Auth ready =", !!auth);
+                console.log("Firebase Init: DB ready =", !!db);
+
+                onAuthStateChanged(auth, async (user) => {
+                    const loginBtn = document.getElementById("nav-login-btn");
+                    const logoutBtn = document.getElementById("nav-logout-btn");
+
+                    if (user) {
+                        userId = user.uid;
+                        // Load local usage immediately so UI updates even if Firestore is grumpy
+                        auditsUsed = loadLocalAuditUsage(userId);
+                        if (loginBtn) loginBtn.classList.add("hidden");
+                        if (logoutBtn) logoutBtn.classList.remove("hidden");
+                        updateAuditButton();
+                        updateProfileDisplay();
+
+                        if (!isAuthReady) {
+                            isAuthReady = true;
+                            loadUserDataAndHistory();
+                        }
+                    } else {
+                        userId = null;
+                        auditsUsed = 0;
+                        isPremium = false;
+                        if (loginBtn) loginBtn.classList.remove("hidden");
+                        if (logoutBtn) logoutBtn.classList.add("hidden");
+                        updateAuditButton();
+                        updateProfileDisplay();
                     }
-                } else {
-                    userId = null;
-                    auditsUsed = 0;
-                    isPremium = false;
-                    if (loginBtn) loginBtn.classList.remove("hidden");
-                    if (logoutBtn) logoutBtn.classList.add("hidden");
+                });
+            } catch (e) {
+                console.error("Firebase init failed:", e);
+                alert("Firebase failed to initialize. Check your configuration.");
+            }
+        }
+
+        // ============================
+        //  USER DATA + HISTORY (FIRESTORE)
+        // ============================
+        function getLimitsDocRef() {
+            const uid = auth.currentUser?.uid || userId;
+            if (!uid) return null;
+            return doc(
+                db,
+                "artifacts",
+                "fbamoneyscout",
+                "users",
+                uid,
+                "user_data",
+                "limits"
+            );
+        }
+
+        function getHistoryCollectionRef() {
+            const uid = auth.currentUser?.uid || userId;
+            if (!uid) return null;
+            return collection(
+                db,
+                "artifacts",
+                "fbamoneyscout",
+                "users",
+                uid,
+                "user_data",
+                "audit_history"
+            );
+        }
+
+        function loadUserDataAndHistory() {
+            if (!db || !userId) return;
+            console.log("Loading user data and history for user:", userId);
+
+            const limitsDocRef = getLimitsDocRef();
+            if (!limitsDocRef) return;
+
+            // Limits doc listener (to sync isPremium + cloud usage)
+            onSnapshot(
+                limitsDocRef,
+                (docSnap) => {
+                    if (docSnap.exists()) {
+                        const data = docSnap.data();
+                        const cloudUsed = typeof data.auditsUsed === "number" ? data.auditsUsed : 0;
+                        const localUsed = loadLocalAuditUsage(userId);
+
+                        // Prefer the max so we never "lose" used count
+                        const finalUsed = Math.max(cloudUsed, localUsed);
+                        auditsUsed = finalUsed;
+                        saveLocalAuditUsage(userId, finalUsed);
+
+                        isPremium = !!data.isPremium;
+                    } else {
+                        // If doc doesn't exist, initialize it with our current local usage
+                        const startingUsed = loadLocalAuditUsage(userId);
+                        auditsUsed = startingUsed;
+                        setDoc(
+                            limitsDocRef,
+                            { auditsUsed: startingUsed, isPremium: false },
+                            { merge: true }
+                        ).catch(console.error);
+                    }
+                    updateAuditButton();
+                    updateProfileDisplay();
+                },
+                (error) => {
+                    console.error("Error reading limits:", error);
+                    document.getElementById("status-message").textContent =
+                        "Error reading free uses limit (using local counter only).";
+                    // We still continue with local usage
+                    auditsUsed = loadLocalAuditUsage(userId);
                     updateAuditButton();
                     updateProfileDisplay();
                 }
-            });
-        } catch (e) {
-            console.error("Firebase init failed:", e);
-            alert("Firebase failed to initialize. Check your configuration.");
-        }
-    }
+            );
 
-    // ============================
-    //  USER DATA + HISTORY (FIRESTORE)
-    // ============================
-    function getLimitsDocRef() {
-        const uid = auth.currentUser?.uid || userId;
-        if (!uid) return null;
-        return doc(
-            db,
-            "artifacts",
-            "fbamoneyscout",
-            "users",
-            uid,
-            "user_data",
-            "limits"
-        );
-    }
-
-    function getHistoryCollectionRef() {
-        const uid = auth.currentUser?.uid || userId;
-        if (!uid) return null;
-        return collection(
-            db,
-            "artifacts",
-            "fbamoneyscout",
-            "users",
-            uid,
-            "user_data",
-            "audit_history"
-        );
-    }
-
-    function loadUserDataAndHistory() {
-        if (!db || !userId) return;
-        console.log("Loading user data and history for user:", userId);
-
-        const limitsDocRef = getLimitsDocRef();
-        if (!limitsDocRef) return;
-
-        // Limits doc listener (to sync isPremium + cloud usage)
-        onSnapshot(
-            limitsDocRef,
-            (docSnap) => {
-                if (docSnap.exists()) {
-                    const data = docSnap.data();
-                    const cloudUsed = typeof data.auditsUsed === "number" ? data.auditsUsed : 0;
-                    const localUsed = loadLocalAuditUsage(userId);
-
-                    // Prefer the max so we never "lose" used count
-                    const finalUsed = Math.max(cloudUsed, localUsed);
-                    auditsUsed = finalUsed;
-                    saveLocalAuditUsage(userId, finalUsed);
-
-                    isPremium = !!data.isPremium;
-                } else {
-                    // If doc doesn't exist, initialize it with our current local usage
-                    const startingUsed = loadLocalAuditUsage(userId);
-                    auditsUsed = startingUsed;
-                    setDoc(
-                        limitsDocRef,
-                        { auditsUsed: startingUsed, isPremium: false },
-                        { merge: true }
-                    ).catch(console.error);
-                }
-                updateAuditButton();
-                updateProfileDisplay();
-            },
-            (error) => {
-                console.error("Error reading limits:", error);
-                document.getElementById("status-message").textContent =
-                    "Error reading free uses limit (using local counter only).";
-                // We still continue with local usage
-                auditsUsed = loadLocalAuditUsage(userId);
-                updateAuditButton();
-                updateProfileDisplay();
-            }
-        );
-
-        // History
-        const historyCollectionRef = getHistoryCollectionRef();
-        if (!historyCollectionRef) return;
-
-        const historyQuery = query(historyCollectionRef, orderBy("createdAt", "desc"));
-
-        onSnapshot(
-            historyQuery,
-            (snapshot) => {
-                console.log("History snapshot received. Documents:", snapshot.docs.length);
-                renderHistory(snapshot.docs);
-            },
-            (error) => {
-                console.error("Error reading history:", error);
-                document.getElementById("history-loading").textContent =
-                    "Error loading history.";
-            }
-        );
-    }
-
-    async function saveAuditResult(fileName, claims, totalValue) {
-        if (!db || !userId) return;
-
-        try {
+            // History
             const historyCollectionRef = getHistoryCollectionRef();
             if (!historyCollectionRef) return;
 
-            await setDoc(doc(historyCollectionRef), {
-                fileName: fileName,
-                claimsCount: claims.length,
-                totalEstimatedValue: totalValue,
-                claims: JSON.stringify(claims),
-                createdAt: serverTimestamp()
-            });
+            const historyQuery = query(historyCollectionRef, orderBy("createdAt", "desc"));
 
-            console.log("Audit result saved successfully.");
-        } catch (error) {
-            console.error("Failed to save audit result:", error);
-            document.getElementById("status-message").textContent =
-                "Audit saved locally but failed to save to history.";
-        }
-    }
-
-    // 🚀 NEW: LOCAL-FIRST COUNTER (then sync to Firestore best-effort)
-    async function incrementAuditCounter() {
-        const uid = auth.currentUser?.uid || userId;
-        if (!uid) {
-            console.error("No user ID for incrementAuditCounter");
-            return false;
-        }
-
-        // 1) Local first (this is what drives the UI)
-        let newCount = (auditsUsed || 0) + 1;
-        auditsUsed = newCount;
-        saveLocalAuditUsage(uid, newCount);
-        updateAuditButton();
-        updateProfileDisplay();
-
-        // 2) Firestore best-effort sync
-        try {
-            const limitsDocRef = getLimitsDocRef();
-            if (!limitsDocRef) return true;
-
-            await setDoc(
-                limitsDocRef,
-                { auditsUsed: newCount },
-                { merge: true }
+            onSnapshot(
+                historyQuery,
+                (snapshot) => {
+                    console.log("History snapshot received. Documents:", snapshot.docs.length);
+                    renderHistory(snapshot.docs);
+                },
+                (error) => {
+                    console.error("Error reading history:", error);
+                    document.getElementById("history-loading").textContent =
+                        "Error loading history.";
+                }
             );
-        } catch (error) {
-            console.error("Firestore sync failed (incrementAuditCounter):", error);
-            document.getElementById("status-message").textContent =
-                "Usage tracked locally. Sync issue with server.";
         }
 
-        return true;
-    }
+        async function saveAuditResult(fileName, claims, totalValue) {
+            if (!db || !userId) return;
 
-    function updateProfileDisplay() {
-        try {
-            const auditsUsedEl = document.getElementById("audits-used");
-            const auditsRemainingEl = document.getElementById("audits-remaining");
-            const usageBarEl = document.getElementById("usage-bar");
-            const subscriptionStatusEl = document.getElementById("subscription-status");
+            try {
+                const historyCollectionRef = getHistoryCollectionRef();
+                if (!historyCollectionRef) return;
+
+                await setDoc(doc(historyCollectionRef), {
+                    fileName: fileName,
+                    claimsCount: claims.length,
+                    totalEstimatedValue: totalValue,
+                    claims: JSON.stringify(claims),
+                    createdAt: serverTimestamp()
+                });
+
+                console.log("Audit result saved successfully.");
+            } catch (error) {
+                console.error("Failed to save audit result:", error);
+                document.getElementById("status-message").textContent =
+                    "Audit saved locally but failed to save to history.";
+            }
+        }
+
+        // 🚀 LOCAL-FIRST COUNTER (then sync to Firestore best-effort)
+        async function incrementAuditCounter() {
+            const uid = auth.currentUser?.uid || userId;
+            if (!uid) {
+                console.error("No user ID for incrementAuditCounter");
+                return false;
+            }
+
+            // 1) Local first (this is what drives the UI)
+            let newCount = (auditsUsed || 0) + 1;
+            auditsUsed = newCount;
+            saveLocalAuditUsage(uid, newCount);
+            updateAuditButton();
+            updateProfileDisplay();
+
+            // 2) Firestore best-effort sync
+            try {
+                const limitsDocRef = getLimitsDocRef();
+                if (!limitsDocRef) return true;
+
+                await setDoc(
+                    limitsDocRef,
+                    { auditsUsed: newCount },
+                    { merge: true }
+                );
+            } catch (error) {
+                console.error("Firestore sync failed (incrementAuditCounter):", error);
+                document.getElementById("status-message").textContent =
+                    "Usage tracked locally. Sync issue with server.";
+            }
+
+            return true;
+        }
+
+        function updateProfileDisplay() {
+            try {
+                const auditsUsedEl = document.getElementById("audits-used");
+                const auditsRemainingEl = document.getElementById("audits-remaining");
+                const usageBarEl = document.getElementById("usage-bar");
+                const subscriptionStatusEl = document.getElementById("subscription-status");
+
+                const used = auditsUsed || 0;
+                const remaining = Math.max(AUDIT_LIMIT - used, 0);
+                const isPro = !!isPremium;
+
+                if (auditsUsedEl) auditsUsedEl.textContent = used;
+                if (auditsRemainingEl) auditsRemainingEl.textContent = isPro ? "∞" : remaining;
+
+                if (usageBarEl) {
+                    const pct = isPro ? 100 : Math.min((used / AUDIT_LIMIT) * 100, 100);
+                    usageBarEl.style.width = pct + "%";
+                }
+
+                if (subscriptionStatusEl) {
+                    subscriptionStatusEl.textContent = isPro
+                        ? "PRO Hunter (Unlimited)"
+                        : "Trial User";
+                }
+            } catch (err) {
+                console.error("updateProfileDisplay failed:", err);
+            }
+        }
+
+        function renderHistory(docs) {
+            const listContainer = document.getElementById("history-list");
+            listContainer.innerHTML = "";
+            document.getElementById("history-loading").classList.add("hidden");
+
+            if (docs.length === 0) {
+                listContainer.innerHTML =
+                    '<p class="text-slate-500 italic">No previous audits found. Upload your first report!</p>';
+                return;
+            }
+
+            docs.forEach((docSnap) => {
+                const data = docSnap.data();
+                const date = data.createdAt
+                    ? new Date(data.createdAt.seconds * 1000).toLocaleDateString("en-US", {
+                          year: "numeric",
+                          month: "short",
+                          day: "numeric"
+                      })
+                    : "N/A";
+
+                const historyItem = document.createElement("div");
+                historyItem.className =
+                    "bg-white p-4 rounded-xl shadow border border-gray-200 flex justify-between items-center hover:shadow-lg transition cursor-pointer";
+                historyItem.onclick = () => viewHistoryItem(docSnap.id);
+
+                historyItem.innerHTML = `
+                    <div>
+                        <p class="font-semibold text-slate-800">${data.fileName || "Audit Report"}</p>
+                        <p class="text-sm text-slate-600">
+                            Audited on ${date} &bull; ${data.claimsCount} claims found
+                        </p>
+                    </div>
+                    <div class="text-right">
+                        <p class="text-lg font-extrabold text-[var(--rh-success)]">
+                            $${(data.totalEstimatedValue || 0).toFixed(2)}
+                        </p>
+                        <span class="text-xs text-[var(--rh-primary)] hover:underline mt-1">
+                            View Details
+                        </span>
+                    </div>
+                `;
+                listContainer.appendChild(historyItem);
+            });
+        }
+
+        window.viewHistoryItem = function (docId) {
+            const uid = auth.currentUser?.uid || userId;
+            if (!uid) return;
+
+            const docRef = doc(
+                db,
+                "artifacts",
+                "fbamoneyscout",
+                "users",
+                uid,
+                "user_data",
+                "audit_history",
+                docId
+            );
+
+            onSnapshot(
+                docRef,
+                (docSnap) => {
+                    if (docSnap.exists()) {
+                        const data = docSnap.data();
+                        const claims = JSON.parse(data.claims || "[]");
+
+                        currentClaimsData = claims;
+                        currentTotalValue = data.totalEstimatedValue || 0;
+
+                        displayClaims(claims, currentTotalValue, data.fileName || "Audit Report");
+                    }
+                },
+                (error) => {
+                    console.error("Failed to load history item:", error);
+                    document.getElementById("status-message").textContent =
+                        "Failed to load audit details.";
+                }
+            );
+        };
+
+        // ============================
+        //  FILE UPLOAD (LOGIN-GATED)
+        // ============================
+        // Require login before letting user pick a file
+        window.requireLoginThenSelectFile = function (event) {
+            if (!auth.currentUser) {
+                event.target.value = null;
+                openLoginModal();
+                return;
+            }
+            handleFileSelect(event);
+        };
+
+        // STREAMING FILE READER (better for big CSVs)
+        window.handleFileSelect = async function (event) {
+            console.log("File select triggered");
+
+            const file = event.target.files[0];
+            const fileNameDisplay = document.getElementById("file-name-display");
+
+            document.getElementById("results-area").classList.add("hidden");
+
+            if (!file) {
+                uploadedFileContent = null;
+                fileNameDisplay.textContent = "No file selected.";
+                updateAuditButton();
+                return;
+            }
+
+            if (file.type !== "text/csv" && !file.name.endsWith(".csv")) {
+                fileNameDisplay.textContent = "Error: Please upload a .csv file only.";
+                fileNameDisplay.classList.add("text-red-500");
+                uploadedFileContent = null;
+                updateAuditButton();
+                return;
+            }
+
+            selectedFileName = file.name;
+            fileNameDisplay.textContent = `File Selected: ${selectedFileName}`;
+            fileNameDisplay.classList.remove("text-red-500");
+
+            try {
+                uploadedFileContent = "";
+
+                const decoder = new TextDecoder("utf-8");
+                const reader = file.stream().getReader();
+
+                while (true) {
+                    const { value, done } = await reader.read();
+                    if (done) break;
+                    uploadedFileContent += decoder.decode(value, { stream: true });
+                }
+
+                // finalize decoding
+                uploadedFileContent += decoder.decode();
+                updateAuditButton();
+            } catch (e) {
+                console.error("File streaming error", e);
+                uploadedFileContent = null;
+                fileNameDisplay.textContent = "Error reading file.";
+                fileNameDisplay.classList.add("text-red-500");
+                updateAuditButton();
+            }
+        };
+
+        // ============================
+        //  AUDIT BUTTON / STATE
+        // ============================
+        function updateAuditButton() {
+            const auditButton = document.getElementById("audit-button");
+            const freeUsesDisplay = document.getElementById("free-uses-display");
+            if (!auditButton) return;
 
             const used = auditsUsed || 0;
             const remaining = Math.max(AUDIT_LIMIT - used, 0);
-            const isPro = !!isPremium;
+            const isFileReady = uploadedFileContent !== null;
+            const loggedIn = !!(auth.currentUser || userId);
 
-            if (auditsUsedEl) auditsUsedEl.textContent = used;
-            if (auditsRemainingEl) auditsRemainingEl.textContent = isPro ? "∞" : remaining;
+            auditButton.onclick = null;
 
-            if (usageBarEl) {
-                const pct = isPro ? 100 : Math.min((used / AUDIT_LIMIT) * 100, 100);
-                usageBarEl.style.width = pct + "%";
-            }
-
-            if (subscriptionStatusEl) {
-                subscriptionStatusEl.textContent = isPro
-                    ? "PRO Hunter (Unlimited)"
-                    : "Trial User";
-            }
-        } catch (err) {
-            console.error("updateProfileDisplay failed:", err);
-        }
-    }
-
-    function renderHistory(docs) {
-        const listContainer = document.getElementById("history-list");
-        listContainer.innerHTML = "";
-        document.getElementById("history-loading").classList.add("hidden");
-
-        if (docs.length === 0) {
-            listContainer.innerHTML =
-                '<p class="text-slate-500 italic">No previous audits found. Upload your first report!</p>';
-            return;
-        }
-
-        docs.forEach((docSnap) => {
-            const data = docSnap.data();
-            const date = data.createdAt
-                ? new Date(data.createdAt.seconds * 1000).toLocaleDateString("en-US", {
-                      year: "numeric",
-                      month: "short",
-                      day: "numeric"
-                  })
-                : "N/A";
-
-            const historyItem = document.createElement("div");
-            historyItem.className =
-                "bg-white p-4 rounded-xl shadow border border-gray-200 flex justify-between items-center hover:shadow-lg transition cursor-pointer";
-            historyItem.onclick = () => viewHistoryItem(docSnap.id);
-
-            historyItem.innerHTML = `
-                <div>
-                    <p class="font-semibold text-slate-800">${data.fileName || "Audit Report"}</p>
-                    <p class="text-sm text-slate-600">
-                        Audited on ${date} &bull; ${data.claimsCount} claims found
-                    </p>
-                </div>
-                <div class="text-right">
-                    <p class="text-lg font-extrabold text-[var(--rh-success)]">
-                        $${(data.totalEstimatedValue || 0).toFixed(2)}
-                    </p>
-                    <span class="text-xs text-[var(--rh-primary)] hover:underline mt-1">
-                        View Details
-                    </span>
-                </div>
-            `;
-            listContainer.appendChild(historyItem);
-        });
-    }
-
-    window.viewHistoryItem = function (docId) {
-        const uid = auth.currentUser?.uid || userId;
-        if (!uid) return;
-
-        const docRef = doc(
-            db,
-            "artifacts",
-            "fbamoneyscout",
-            "users",
-            uid,
-            "user_data",
-            "audit_history",
-            docId
-        );
-
-        onSnapshot(
-            docRef,
-            (docSnap) => {
-                if (docSnap.exists()) {
-                    const data = docSnap.data();
-                    const claims = JSON.parse(data.claims || "[]");
-
-                    currentClaimsData = claims;
-                    currentTotalValue = data.totalEstimatedValue || 0;
-
-                    displayClaims(claims, currentTotalValue, data.fileName || "Audit Report");
-                }
-            },
-            (error) => {
-                console.error("Failed to load history item:", error);
-                document.getElementById("status-message").textContent =
-                    "Failed to load audit details.";
-            }
-        );
-    };
-
-    // ============================
-    //  FILE UPLOAD (LOGIN-GATED)
-    // ============================
-    // Require login before letting user pick a file
-    window.requireLoginThenSelectFile = function (event) {
-        if (!auth.currentUser) {
-            event.target.value = null;
-            openLoginModal();
-            return;
-        }
-        handleFileSelect(event);
-    };
-
-    // STREAMING FILE READER (better for big CSVs)
-    window.handleFileSelect = async function (event) {
-        console.log("File select triggered");
-
-        const file = event.target.files[0];
-        const fileNameDisplay = document.getElementById("file-name-display");
-
-        document.getElementById("results-area").classList.add("hidden");
-
-        if (!file) {
-            uploadedFileContent = null;
-            fileNameDisplay.textContent = "No file selected.";
-            updateAuditButton();
-            return;
-        }
-
-        if (file.type !== "text/csv" && !file.name.endsWith(".csv")) {
-            fileNameDisplay.textContent = "Error: Please upload a .csv file only.";
-            fileNameDisplay.classList.add("text-red-500");
-            uploadedFileContent = null;
-            updateAuditButton();
-            return;
-        }
-
-        selectedFileName = file.name;
-        fileNameDisplay.textContent = `File Selected: ${selectedFileName}`;
-        fileNameDisplay.classList.remove("text-red-500");
-
-        try {
-            uploadedFileContent = "";
-
-            const decoder = new TextDecoder("utf-8");
-            const reader = file.stream().getReader();
-
-            while (true) {
-                const { value, done } = await reader.read();
-                if (done) break;
-                uploadedFileContent += decoder.decode(value, { stream: true });
-            }
-
-            // finalize decoding
-            uploadedFileContent += decoder.decode();
-            updateAuditButton();
-        } catch (e) {
-            console.error("File streaming error", e);
-            uploadedFileContent = null;
-            fileNameDisplay.textContent = "Error reading file.";
-            fileNameDisplay.classList.add("text-red-500");
-            updateAuditButton();
-        }
-    };
-
-    // ============================
-    //  AUDIT BUTTON / STATE
-    // ============================
-    function updateAuditButton() {
-        const auditButton = document.getElementById("audit-button");
-        const freeUsesDisplay = document.getElementById("free-uses-display");
-        if (!auditButton) return;
-
-        const used = auditsUsed || 0;
-        const remaining = Math.max(AUDIT_LIMIT - used, 0);
-        const isFileReady = uploadedFileContent !== null;
-        const loggedIn = !!(auth.currentUser || userId);
-
-        auditButton.onclick = null;
-
-        // Not logged in
-        if (!loggedIn) {
-            auditButton.textContent = "Log in to run an audit";
-            auditButton.disabled = false;
-            auditButton.onclick = openLoginModal;
-            if (freeUsesDisplay) {
-                freeUsesDisplay.innerHTML = `
-                    Your first <strong>${AUDIT_LIMIT}</strong> audits are free.
-                    Log in to start using them.
-                `;
-            }
-            return;
-        }
-
-        if (isPremium) {
-            auditButton.textContent = "Run Audit (PRO Unlimited)";
-            auditButton.disabled = !isFileReady;
-
-            if (isFileReady) {
-                auditButton.onclick = processAuditWrapper;
-            }
-
-            if (freeUsesDisplay) {
-                freeUsesDisplay.innerHTML =
-                    'You are a <strong>PRO Hunter</strong>. Unlimited audits unlocked!';
-            }
-
-            return;
-        }
-
-        // Free tier
-        if (remaining > 0) {
-            auditButton.textContent = `Audit Report (${remaining}/${AUDIT_LIMIT} FREE Uses Remaining)`;
-            auditButton.disabled = !isFileReady;
-
-            if (isFileReady) {
-                auditButton.onclick = processAuditWrapper;
-            }
-
-            if (freeUsesDisplay) {
-                freeUsesDisplay.innerHTML = `
-                    Your first <strong>${AUDIT_LIMIT}</strong> audits are free.
-                    You have <strong>${remaining}</strong> remaining.
-                `;
-            }
-
-            return;
-        }
-
-        // Free limit exceeded
-        auditButton.textContent = "Audit Report (Upgrade Required)";
-        auditButton.disabled = false;
-        auditButton.onclick = () => showUpgradeModal("audit_monthly");
-
-        if (freeUsesDisplay) {
-            freeUsesDisplay.innerHTML = `
-                You have used your <strong>${AUDIT_LIMIT}</strong> free audits.
-                Please upgrade below for unlimited use.
-            `;
-        }
-    }
-
-    document.addEventListener("DOMContentLoaded", () => {
-        initFirebase();
-        const auditButton = document.getElementById("audit-button");
-        if (auditButton) {
-            auditButton.onclick = processAuditWrapper;
-        }
-    });
-
-    function processAuditWrapper() {
-        if (!auth.currentUser && !userId) {
-            openLoginModal();
-            return;
-        }
-
-        if (!isPremium && (auditsUsed || 0) >= AUDIT_LIMIT) {
-            showUpgradeModal("audit_monthly");
-            return;
-        }
-
-        if (uploadedFileContent) {
-            processAudit(uploadedFileContent, selectedFileName);
-        }
-    }
-
-    function finishAuditDisplay() {
-        document.getElementById("loading-indicator").classList.add("hidden");
-        document.getElementById("upload-section").classList.remove("hidden");
-
-        displayClaims(currentClaimsData, currentTotalValue, selectedFileName || "Audit Report");
-
-        uploadedFileContent = null;
-        selectedFileName = "";
-        document.getElementById("file-name-display").textContent =
-            "Click to select your FBA Inventory Ledger or Daily Inventory Report (CSV file only)";
-        document.getElementById("csv-file").value = "";
-        document.getElementById("audit-button").disabled = true;
-
-        document.getElementById("status-message").textContent =
-            "Audit Complete. Ready for next report.";
-    }
-
-    // ============================
-    //  UPGRADE / CLAIM MODALS
-    // ============================
-    window.showUpgradeModal = function (productName) {
-        const modal = document.getElementById("upgrade-modal");
-        const title = document.getElementById("modal-title");
-        const price = document.getElementById("modal-price");
-        const description = document.getElementById("modal-description");
-        const checkoutLink = document.getElementById("modal-checkout-link");
-        const modalIconPath = modal.querySelector("#modal-icon path");
-
-        const productDetails =
-            {
-                audit_monthly: {
-                    title: "Unlock Unlimited Audits",
-                    price: "$199 / Month",
-                    description:
-                        "Go Pro and get unlimited access to FBA Money Scout. Never miss a claim again.",
-                    iconPath:
-                        "M12 1c-4.97 0-9 4.03-9 9s4.03 9 9 9 9-4.03 9-9-4.03-9-9-9zM10 13l2-2 2 2M10 11l2-2 2 2",
-                    url: `https://buy.stripe.com/bJe3cuarVa2f4Buc2W7EQ00`
-                },
-                audit_single: {
-                    title: "Purchase Single Audit Boost",
-                    price: "$99 One-Time",
-                    description:
-                        "Purchase a single audit report immediately. Great for occasional use or one large report.",
-                    iconPath: "M12 6v6m0 0v6m0-6h6m-6 0H6",
-                    url: `https://buy.stripe.com/28EbJ0bvZ0rF4BuaYS7EQ01`
-                }
-            }[productName] || null;
-
-        if (!productDetails) return;
-
-        title.textContent = productDetails.title;
-        price.textContent = productDetails.price;
-        description.textContent = productDetails.description;
-        checkoutLink.href = productDetails.url;
-
-        if (modalIconPath) {
-            modalIconPath.setAttribute("d", productDetails.iconPath);
-        }
-
-        modal.classList.remove("hidden");
-    };
-
-    window.showClaimFilingModal = function (claims, totalValue) {
-        const modal = document.getElementById("claim-filing-modal");
-        const claimCountDisplay = document.getElementById("filing-claim-count");
-        const claimValueDisplay = document.getElementById("filing-claim-value");
-        const jsonDataBlock = document.getElementById("claim-json-data");
-        const copyBtnText = document.getElementById("copy-btn-text");
-        const messagesContainer = document.getElementById("claim-messages");
-
-        claimCountDisplay.textContent = `${claims.length}`;
-        claimValueDisplay.textContent = `$${totalValue.toFixed(2)}`;
-
-        const jsonClaims = JSON.stringify(claims, null, 2);
-        jsonDataBlock.textContent = jsonClaims;
-
-        copyBtnText.textContent = "Copy JSON";
-
-        if (messagesContainer) {
-            messagesContainer.innerHTML = "";
-
-            if (!currentClaimMessages || currentClaimMessages.length === 0) {
-                messagesContainer.innerHTML =
-                    "<p class='text-sm text-slate-500 italic'>No pre-written messages were generated for this audit. You can still use the JSON and filing steps above.</p>";
-            } else {
-                currentClaimMessages.forEach((msg, index) => {
-                    const card = document.createElement("div");
-                    card.className =
-                        "bg-gray-50 border border-gray-200 rounded-lg p-3";
-
-                    const skuLabel = msg.sku ? `SKU: ${msg.sku}` : "";
-                    const reasonLabel = msg.reason ? `Reason: ${msg.reason}` : "";
-
-                    card.innerHTML = `
-                      <div class="flex justify-between items-center mb-2">
-                        <span class="text-sm font-semibold text-slate-800">
-                          Case Message #${index + 1}
-                        </span>
-                        <span class="text-xs text-slate-500">
-                          ${skuLabel}
-                          ${reasonLabel ? "&nbsp;&bull;&nbsp;" + reasonLabel : ""}
-                        </span>
-                      </div>
-                      <textarea
-                        class="w-full text-xs p-2 rounded-md border border-gray-300 bg-white"
-                        rows="5"
-                        readonly
-                      >${(msg.message || "").trim()}</textarea>
+            // Not logged in
+            if (!loggedIn) {
+                auditButton.textContent = "Log in to run an audit";
+                auditButton.disabled = false;
+                auditButton.onclick = openLoginModal;
+                if (freeUsesDisplay) {
+                    freeUsesDisplay.innerHTML = `
+                        Your first <strong>${AUDIT_LIMIT}</strong> audits are free.
+                        Log in to start using them.
                     `;
+                }
+                return;
+            }
 
-                    messagesContainer.appendChild(card);
-                });
+            if (isPremium) {
+                auditButton.textContent = "Run Audit (PRO Unlimited)";
+                auditButton.disabled = !isFileReady;
+
+                if (isFileReady) {
+                    auditButton.onclick = processAuditWrapper;
+                }
+
+                if (freeUsesDisplay) {
+                    freeUsesDisplay.innerHTML =
+                        'You are a <strong>PRO Hunter</strong>. Unlimited audits unlocked!';
+                }
+
+                return;
+            }
+
+            // Free tier
+            if (remaining > 0) {
+                auditButton.textContent = `Audit Report (${remaining}/${AUDIT_LIMIT} FREE Uses Remaining)`;
+                auditButton.disabled = !isFileReady;
+
+                if (isFileReady) {
+                    auditButton.onclick = processAuditWrapper;
+                }
+
+                if (freeUsesDisplay) {
+                    freeUsesDisplay.innerHTML = `
+                        Your first <strong>${AUDIT_LIMIT}</strong> audits are free.
+                        You have <strong>${remaining}</strong> remaining.
+                    `;
+                }
+
+                return;
+            }
+
+            // Free limit exceeded
+            auditButton.textContent = "Audit Report (Upgrade Required)";
+            auditButton.disabled = false;
+            auditButton.onclick = () => showUpgradeModal("audit_monthly");
+
+            if (freeUsesDisplay) {
+                freeUsesDisplay.innerHTML = `
+                    You have used your <strong>${AUDIT_LIMIT}</strong> free audits.
+                    Please upgrade below for unlimited use.
+                `;
             }
         }
 
-        modal.classList.remove("hidden");
-    };
+        document.addEventListener("DOMContentLoaded", () => {
+            initFirebase();
+            const auditButton = document.getElementById("audit-button");
+            if (auditButton) {
+                auditButton.onclick = processAuditWrapper;
+            }
+        });
 
-    window.copyClaimData = function () {
-        const jsonDataBlock = document.getElementById("claim-json-data");
-        const copyBtnText = document.getElementById("copy-btn-text");
-
-        try {
-            const tempTextArea = document.createElement("textarea");
-            tempTextArea.value = jsonDataBlock.textContent;
-            document.body.appendChild(tempTextArea);
-            tempTextArea.select();
-            document.execCommand("copy");
-            document.body.removeChild(tempTextArea);
-
-            copyBtnText.textContent = "Copied!";
-            setTimeout(() => {
-                copyBtnText.textContent = "Copy JSON";
-            }, 2000);
-        } catch (err) {
-            console.error("Failed to copy text: ", err);
-            copyBtnText.textContent = "Error Copying!";
-        }
-    };
-
-    // ============================
-    //  BACKEND AUDIT CALL
-    // ============================
-    async function processAudit(csvContent, fileName) {
-        if (!isPremium && (auditsUsed || 0) >= AUDIT_LIMIT) {
-            showUpgradeModal("audit_monthly");
-            return;
-        }
-
-        document.getElementById("upload-section").classList.add("hidden");
-        document.getElementById("loading-indicator").classList.remove("hidden");
-        document.getElementById("results-area").classList.add("hidden");
-        document.getElementById("status-message").textContent =
-            `Analyzing ${fileName}...`;
-
-        try {
-            const response = await fetch(`${API_BASE_URL}/api/audit`, {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({
-                    csvContent,
-                    fileName,
-                    userId: (auth.currentUser && auth.currentUser.uid) || userId || "anonymous"
-                })
-            });
-
-            if (!response.ok) {
-                throw new Error(`Backend responded with status ${response.status}`);
+        function processAuditWrapper() {
+            if (!auth.currentUser && !userId) {
+                openLoginModal();
+                return;
             }
 
-            const data = await response.json();
-
-            currentClaimsData = data.claims || [];
-            currentTotalValue = data.totalEstimatedValue || 0;
-            currentClaimMessages = data.messages || [];
-
-            if (!isPremium) {
-                await incrementAuditCounter();
+            if (!isPremium && (auditsUsed || 0) >= AUDIT_LIMIT) {
+                showUpgradeModal("audit_monthly");
+                return;
             }
-            await saveAuditResult(fileName, currentClaimsData, currentTotalValue);
-        } catch (err) {
-            console.error("BACKEND ERROR:", err);
-            alert("Error analyzing your report. Please try again with a smaller date range if the file is very large.");
 
-            currentClaimsData = [];
-            currentTotalValue = 0;
+            if (uploadedFileContent) {
+                processAudit(uploadedFileContent, selectedFileName);
+            }
+        }
 
+        function finishAuditDisplay() {
             document.getElementById("loading-indicator").classList.add("hidden");
             document.getElementById("upload-section").classList.remove("hidden");
+
+            displayClaims(currentClaimsData, currentTotalValue, selectedFileName || "Audit Report");
+
+            uploadedFileContent = null;
+            selectedFileName = "";
+            document.getElementById("file-name-display").textContent =
+                "Click to select your FBA Inventory Ledger or Daily Inventory Report (CSV file only)";
+            document.getElementById("csv-file").value = "";
+            document.getElementById("audit-button").disabled = true;
+
             document.getElementById("status-message").textContent =
-                "Audit Failed: Connection or server error.";
-            return;
+                "Audit Complete. Ready for next report.";
         }
 
-        finishAuditDisplay();
-    }
+        // ============================
+        //  UPGRADE / CLAIM MODALS
+        // ============================
+        window.showUpgradeModal = function (productName) {
+            const modal = document.getElementById("upgrade-modal");
+            const title = document.getElementById("modal-title");
+            const price = document.getElementById("modal-price");
+            const description = document.getElementById("modal-description");
+            const checkoutLink = document.getElementById("modal-checkout-link");
+            const modalIconPath = modal.querySelector("#modal-icon path");
 
-    // ============================
-    //  CHART + CLAIM DISPLAY
-    // ============================
-    function renderClaimChart(data, total) {
-        const canvas = document.getElementById("claim-chart");
-        const ctx = canvas.getContext("2d");
+            const productDetails =
+                {
+                    audit_monthly: {
+                        title: "Unlock Unlimited Audits",
+                        price: "$199 / Month",
+                        description:
+                            "Go Pro and get unlimited access to FBA Money Scout. Never miss a claim again.",
+                        iconPath:
+                            "M12 1c-4.97 0-9 4.03-9 9s4.03 9 9 9 9-4.03 9-9-4.03-9-9-9zM10 13l2-2 2 2M10 11l2-2 2 2",
+                        url: `https://buy.stripe.com/bJe3cuarVa2f4Buc2W7EQ00`
+                    },
+                    audit_single: {
+                        title: "Purchase Single Audit Boost",
+                        price: "$99 One-Time",
+                        description:
+                            "Purchase a single audit report immediately. Great for occasional use or one large report.",
+                        iconPath: "M12 6v6m0 0v6m0-6h6m-6 0H6",
+                        url: `https://buy.stripe.com/28EbJ0bvZ0rF4BuaYS7EQ01`
+                    }
+                }[productName] || null;
 
-        lastClaimsData = { data, total };
+            if (!productDetails) return;
 
-        canvas.width = canvas.offsetWidth;
-        canvas.height = 250;
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
+            title.textContent = productDetails.title;
+            price.textContent = productDetails.price;
+            description.textContent = productDetails.description;
+            checkoutLink.href = productDetails.url;
 
-        if (total === 0 || !Object.keys(data).length) {
-            ctx.fillStyle = "#94a3b8";
-            ctx.font = "16px Inter";
-            ctx.textAlign = "center";
-            ctx.fillText("No claims found to chart.", canvas.width / 2, canvas.height / 2);
-            return;
+            // Make the CTA use startPurchase so we always send Firebase UID to Stripe
+            checkoutLink.onclick = (e) => {
+                e.preventDefault();
+                window.startPurchase(productDetails.url);
+            };
+
+            if (modalIconPath) {
+                modalIconPath.setAttribute("d", productDetails.iconPath);
+            }
+
+            modal.classList.remove("hidden");
+        };
+
+        window.showClaimFilingModal = function (claims, totalValue) {
+            const modal = document.getElementById("claim-filing-modal");
+            const claimCountDisplay = document.getElementById("filing-claim-count");
+            const claimValueDisplay = document.getElementById("filing-claim-value");
+            const jsonDataBlock = document.getElementById("claim-json-data");
+            const copyBtnText = document.getElementById("copy-btn-text");
+            const messagesContainer = document.getElementById("claim-messages");
+
+            claimCountDisplay.textContent = `${claims.length}`;
+            claimValueDisplay.textContent = `$${totalValue.toFixed(2)}`;
+
+            const jsonClaims = JSON.stringify(claims, null, 2);
+            jsonDataBlock.textContent = jsonClaims;
+
+            copyBtnText.textContent = "Copy JSON";
+
+            if (messagesContainer) {
+                messagesContainer.innerHTML = "";
+
+                if (!currentClaimMessages || currentClaimMessages.length === 0) {
+                    messagesContainer.innerHTML =
+                        "<p class='text-sm text-slate-500 italic'>No pre-written messages were generated for this audit. You can still use the JSON and filing steps above.</p>";
+                } else {
+                    currentClaimMessages.forEach((msg, index) => {
+                        const card = document.createElement("div");
+                        card.className =
+                            "bg-gray-50 border border-gray-200 rounded-lg p-3";
+
+                        const skuLabel = msg.sku ? `SKU: ${msg.sku}` : "";
+                        const reasonLabel = msg.reason ? `Reason: ${msg.reason}` : "";
+
+                        card.innerHTML = `
+                          <div class="flex justify-between items-center mb-2">
+                            <span class="text-sm font-semibold text-slate-800">
+                              Case Message #${index + 1}
+                            </span>
+                            <span class="text-xs text-slate-500">
+                              ${skuLabel}
+                              ${reasonLabel ? "&nbsp;&bull;&nbsp;" + reasonLabel : ""}
+                            </span>
+                          </div>
+                          <textarea
+                            class="w-full text-xs p-2 rounded-md border border-gray-300 bg-white"
+                            rows="5"
+                            readonly
+                          >${(msg.message || "").trim()}</textarea>
+                        `;
+
+                        messagesContainer.appendChild(card);
+                    });
+                }
+            }
+
+            modal.classList.remove("hidden");
+        };
+
+        window.copyClaimData = function () {
+            const jsonDataBlock = document.getElementById("claim-json-data");
+            const copyBtnText = document.getElementById("copy-btn-text");
+
+            try {
+                const tempTextArea = document.createElement("textarea");
+                tempTextArea.value = jsonDataBlock.textContent;
+                document.body.appendChild(tempTextArea);
+                tempTextArea.select();
+                document.execCommand("copy");
+                document.body.removeChild(tempTextArea);
+
+                copyBtnText.textContent = "Copied!";
+                setTimeout(() => {
+                    copyBtnText.textContent = "Copy JSON";
+                }, 2000);
+            } catch (err) {
+                console.error("Failed to copy text: ", err);
+                copyBtnText.textContent = "Error Copying!";
+            }
+        };
+
+        // ============================
+        //  BACKEND AUDIT CALL
+        // ============================
+        async function processAudit(csvContent, fileName) {
+            if (!isPremium && (auditsUsed || 0) >= AUDIT_LIMIT) {
+                showUpgradeModal("audit_monthly");
+                return;
+            }
+
+            document.getElementById("upload-section").classList.add("hidden");
+            document.getElementById("loading-indicator").classList.remove("hidden");
+            document.getElementById("results-area").classList.add("hidden");
+            document.getElementById("status-message").textContent =
+                `Analyzing ${fileName}...`;
+
+            try {
+                const response = await fetch(`${API_BASE_URL}/api/audit`, {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({
+                        csvContent,
+                        fileName,
+                        userId: (auth.currentUser && auth.currentUser.uid) || userId || "anonymous"
+                    })
+                });
+
+                if (!response.ok) {
+                    throw new Error(`Backend responded with status ${response.status}`);
+                }
+
+                const data = await response.json();
+
+                currentClaimsData = data.claims || [];
+                currentTotalValue = data.totalEstimatedValue || 0;
+                currentClaimMessages = data.messages || [];
+
+                if (!isPremium) {
+                    await incrementAuditCounter();
+                }
+                await saveAuditResult(fileName, currentClaimsData, currentTotalValue);
+            } catch (err) {
+                console.error("BACKEND ERROR:", err);
+                alert("Error analyzing your report. Please try again with a smaller date range if the file is very large.");
+
+                currentClaimsData = [];
+                currentTotalValue = 0;
+
+                document.getElementById("loading-indicator").classList.add("hidden");
+                document.getElementById("upload-section").classList.remove("hidden");
+                document.getElementById("status-message").textContent =
+                    "Audit Failed: Connection or server error.";
+                return;
+            }
+
+            finishAuditDisplay();
         }
 
-        const reasons = Object.keys(data);
-        const values = Object.values(data);
-        const numBars = reasons.length;
+        // ============================
+        //  CHART + CLAIM DISPLAY
+        // ============================
+        function renderClaimChart(data, total) {
+            const canvas = document.getElementById("claim-chart");
+            const ctx = canvas.getContext("2d");
 
-        const colors = ["#FE9900", "#4BB543", "#3498DB", "#E74C3C", "#9B59B6", "#F39C12"];
-        const darkText = "#1f2937";
-        const lightGrey = "#e5e7eb";
+            lastClaimsData = { data, total };
 
-        const padding = 30;
-        const chartHeight = canvas.height - padding * 2;
-        const chartWidth = canvas.width - padding * 2;
-        const barSpacing = 15;
-        const barWidth = (chartWidth - (numBars - 1) * barSpacing) / numBars;
-        const maxValue = Math.max(...values) * 1.1;
+            canvas.width = canvas.offsetWidth;
+            canvas.height = 250;
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-        ctx.strokeStyle = lightGrey;
-        ctx.lineWidth = 2;
-        ctx.beginPath();
-        ctx.moveTo(padding, canvas.height - padding);
-        ctx.lineTo(canvas.width - padding, canvas.height - padding);
-        ctx.stroke();
+            if (total === 0 || !Object.keys(data).length) {
+                ctx.fillStyle = "#94a3b8";
+                ctx.font = "16px Inter";
+                ctx.textAlign = "center";
+                ctx.fillText("No claims found to chart.", canvas.width / 2, canvas.height / 2);
+                return;
+            }
 
-        for (let i = 0; i < numBars; i++) {
-            const value = values[i];
-            const reason = reasons[i];
-            const x = padding + i * (barWidth + barSpacing);
-            const barHeight = (value / maxValue) * chartHeight;
-            const y = canvas.height - padding - barHeight;
-            const barXCenter = x + barWidth / 2;
+            const reasons = Object.keys(data);
+            const values = Object.values(data);
+            const numBars = reasons.length;
 
-            ctx.fillStyle = colors[i % colors.length];
-            ctx.fillRect(x, y, barWidth, barHeight);
+            const colors = ["#FE9900", "#4BB543", "#3498DB", "#E74C3C", "#9B59B6", "#F39C12"];
+            const darkText = "#1f2937";
+            const lightGrey = "#e5e7eb";
 
-            ctx.fillStyle = darkText;
-            ctx.font = "11px Inter";
-            ctx.textAlign = "center";
-            ctx.fillText(reason, barXCenter, canvas.height - 10);
+            const padding = 30;
+            const chartHeight = canvas.height - padding * 2;
+            const chartWidth = canvas.width - padding * 2;
+            const barSpacing = 15;
+            const barWidth = (chartWidth - (numBars - 1) * barSpacing) / numBars;
+            const maxValue = Math.max(...values) * 1.1;
 
-            ctx.fillStyle = darkText;
-            ctx.font = "14px Inter bold";
-            ctx.fillText(`$${value.toFixed(0)}`, barXCenter, y - 5);
+            ctx.strokeStyle = lightGrey;
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            ctx.moveTo(padding, canvas.height - padding);
+            ctx.lineTo(canvas.width - padding, canvas.height - padding);
+            ctx.stroke();
+
+            for (let i = 0; i < numBars; i++) {
+                const value = values[i];
+                const reason = reasons[i];
+                const x = padding + i * (barWidth + barSpacing);
+                const barHeight = (value / maxValue) * chartHeight;
+                const y = canvas.height - padding - barHeight;
+                const barXCenter = x + barWidth / 2;
+
+                ctx.fillStyle = colors[i % colors.length];
+                ctx.fillRect(x, y, barWidth, barHeight);
+
+                ctx.fillStyle = darkText;
+                ctx.font = "11px Inter";
+                ctx.textAlign = "center";
+                ctx.fillText(reason, barXCenter, canvas.height - 10);
+
+                ctx.fillStyle = darkText;
+                ctx.font = "14px Inter bold";
+                ctx.fillText(`$${value.toFixed(0)}`, barXCenter, y - 5);
+            }
         }
-    }
 
-    window.addEventListener("resize", () => {
-        const resultsArea = document.getElementById("results-area");
-        if (!resultsArea.classList.contains("hidden") && lastClaimsData) {
-            renderClaimChart(lastClaimsData.data, lastClaimsData.total);
-        }
-    });
+        window.addEventListener("resize", () => {
+            const resultsArea = document.getElementById("results-area");
+            if (!resultsArea.classList.contains("hidden") && lastClaimsData) {
+                renderClaimChart(lastClaimsData.data, lastClaimsData.total);
+            }
+        });
 
-    function displayClaims(claims, totalEstimatedValue, auditFileName) {
-        const resultsArea = document.getElementById("results-area");
-        const listContainer = document.getElementById("claim-list");
-        const claimCountDisplay = document.getElementById("claim-count");
-        const noClaimsMessage = document.getElementById("no-claims-found");
+        function displayClaims(claims, totalEstimatedValue, auditFileName) {
+            const resultsArea = document.getElementById("results-area");
+            const listContainer = document.getElementById("claim-list");
+            const claimCountDisplay = document.getElementById("claim-count");
+            const noClaimsMessage = document.getElementById("no-claims-found");
 
-        resultsArea.classList.remove("hidden");
-        resultsArea.querySelector("h2").innerHTML = `
-            <span id="claim-count" class="text-4xl text-[var(--rh-success)] mr-4">
-                ${claims.length}
-            </span>
-            Actionable Reimbursement Claims Found in: ${auditFileName}
-        `;
+            resultsArea.classList.remove("hidden");
+            resultsArea.querySelector("h2").innerHTML = `
+                <span id="claim-count" class="text-4xl text-[var(--rh-success)] mr-4">
+                    ${claims.length}
+                </span>
+                Actionable Reimbursement Claims Found in: ${auditFileName}
+            `;
 
-        listContainer.innerHTML = "";
-        const valueByReason = {};
+            listContainer.innerHTML = "";
+            const valueByReason = {};
 
-        if (claims && claims.length > 0) {
-            claimCountDisplay.textContent = claims.length;
-            noClaimsMessage.classList.add("hidden");
+            if (claims && claims.length > 0) {
+                claimCountDisplay.textContent = claims.length;
+                noClaimsMessage.classList.add("hidden");
 
-            claims.forEach((claim) => {
-                const value = parseFloat(claim.estimatedValue) || 0;
-                const reason = claim.claimReason || "Unspecified Claim";
+                claims.forEach((claim) => {
+                    const value = parseFloat(claim.estimatedValue) || 0;
+                    const reason = claim.claimReason || "Unspecified Claim";
 
-                valueByReason[reason] = (valueByReason[reason] || 0) + value;
+                    valueByReason[reason] = (valueByReason[reason] || 0) + value;
 
-                const claimElement = document.createElement("div");
-                claimElement.className =
-                    "bg-gray-50 p-4 rounded-xl border border-gray-200 hover:bg-gray-100 transition";
-                claimElement.innerHTML = `
-                    <div class="flex justify-between items-center mb-2">
-                        <span class="text-lg font-bold text-slate-800">${reason}</span>
-                        <span class="text-xl font-extrabold text-[var(--rh-success)]">
-                            $${value.toFixed(2)}
+                    const claimElement = document.createElement("div");
+                    claimElement.className =
+                        "bg-gray-50 p-4 rounded-xl border border-gray-200 hover:bg-gray-100 transition";
+                    claimElement.innerHTML = `
+                        <div class="flex justify-between items-center mb-2">
+                            <span class="text-lg font-bold text-slate-800">${reason}</span>
+                            <span class="text-xl font-extrabold text-[var(--rh-success)]">
+                                $${value.toFixed(2)}
+                            </span>
+                        </div>
+                        <p class="text-sm text-slate-600">
+                            <strong>SKU:</strong> ${claim.sku || "N/A"} &bull;
+                            <strong>Qty:</strong> ${claim.quantity || 1} &bull;
+                            <strong>Ref ID:</strong> ${claim.amazonTransactionId || "None"}
+                        </p>
+                    `;
+                    listContainer.appendChild(claimElement);
+                });
+
+                renderClaimChart(valueByReason, totalEstimatedValue);
+
+                const summaryElement = document.createElement("div");
+                summaryElement.className =
+                    "bg-white p-6 rounded-xl border-4 border-[var(--rh-primary)] shadow-inner mb-6";
+                summaryElement.innerHTML = `
+                    <p class="text-xl font-bold text-[var(--rh-dark)] flex justify-between">
+                        <span>Total Estimated Reimbursement Value:</span> 
+                        <span class="text-3xl text-[var(--rh-success)] font-extrabold">
+                            $${totalEstimatedValue.toFixed(2)}
                         </span>
-                    </div>
-                    <p class="text-sm text-slate-600">
-                        <strong>SKU:</strong> ${claim.sku || "N/A"} &bull;
-                        <strong>Qty:</strong> ${claim.quantity || 1} &bull;
-                        <strong>Ref ID:</strong> ${claim.amazonTransactionId || "None"}
+                    </p>
+                    <p class="text-sm text-slate-500 mt-2">
+                        This is the cash you can claim back by filing these reports.
                     </p>
                 `;
-                listContainer.appendChild(claimElement);
-            });
+                listContainer.prepend(summaryElement);
 
-            renderClaimChart(valueByReason, totalEstimatedValue);
+                const fileClaimsButton = document.createElement("button");
+                fileClaimsButton.id = "file-claims-btn";
+                fileClaimsButton.className =
+                    "rh-primary-btn mt-6 w-full py-3 text-white rounded-xl font-bold shadow-lg transition";
+                fileClaimsButton.textContent = `File ${claims.length} Claims Worth $${totalEstimatedValue.toFixed(2)}`;
+                fileClaimsButton.onclick = () =>
+                    showClaimFilingModal(currentClaimsData, currentTotalValue);
 
-            const summaryElement = document.createElement("div");
-            summaryElement.className =
-                "bg-white p-6 rounded-xl border-4 border-[var(--rh-primary)] shadow-inner mb-6";
-            summaryElement.innerHTML = `
-                <p class="text-xl font-bold text-[var(--rh-dark)] flex justify-between">
-                    <span>Total Estimated Reimbursement Value:</span> 
-                    <span class="text-3xl text-[var(--rh-success)] font-extrabold">
-                        $${totalEstimatedValue.toFixed(2)}
-                    </span>
-                </p>
-                <p class="text-sm text-slate-500 mt-2">
-                    This is the cash you can claim back by filing these reports.
-                </p>
-            `;
-            listContainer.prepend(summaryElement);
-
-            const fileClaimsButton = document.createElement("button");
-            fileClaimsButton.id = "file-claims-btn";
-            fileClaimsButton.className =
-                "rh-primary-btn mt-6 w-full py-3 text-white rounded-xl font-bold shadow-lg transition";
-            fileClaimsButton.textContent = `File ${claims.length} Claims Worth $${totalEstimatedValue.toFixed(2)}`;
-            fileClaimsButton.onclick = () =>
-                showClaimFilingModal(currentClaimsData, currentTotalValue);
-
-            listContainer.appendChild(fileClaimsButton);
-        } else {
-            claimCountDisplay.textContent = "0";
-            noClaimsMessage.classList.remove("hidden");
-            renderClaimChart({}, 0);
+                listContainer.appendChild(fileClaimsButton);
+            } else {
+                claimCountDisplay.textContent = "0";
+                noClaimsMessage.classList.remove("hidden");
+                renderClaimChart({}, 0);
+            }
         }
-    }
-</script>
+    </script>
 </body>
 </html>
-
-
-
-
-
-
-

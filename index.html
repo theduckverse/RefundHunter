@@ -722,6 +722,92 @@ window.closeModalOnOutsideClick = function(event) {
         event.target.classList.add('hidden');
     }
 }
+   // ... (The rest of window.closeAuthModals and the other modal handlers)
+
+// --- AUTHENTICATION FUNCTIONS ---
+window.loginUser = async function() {
+    const email = document.getElementById('login-email').value;
+    const password = document.getElementById('login-password').value;
+
+    try {
+        await signInWithEmailAndPassword(auth, email, password);
+        closeAuthModals();
+        // The onAuthStateChanged listener will handle the rest (like calling loadUserDataAndHistory)
+    } catch (error) {
+        alert('Login failed: ' + error.message);
+    }
+}
+
+window.signupUser = async function() {
+    const email = document.getElementById('signup-email').value;
+    const password = document.getElementById('signup-password').value;
+
+    try {
+        const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+        // Create an initial user document for limits
+        const userDocRef = doc(db, 'artifacts/fbamoneyscout/users', userCredential.user.uid, 'user_data', 'limits');
+        await setDoc(userDocRef, {
+            auditsUsed: 0,
+            isPremium: false,
+            createdAt: serverTimestamp()
+        });
+        closeAuthModals();
+        // The onAuthStateChanged listener will handle the rest
+    } catch (error) {
+        alert('Signup failed: ' + error.message);
+    }
+}
+
+window.logoutUser = async function() {
+    try {
+        await auth.signOut();
+        // onAuthStateChanged handles UI update (e.g., showing login button)
+    } catch (error) {
+        console.error("Logout failed:", error);
+    }
+}
+// ---------------------------------
+    // --- FILE UPLOAD HANDLERS ---
+window.requireLoginThenSelectFile = function(event) {
+    if (!userId) {
+        // If not logged in, show the modal and clear the file input
+        event.target.value = null; // Clear selection
+        openLoginModal();
+        return;
+    }
+    
+    // If logged in, proceed to read the file
+    handleFileSelect(event); 
+}
+
+// Function to handle the actual reading of the file
+function handleFileSelect(event) {
+    const file = event.target.files[0];
+    const fileNameDisplay = document.getElementById('file-name-display');
+    const auditButton = document.getElementById('audit-button');
+    
+    if (file) {
+        selectedFileName = file.name;
+        fileNameDisplay.textContent = `Selected: ${selectedFileName} (${(file.size / 1024).toFixed(2)} KB)`;
+        auditButton.textContent = 'Audit Report';
+        auditButton.disabled = false; // Enable the button once a file is selected
+
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            uploadedFileContent = e.target.result;
+        };
+        reader.readAsText(file);
+    } else {
+        selectedFileName = "";
+        uploadedFileContent = null;
+        fileNameDisplay.textContent = 'Click to select your FBA Inventory Ledger or Daily Inventory Report (CSV file only)';
+        auditButton.textContent = 'Audit Report (No File)';
+        auditButton.disabled = true;
+    }
+}
+
+// NOTE: You will also need to define the 'Audit Report' button handler, e.g., 'startAudit()'
+// -----------------------------
     const API_BASE_URL = "https://refundhunter-backend.onrender.com";
     const appId = typeof __app_id !== "undefined" ? __app_id : "default-app-id";
 
@@ -1569,6 +1655,7 @@ async function loadUserDataAndHistory() {
 </script>
 </body>
 </html>
+
 
 
 

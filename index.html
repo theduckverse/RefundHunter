@@ -676,11 +676,15 @@
         collection,
         query,
         orderBy,
-        serverTimestamp,
-        runTransaction
+        serverTimestamp
     } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
+    // ============================
+    //  CONSTANTS & GLOBAL STATE
+    // ============================
     const AUDIT_LIMIT = 5;
+    const LOCAL_USAGE_PREFIX = "fba_audits_used_";
+
     let db, auth;
     let userId = null;
     let auditsUsed = 0;
@@ -705,6 +709,27 @@
         messagingSenderId: "1072177597124",
         appId: "1:1072177597124:web:bee84507aa63dd827f9791"
     };
+
+    // ============================
+    //  LOCAL STORAGE HELPERS
+    // ============================
+    function loadLocalAuditUsage(uid) {
+        try {
+            const raw = localStorage.getItem(`${LOCAL_USAGE_PREFIX}${uid}`);
+            const n = parseInt(raw, 10);
+            return Number.isFinite(n) && n >= 0 ? n : 0;
+        } catch (_) {
+            return 0;
+        }
+    }
+
+    function saveLocalAuditUsage(uid, used) {
+        try {
+            localStorage.setItem(`${LOCAL_USAGE_PREFIX}${uid}`, String(used));
+        } catch (e) {
+            console.warn("Failed to persist usage locally:", e);
+        }
+    }
 
     // ============================
     //  FIREBASE INIT
@@ -782,6 +807,11 @@
     window.logoutUser = async function () {
         try {
             await signOut(auth);
+            userId = null;
+            auditsUsed = 0;
+            isPremium = false;
+            updateAuditButton();
+            updateProfileDisplay();
         } catch (err) {
             alert("Logout failed: " + err.message);
         }
@@ -798,18 +828,26 @@
                 const logoutBtn = document.getElementById("nav-logout-btn");
 
                 if (user) {
-                    loginBtn.classList.add("hidden");
-                    logoutBtn.classList.remove("hidden");
                     userId = user.uid;
+                    // Load local usage immediately so UI updates even if Firestore is grumpy
+                    auditsUsed = loadLocalAuditUsage(userId);
+                    if (loginBtn) loginBtn.classList.add("hidden");
+                    if (logoutBtn) logoutBtn.classList.remove("hidden");
+                    updateAuditButton();
+                    updateProfileDisplay();
+
                     if (!isAuthReady) {
                         isAuthReady = true;
                         loadUserDataAndHistory();
                     }
                 } else {
                     userId = null;
-                    loginBtn.classList.remove("hidden");
-                    logoutBtn.classList.add("hidden");
-                    updateAuditButton(); // disable audit if logged out
+                    auditsUsed = 0;
+                    isPremium = false;
+                    if (loginBtn) loginBtn.classList.remove("hidden");
+                    if (logoutBtn) logoutBtn.classList.add("hidden");
+                    updateAuditButton();
+                    updateProfileDisplay();
                 }
             });
         } catch (e) {
@@ -819,29 +857,31 @@
     }
 
     // ============================
-    //  USER DATA + HISTORY
+    //  USER DATA + HISTORY (FIRESTORE)
     // ============================
     function getLimitsDocRef() {
-        // artifacts/fbamoneyscout/users/{uid}/user_data/limits
+        const uid = auth.currentUser?.uid || userId;
+        if (!uid) return null;
         return doc(
             db,
             "artifacts",
             "fbamoneyscout",
             "users",
-            userId,
+            uid,
             "user_data",
             "limits"
         );
     }
 
     function getHistoryCollectionRef() {
-        // artifacts/fbamoneyscout/users/{uid}/user_data/audit_history
+        const uid = auth.currentUser?.uid || userId;
+        if (!uid) return null;
         return collection(
             db,
             "artifacts",
             "fbamoneyscout",
             "users",
-            userId,
+            uid,
             "user_data",
             "audit_history"
         );
@@ -852,20 +892,30 @@
         console.log("Loading user data and history for user:", userId);
 
         const limitsDocRef = getLimitsDocRef();
+        if (!limitsDocRef) return;
 
+        // Limits doc listener (to sync isPremium + cloud usage)
         onSnapshot(
             limitsDocRef,
             (docSnap) => {
                 if (docSnap.exists()) {
                     const data = docSnap.data();
-                    auditsUsed = data.auditsUsed || 0;
-                    isPremium = data.isPremium || false;
+                    const cloudUsed = typeof data.auditsUsed === "number" ? data.auditsUsed : 0;
+                    const localUsed = loadLocalAuditUsage(userId);
+
+                    // Prefer the max so we never "lose" used count
+                    const finalUsed = Math.max(cloudUsed, localUsed);
+                    auditsUsed = finalUsed;
+                    saveLocalAuditUsage(userId, finalUsed);
+
+                    isPremium = !!data.isPremium;
                 } else {
-                    auditsUsed = 0;
-                    isPremium = false;
+                    // If doc doesn't exist, initialize it with our current local usage
+                    const startingUsed = loadLocalAuditUsage(userId);
+                    auditsUsed = startingUsed;
                     setDoc(
                         limitsDocRef,
-                        { auditsUsed: 0, isPremium: false },
+                        { auditsUsed: startingUsed, isPremium: false },
                         { merge: true }
                     ).catch(console.error);
                 }
@@ -875,11 +925,18 @@
             (error) => {
                 console.error("Error reading limits:", error);
                 document.getElementById("status-message").textContent =
-                    "Error reading free uses limit.";
+                    "Error reading free uses limit (using local counter only).";
+                // We still continue with local usage
+                auditsUsed = loadLocalAuditUsage(userId);
+                updateAuditButton();
+                updateProfileDisplay();
             }
         );
 
+        // History
         const historyCollectionRef = getHistoryCollectionRef();
+        if (!historyCollectionRef) return;
+
         const historyQuery = query(historyCollectionRef, orderBy("createdAt", "desc"));
 
         onSnapshot(
@@ -901,6 +958,7 @@
 
         try {
             const historyCollectionRef = getHistoryCollectionRef();
+            if (!historyCollectionRef) return;
 
             await setDoc(doc(historyCollectionRef), {
                 fileName: fileName,
@@ -918,46 +976,38 @@
         }
     }
 
+    // 🚀 NEW: LOCAL-FIRST COUNTER (then sync to Firestore best-effort)
     async function incrementAuditCounter() {
-        if (!db || !userId) return false;
-
-        const limitsDocRef = getLimitsDocRef();
-
-        try {
-            await runTransaction(db, async (transaction) => {
-                const docSnap = await transaction.get(limitsDocRef);
-
-                if (!docSnap.exists()) {
-                    transaction.set(limitsDocRef, {
-                        auditsUsed: 1,
-                        isPremium: false
-                    });
-                    auditsUsed = 1;
-                    return;
-                }
-
-                const data = docSnap.data();
-
-                if (data.isPremium === true) {
-                    auditsUsed = data.auditsUsed || 0;
-                    isPremium = true;
-                    return;
-                }
-
-                const newCount = (data.auditsUsed || 0) + 1;
-                transaction.update(limitsDocRef, { auditsUsed: newCount });
-                auditsUsed = newCount;
-            });
-
-            updateAuditButton();
-            updateProfileDisplay();
-            return true;
-        } catch (error) {
-            console.error("Transaction failed (incrementAuditCounter):", error);
-            document.getElementById("status-message").textContent =
-                "Fatal Error: Failed to track usage.";
+        const uid = auth.currentUser?.uid || userId;
+        if (!uid) {
+            console.error("No user ID for incrementAuditCounter");
             return false;
         }
+
+        // 1) Local first (this is what drives the UI)
+        let newCount = (auditsUsed || 0) + 1;
+        auditsUsed = newCount;
+        saveLocalAuditUsage(uid, newCount);
+        updateAuditButton();
+        updateProfileDisplay();
+
+        // 2) Firestore best-effort sync
+        try {
+            const limitsDocRef = getLimitsDocRef();
+            if (!limitsDocRef) return true;
+
+            await setDoc(
+                limitsDocRef,
+                { auditsUsed: newCount },
+                { merge: true }
+            );
+        } catch (error) {
+            console.error("Firestore sync failed (incrementAuditCounter):", error);
+            document.getElementById("status-message").textContent =
+                "Usage tracked locally. Sync issue with server.";
+        }
+
+        return true;
     }
 
     function updateProfileDisplay() {
@@ -972,7 +1022,7 @@
             const isPro = !!isPremium;
 
             if (auditsUsedEl) auditsUsedEl.textContent = used;
-            if (auditsRemainingEl) auditsRemainingEl.textContent = remaining;
+            if (auditsRemainingEl) auditsRemainingEl.textContent = isPro ? "∞" : remaining;
 
             if (usageBarEl) {
                 const pct = isPro ? 100 : Math.min((used / AUDIT_LIMIT) * 100, 100);
@@ -1036,12 +1086,15 @@
     }
 
     window.viewHistoryItem = function (docId) {
+        const uid = auth.currentUser?.uid || userId;
+        if (!uid) return;
+
         const docRef = doc(
             db,
             "artifacts",
             "fbamoneyscout",
             "users",
-            userId,
+            uid,
             "user_data",
             "audit_history",
             docId
@@ -1074,7 +1127,6 @@
     // Require login before letting user pick a file
     window.requireLoginThenSelectFile = function (event) {
         if (!auth.currentUser) {
-            // reset the input so same file can be re-selected after login
             event.target.value = null;
             openLoginModal();
             return;
@@ -1140,13 +1192,12 @@
     function updateAuditButton() {
         const auditButton = document.getElementById("audit-button");
         const freeUsesDisplay = document.getElementById("free-uses-display");
-
         if (!auditButton) return;
 
         const used = auditsUsed || 0;
         const remaining = Math.max(AUDIT_LIMIT - used, 0);
         const isFileReady = uploadedFileContent !== null;
-        const loggedIn = !!userId;
+        const loggedIn = !!(auth.currentUser || userId);
 
         auditButton.onclick = null;
 
@@ -1221,12 +1272,12 @@
     });
 
     function processAuditWrapper() {
-        if (!userId) {
+        if (!auth.currentUser && !userId) {
             openLoginModal();
             return;
         }
 
-        if (!isPremium && auditsUsed >= AUDIT_LIMIT) {
+        if (!isPremium && (auditsUsed || 0) >= AUDIT_LIMIT) {
             showUpgradeModal("audit_monthly");
             return;
         }
@@ -1381,7 +1432,7 @@
     //  BACKEND AUDIT CALL
     // ============================
     async function processAudit(csvContent, fileName) {
-        if (!isPremium && auditsUsed >= AUDIT_LIMIT) {
+        if (!isPremium && (auditsUsed || 0) >= AUDIT_LIMIT) {
             showUpgradeModal("audit_monthly");
             return;
         }
@@ -1399,7 +1450,7 @@
                 body: JSON.stringify({
                     csvContent,
                     fileName,
-                    userId: userId || "anonymous"
+                    userId: (auth.currentUser && auth.currentUser.uid) || userId || "anonymous"
                 })
             });
 
@@ -1588,6 +1639,7 @@
 </script>
 </body>
 </html>
+
 
 
 

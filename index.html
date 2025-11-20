@@ -883,101 +883,37 @@
         showTemporaryMessage("Logged Out", "You have been successfully logged out.", 'success');
     }
     
-   // =================================================================
-// --- SAFE FILE HANDLING WITH LOGIN + REAL-WORLD CSV PROTECTION ---
-// =================================================================
+    // =================================================================
+    // --- FILE HANDLING & AUDIT EXECUTION LOGIC ---
+    // =================================================================
 
-window.requireLoginThenSelectFile = function(event) {
-    const file = event.target.files[0];
-    const fileNameDisplay = document.getElementById('file-name-display');
-    const auditButton = document.getElementById('audit-button');
-
-    // Reset UI each time
-    uploadedFileContent = null;
-    selectedFileName = "";
-    auditButton.disabled = true;
-
-    // ------------------------------------------
-    // 1) Require FULL login (no anonymous users)
-    // ------------------------------------------
-    if (!auth.currentUser || auth.currentUser.isAnonymous) {
-        showTemporaryMessage(
-            "Login Required",
-            "Please log in or create an account before uploading FBA reports.",
-            "warning"
-        );
-        event.target.value = null; // Clear the file picker
-        openLoginModal();
-        return;
-    }
-
-    // -------------------------
-    // 2) Must select a file
-    // -------------------------
-    if (!file) {
-        fileNameDisplay.textContent = "Click to select your FBA Inventory Ledger or Daily Inventory Report (CSV file only)";
-        return;
-    }
-
-    // --------------------------------------------
-    // 3) File type must be .csv (Amazon exports)
-    // --------------------------------------------
-    if (file.type !== "text/csv" && !file.name.toLowerCase().endsWith(".csv")) {
-        fileNameDisplay.textContent = "Error: Please upload a .csv file only.";
-        fileNameDisplay.classList.add("text-red-500");
-        event.target.value = null;
-        return;
-    }
-
-    // ---------------------------------------------------
-    // 4) Safety: Amazon CSVs can get HUGE. Limit to ~10MB
-    // ---------------------------------------------------
-    const MAX_BYTES = 10 * 1024 * 1024; // 10 MB
-    if (file.size > MAX_BYTES) {
-        fileNameDisplay.textContent =
-            "Your file is too large. Please export a smaller date range (max ~10 MB).";
-        fileNameDisplay.classList.add("text-red-500");
-        event.target.value = null;
-        return;
-    }
-
-    // ----------------------------------------------------
-    // 5) Read the file into memory
-    // ----------------------------------------------------
-    selectedFileName = file.name;
-    fileNameDisplay.textContent = `File Selected: ${selectedFileName}`;
-    fileNameDisplay.classList.remove("text-red-500");
-
-    const reader = new FileReader();
-
-    reader.onload = (e) => {
-        const text = e.target.result || "";
-
-        // ----------------------------------------------------
-        // 6) Empty CSV guard (VERY common issue with Seller Central)
-        // ----------------------------------------------------
-        if (!text.trim()) {
-            fileNameDisplay.textContent = "This CSV appears empty. Please re-download from Seller Central.";
-            fileNameDisplay.classList.add("text-red-500");
-            event.target.value = null;
+    window.requireLoginThenSelectFile = function(event) {
+        const file = event.target.files[0];
+        if (!userId || auth.currentUser.isAnonymous) {
+            showTemporaryMessage("Login Required", "Please use the login/signup form to secure your account before uploading files.", 'warning');
+            event.target.value = null; // Clear selection
+            openLoginModal();
             return;
         }
+        
+        if (file) {
+            selectedFileName = file.name;
+            document.getElementById('file-name-display').textContent = `File Selected: ${selectedFileName}`;
+            document.getElementById('audit-button').textContent = `Audit Report (${file.name})`;
 
-        uploadedFileContent = text;
-        auditButton.disabled = false;
-        auditButton.textContent = `Audit Report (${selectedFileName})`;
-    };
-
-    reader.onerror = () => {
-        fileNameDisplay.textContent = "Error reading file.";
-        fileNameDisplay.classList.add("text-red-500");
-        event.target.value = null;
-        uploadedFileContent = null;
-    };
-
-    reader.readAsText(file);
-};
-
+            // Read the file content
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                uploadedFileContent = e.target.result;
+                document.getElementById('audit-button').disabled = false;
+            };
+            reader.readAsText(file);
+        } else {
+            uploadedFileContent = null;
+            document.getElementById('file-name-display').textContent = 'Click to select your FBA Inventory Ledger or Daily Inventory Report (CSV file only)';
+            document.getElementById('audit-button').disabled = true;
+        }
+    }
 
     window.runAudit = async function() {
         if (!uploadedFileContent || !userId) {
@@ -1430,4 +1366,3 @@ Thank you.
 </script>
 </body>
 </html>
-

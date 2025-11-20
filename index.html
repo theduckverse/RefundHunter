@@ -365,45 +365,17 @@
                             </li>
                         </ul>
                     </div>
-                    <button
-                        onclick="showUpgradeModal('audit_single')"
-                        class="mt-8 w-full py-3 rounded-xl rh-secondary-btn font-bold"
-                    >
-                        Purchase Single Audit
-                    </button>
-                </div>
+                   <button
+    onclick="startPurchase('https://buy.stripe.com/28EbJ0bvZ0rF4BuaYS7EQ01')"
+    class="mt-8 w-full py-3 rounded-xl rh-secondary-btn font-bold">
+    Purchase Single Audit
+</button>
+                  <button
+    onclick="startPurchase('https://buy.stripe.com/bJe3cuarVa2f4Buc2W7EQ00')"
+    class="mt-8 w-full py-3 rounded-xl rh-primary-btn font-bold">
+    Upgrade to Monthly Unlimited
+</button>
 
-                <div class="relative bg-white p-6 rounded-2xl shadow-2xl border-4 border-[var(--rh-primary)] scale-[1.05] flex flex-col justify-between">
-                    <div class="absolute top-0 right-0 -mt-3 -mr-3 bg-red-500 text-white text-xs font-bold py-1 px-3 rounded-full uppercase shadow-md">
-                        Best Value
-                    </div>
-                    <div>
-                        <p class="text-lg font-bold text-slate-800 mb-4">Pro Hunter Monthly</p>
-                        <p class="text-5xl font-extrabold text-slate-900 mb-2">$199</p>
-                        <p class="text-sm font-medium text-slate-500 mb-6">
-                            Billed Monthly for serious sellers
-                        </p>
-                        <ul class="text-left space-y-3 text-sm text-slate-700">
-                            <li class="flex items-center">
-                                <span class="text-[var(--rh-success)] mr-2 font-bold text-lg">&check;</span>
-                                <strong>Unlimited</strong> Audits
-                            </li>
-                            <li class="flex items-center">
-                                <span class="text-[var(--rh-success)] mr-2 font-bold text-lg">&check;</span>
-                                JSON/CSV Claim Export (Mock)
-                            </li>
-                            <li class="flex items-center">
-                                <span class="text-[var(--rh-success)] mr-2 font-bold text-lg">&check;</span>
-                                Priority Support
-                            </li>
-                        </ul>
-                    </div>
-                    <button
-                        onclick="showUpgradeModal('audit_monthly')"
-                        class="mt-8 rh-primary-btn w-full text-white p-3 rounded-xl font-bold transition"
-                    >
-                        Go Pro: Start Unlimited
-                    </button>
                 </div>
             </div>
         </div>
@@ -678,7 +650,23 @@
         orderBy,
         serverTimestamp
     } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+// -------------------------
+// STRIPE PURCHASE HANDLER
+// -------------------------
+function startPurchase(stripeLink) {
+    if (!auth.currentUser) {
+        alert("Please log in first to upgrade.");
+        return;
+    }
 
+    const uid = auth.currentUser.uid;
+
+    // Attach Firebase UID → Stripe → Webhook → Firestore upgrade
+    const checkoutUrl = `${stripeLink}?client_reference_id=${uid}`;
+
+    console.log("Redirecting to Stripe checkout:", checkoutUrl);
+    window.location.href = checkoutUrl;
+}
     // ============================
     //  CONSTANTS & GLOBAL STATE
     // ============================
@@ -1639,6 +1627,7 @@
 </script>
 </body>
 </html>
+
 
 
 

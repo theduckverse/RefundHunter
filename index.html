@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>FBA Money Scout - FBA Reimbursement Audit Tool</title>
+    <title>ClaimPilotPro - FBA Reimbursement Audit Tool</title>
     
     <!-- Tailwind CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -12,10 +12,10 @@
             theme: {
                 extend: {
                     colors: {
-                        'rh-primary': '#FE9900',
-                        'rh-dark': '#232f3e',
-                        'rh-success': '#4BB543',
-                        'rh-bg-light': '#ffffff',
+                        'cpp-primary': '#2563EB',   // primary blue
+                        'cpp-dark': '#0F172A',      // navy / slate-900
+                        'cpp-success': '#22C55E',   // bright green
+                        'cpp-bg-light': '#ffffff',
                     },
                     fontFamily: {
                         sans: ['Inter', 'sans-serif'],
@@ -27,9 +27,9 @@
 
     <style>
         :root {
-            --rh-primary: #FE9900;
-            --rh-success: #4BB543;
-            --rh-dark: #232f3e;
+            --cpp-primary: #2563EB;
+            --cpp-success: #22C55E;
+            --cpp-dark: #0F172A;
         }
 
         body {
@@ -37,29 +37,29 @@
             background-color: #f8fafc;
         }
 
-        .rh-primary-btn {
-            background-color: var(--rh-primary);
-            box-shadow: 0 4px 6px -1px rgba(254, 153, 0, 0.4);
+        .cpp-primary-btn {
+            background-color: var(--cpp-primary);
+            box-shadow: 0 4px 6px -1px rgba(37, 99, 235, 0.4);
             transition: all 0.2s ease-in-out;
         }
-        .rh-primary-btn:hover:not(:disabled) {
-            background-color: #e68a00;
+        .cpp-primary-btn:hover:not(:disabled) {
+            background-color: #1D4ED8;
             transform: translateY(-1px);
         }
 
-        .rh-secondary-btn {
-            background-color: #3b82f6;
+        .cpp-secondary-btn {
+            background-color: #0EA5E9;
             color: white;
             transition: all 0.2s ease-in-out;
         }
-        .rh-secondary-btn:hover:not(:disabled) {
-            background-color: #2563eb;
+        .cpp-secondary-btn:hover:not(:disabled) {
+            background-color: #0284C7;
             transform: translateY(-1px);
         }
 
-        .rh-focus:focus {
-            border-color: var(--rh-primary);
-            box-shadow: 0 0 0 3px rgba(254, 153, 0, 0.3);
+        .cpp-focus:focus {
+            border-color: var(--cpp-primary);
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.3);
             outline: none;
         }
 
@@ -90,31 +90,31 @@
 <nav class="backdrop-blur-lg bg-white/70 border-b border-gray-200/60 shadow-sm sticky top-0 z-50">
     <div class="max-w-7xl mx-auto px-4 lg:px-8 py-3 flex items-center justify-between">
         <div class="flex flex-col leading-tight">
-            <span class="text-2xl font-extrabold text-[var(--rh-dark)] tracking-tight">
-                FBA Money Scout
-                <span class="ml-2 h-2 w-2 bg-[var(--rh-primary)] rounded-full inline-block opacity-80"></span>
+            <span class="text-2xl font-extrabold text-[var(--cpp-dark)] tracking-tight">
+                ClaimPilotPro
+                <span class="ml-2 h-2 w-2 bg-[var(--cpp-primary)] rounded-full inline-block opacity-80"></span>
             </span>
-            <span class="text-xs text-gray-500">Stop losing money to Amazon’s errors</span>
+            <span class="text-xs text-gray-500">Your AI co-pilot for lost FBA profit</span>
         </div>
 
         <div class="hidden md:flex items-center space-x-10 font-medium">
-            <a href="#upload-section" class="text-gray-600 hover:text-[var(--rh-primary)] transition-colors duration-200">
+            <a href="#upload-section" class="text-gray-600 hover:text-[var(--cpp-primary)] transition-colors duration-200">
                 Dashboard
             </a>
-            <a href="#history-area" class="text-gray-600 hover:text-[var(--rh-primary)] transition-colors duration-200">
+            <a href="#history-area" class="text-gray-600 hover:text-[var(--cpp-primary)] transition-colors duration-200">
                 History
             </a>
-            <a href="#pricing" class="text-gray-600 hover:text-[var(--rh-primary)] transition-colors duration-200">
+            <a href="#pricing" class="text-gray-600 hover:text-[var(--cpp-primary)] transition-colors duration-200">
                 Pricing
             </a>
-            <a href="#profile-area" class="text-gray-600 hover:text-[var(--rh-primary)] transition-colors duration-200">
+            <a href="#profile-area" class="text-gray-600 hover:text-[var(--cpp-primary)] transition-colors duration-200">
                 Account
             </a>
         </div>
 
         <div class="flex items-center space-x-4">
             <button id="nav-login-btn"
-                    class="text-[var(--rh-primary)] font-semibold hover:underline"
+                    class="text-[var(--cpp-primary)] font-semibold hover:underline"
                     onclick="openLoginModal()">
                 Log In
             </button>
@@ -125,7 +125,7 @@
             </button>
             <button
                 onclick="document.getElementById('pricing').scrollIntoView({ behavior: 'smooth' })"
-                class="bg-gradient-to-r from-orange-400 to-orange-600 text-white px-4 py-2 rounded-xl font-semibold shadow-md hover:shadow-lg transition-all">
+                class="bg-gradient-to-r from-blue-500 to-blue-700 text-white px-4 py-2 rounded-xl font-semibold shadow-md hover:shadow-lg transition-all">
                 Upgrade
             </button>
         </div>
@@ -135,13 +135,13 @@
 <!-- HERO SECTION -->
 <section class="w-full bg-white py-16 px-4 md:px-10 border-b border-gray-100">
   <div class="max-w-6xl mx-auto text-center">
-    <h1 class="text-4xl md:text-6xl font-extrabold text-[var(--rh-dark)] leading-tight">
-      <span class="text-[var(--rh-primary)]">FBA Money Scout</span>
-      <span class="text-[var(--rh-dark)]"> | FBA Reimbursement Audit</span>
+    <h1 class="text-4xl md:text-6xl font-extrabold text-[var(--cpp-dark)] leading-tight">
+      <span class="text-[var(--cpp-primary)]">ClaimPilotPro</span>
+      <span class="text-[var(--cpp-dark)]"> | FBA Reimbursement Audit</span>
     </h1>
     <p class="mt-4 text-lg md:text-xl text-gray-600 max-w-3xl mx-auto">
-      Stop losing money to Amazon’s errors. Upload your Inventory Report and instantly generate
-      a list of exact, actionable reimbursement claims.
+      Upload your FBA inventory reports and let ClaimPilotPro surface missed reimbursements
+      with clear, ready-to-file claim packets.
     </p>
   </div>
 </section>
@@ -171,7 +171,7 @@
             </div>
 
             <!-- DRAG & DROP FILE AREA -->
-            <div class="mb-6 p-4 border-2 border-dashed border-gray-300 rounded-xl text-center hover:border-[var(--rh-primary)] transition duration-200">
+            <div class="mb-6 p-4 border-2 border-dashed border-gray-300 rounded-xl text-center hover:border-[var(--cpp-primary)] transition duration-200">
                 <label for="csv-file" class="cursor-pointer block py-4">
                     <svg class="mx-auto h-8 w-8 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -195,12 +195,12 @@
             <div class="flex items-center justify-between">
                 <button
                     id="audit-button"
-                    class="rh-primary-btn px-8 py-3 text-white rounded-xl font-bold shadow-lg transition disabled:opacity-50"
+                    class="cpp-primary-btn px-8 py-3 text-white rounded-xl font-bold shadow-lg transition disabled:opacity-50"
                     disabled
                 >
                     Audit Report (Loading...)
                 </button>
-                <a href="#pricing" class="text-sm text-[var(--rh-primary)] hover:underline font-medium">
+                <a href="#pricing" class="text-sm text-[var(--cpp-primary)] hover:underline font-medium">
                     See Pricing Plans
                 </a>
             </div>
@@ -211,7 +211,7 @@
         </div>
         
         <div id="loading-indicator" class="hidden text-center py-8">
-            <div class="animate-spin rounded-full h-12 w-12 border-4 border-t-4 border-[var(--rh-primary)] border-t-transparent mx-auto mb-4"></div>
+            <div class="animate-spin rounded-full h-12 w-12 border-4 border-t-4 border-[var(--cpp-primary)] border-t-transparent mx-auto mb-4"></div>
             <p class="text-slate-700 font-medium">
                 Analyzing over 10,000 lines of data... this may take a moment.
             </p>
@@ -223,8 +223,8 @@
         id="results-area"
         class="hidden w-full max-w-4xl mt-10 bg-white p-6 rounded-xl shadow-xl border border-gray-200"
     >
-        <h2 class="text-3xl font-bold text-[var(--rh-dark)] mb-4 flex items-center">
-            <span id="claim-count" class="text-4xl text-[var(--rh-success)] mr-4">0</span>
+        <h2 class="text-3xl font-bold text-[var(--cpp-dark)] mb-4 flex items-center">
+            <span id="claim-count" class="text-4xl text-[var(--cpp-success)] mr-4">0</span>
             Actionable Reimbursement Claims Found
         </h2>
         
@@ -242,7 +242,7 @@
             class="hidden bg-green-50 p-4 rounded-lg border border-green-200 mt-4"
         >
             <p class="text-green-700 font-medium">
-                Great news! Our audit found no immediate discrepancies requiring a claim in this report.
+                Great news! This report shows no obvious missed reimbursement opportunities.
             </p>
         </div>
     </section>
@@ -252,7 +252,7 @@
         id="profile-area"
         class="w-full max-w-4xl mt-10 bg-white p-6 rounded-xl shadow-xl border border-gray-200"
     >
-        <h2 class="text-2xl font-bold text-[var(--rh-dark)] mb-4 flex items-center">
+        <h2 class="text-2xl font-bold text-[var(--cpp-dark)] mb-4 flex items-center">
             <svg class="w-6 h-6 mr-2 text-slate-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                       d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37a1.724 1.724 0 002.572-1.065z"/>
@@ -281,11 +281,12 @@
                 <h3 class="font-semibold text-lg text-slate-800 mb-2">Subscription Status</h3>
                 <p class="text-xl font-bold text-gray-700" id="subscription-status">Trial User</p>
                 <p class="text-sm text-slate-500 mt-1 mb-4">
-                    Current plan includes <strong>5 free audits</strong> for testing.
+                    Your ClaimPilotPro trial includes <strong>5 free audits</strong> so you can see
+                    exactly how much you’ve been leaving on the table.
                 </p>
                 <button
                     onclick="showUpgradeModal('audit_monthly')"
-                    class="rh-primary-btn px-4 py-2 text-sm text-white rounded-lg font-medium"
+                    class="cpp-primary-btn px-4 py-2 text-sm text-white rounded-lg font-medium"
                 >
                     Manage Subscription / Upgrade
                 </button>
@@ -295,7 +296,7 @@
 
     <!-- HISTORY DISPLAY AREA -->
     <section id="history-area" class="w-full max-w-4xl mt-10 p-6">
-        <h2 class="text-2xl font-bold text-[var(--rh-dark)] mb-4">Audit History</h2>
+        <h2 class="text-2xl font-bold text-[var(--cpp-dark)] mb-4">Audit History</h2>
         <div id="history-list" class="space-y-4">
             <p id="history-loading" class="text-slate-500 italic">
                 Loading previous audits...
@@ -303,32 +304,32 @@
         </div>
     </section>
 
-        <!-- PRICING SECTION -->
+    <!-- PRICING SECTION -->
     <section id="pricing" class="py-16 bg-white mt-10 w-full border-t border-gray-200">
         <div class="max-w-6xl mx-auto px-6 text-center">
             <h2 class="text-3xl font-bold mb-3 text-slate-900">
-                Stop Leaving Money on the Table
+                Stop Letting Amazon Keep Your Money
             </h2>
             <p id="free-uses-display" class="text-xl text-slate-600 mb-12">
-                Your first 5 audits are free.
+                Your first 5 ClaimPilotPro audits are free.
             </p>
 
             <div class="grid md:grid-cols-3 gap-8 max-w-4xl mx-auto">
                 <!-- Trial Plan -->
                 <div class="bg-gray-50 p-6 rounded-2xl border-2 border-gray-300 flex flex-col justify-between">
                     <div>
-                        <p class="text-lg font-bold text-gray-700 mb-4">Trial Audit</p>
+                        <p class="text-lg font-bold text-gray-700 mb-4">Trial Flight</p>
                         <p class="text-5xl font-extrabold text-slate-900 mb-2">FREE</p>
                         <p class="text-sm font-medium text-slate-500 mb-6">
-                            Limited to the first 5 reports
+                            Scan your first 5 reports on us.
                         </p>
                         <ul class="text-left space-y-3 text-sm text-slate-700">
                             <li class="flex items-center">
-                                <span class="text-[var(--rh-success)] mr-2 font-bold text-lg">&check;</span>
+                                <span class="text-[var(--cpp-success)] mr-2 font-bold text-lg">&check;</span>
                                 5 Full-Report Audits
                             </li>
                             <li class="flex items-center">
-                                <span class="text-[var(--rh-success)] mr-2 font-bold text-lg">&check;</span>
+                                <span class="text-[var(--cpp-success)] mr-2 font-bold text-lg">&check;</span>
                                 JSON/CSV Claim Export (Mock)
                             </li>
                             <li class="flex items-center text-slate-400">
@@ -348,18 +349,18 @@
                 <!-- Single Audit Plan -->
                 <div class="bg-white p-6 rounded-2xl shadow-xl border-2 border-gray-300 flex flex-col justify-between hover:border-blue-400 transition">
                     <div>
-                        <p class="text-lg font-bold text-slate-800 mb-4">Single Audit Boost</p>
+                        <p class="text-lg font-bold text-slate-800 mb-4">Single Claim Boost</p>
                         <p class="text-5xl font-extrabold text-slate-900 mb-2">$99</p>
                         <p class="text-sm font-medium text-slate-500 mb-6">
-                            One-time purchase per report
+                            One deep-dive audit for a high-value report.
                         </p>
                         <ul class="text-left space-y-3 text-sm text-slate-700">
                             <li class="flex items-center">
-                                <span class="text-[var(--rh-success)] mr-2 font-bold text-lg">&check;</span>
+                                <span class="text-[var(--cpp-success)] mr-2 font-bold text-lg">&check;</span>
                                 1 Full-Report Audit
                             </li>
                             <li class="flex items-center">
-                                <span class="text-[var(--rh-success)] mr-2 font-bold text-lg">&check;</span>
+                                <span class="text-[var(--cpp-success)] mr-2 font-bold text-lg">&check;</span>
                                 JSON/CSV Claim Export (Mock)
                             </li>
                             <li class="flex items-center text-slate-400">
@@ -371,40 +372,40 @@
 
                     <button
                         onclick="startPurchase('https://buy.stripe.com/28EbJ0bvZ0rF4BuaYS7EQ01')"
-                        class="mt-8 w-full py-3 rounded-xl rh-secondary-btn font-bold">
+                        class="mt-8 w-full py-3 rounded-xl cpp-secondary-btn font-bold">
                         Purchase Single Audit
                     </button>
                 </div>
 
                 <!-- Pro Monthly Plan -->
-                <div class="relative bg-white p-6 rounded-2xl shadow-2xl border-4 border-[var(--rh-primary)] scale-[1.05] flex flex-col justify-between">
+                <div class="relative bg-white p-6 rounded-2xl shadow-2xl border-4 border-[var(--cpp-primary)] scale-[1.05] flex flex-col justify-between">
                     <div class="absolute top-0 right-0 -mt-3 -mr-3 bg-red-500 text-white text-xs font-bold py-1 px-3 rounded-full uppercase shadow-md">
                         Best Value
                     </div>
                     <div>
-                        <p class="text-lg font-bold text-slate-800 mb-4">Pro Hunter Monthly</p>
+                        <p class="text-lg font-bold text-slate-800 mb-4">ClaimPilotPro Monthly</p>
                         <p class="text-5xl font-extrabold text-slate-900 mb-2">$199</p>
                         <p class="text-sm font-medium text-slate-500 mb-6">
-                            Billed Monthly for serious sellers
+                            For serious FBA brands who never want to miss a reimbursement again.
                         </p>
                         <ul class="text-left space-y-3 text-sm text-slate-700">
                             <li class="flex items-center">
-                                <span class="text-[var(--rh-success)] mr-2 font-bold text-lg">&check;</span>
+                                <span class="text-[var(--cpp-success)] mr-2 font-bold text-lg">&check;</span>
                                 <strong>Unlimited</strong> Audits
                             </li>
                             <li class="flex items-center">
-                                <span class="text-[var(--rh-success)] mr-2 font-bold text-lg">&check;</span>
+                                <span class="text-[var(--cpp-success)] mr-2 font-bold text-lg">&check;</span>
                                 JSON/CSV Claim Export (Mock)
                             </li>
                             <li class="flex items-center">
-                                <span class="text-[var(--rh-success)] mr-2 font-bold text-lg">&check;</span>
+                                <span class="text-[var(--cpp-success)] mr-2 font-bold text-lg">&check;</span>
                                 Priority Support
                             </li>
                         </ul>
                     </div>
                     <button
                         onclick="startPurchase('https://buy.stripe.com/bJe3cuarVa2f4Buc2W7EQ00')"
-                        class="mt-8 rh-primary-btn w-full text-white p-3 rounded-xl font-bold transition"
+                        class="mt-8 cpp-primary-btn w-full text-white p-3 rounded-xl font-bold transition"
                     >
                         Go Pro: Start Unlimited
                     </button>
@@ -413,8 +414,8 @@
         </div>
     </section>
     
-    <footer class="py-8 bg-[var(--rh-dark)] text-center w-full text-slate-400 mt-10">
-        <p>© 2025 FBA Money Scout. Designed for FBA Sellers.</p>
+    <footer class="py-8 bg-[var(--cpp-dark)] text-center w-full text-slate-400 mt-10">
+        <p>© 2025 ClaimPilotPro. Built for Amazon FBA sellers.</p>
     </footer>
 
     <!-- UPGRADE MODAL -->
@@ -440,7 +441,7 @@
             <div class="text-center">
                 <svg
                     id="modal-icon"
-                    class="h-12 w-12 text-[var(--rh-primary)] mx-auto mb-4"
+                    class="h-12 w-12 text-[var(--cpp-primary)] mx-auto mb-4"
                     fill="none"
                     viewBox="0 0 24 24"
                     stroke="currentColor"
@@ -449,10 +450,10 @@
                     <path stroke-linecap="round" stroke-linejoin="round"
                           d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8V4m0 16v-4m-6-3H4m16 0h-4"/>
                 </svg>
-                <h2 id="modal-title" class="text-2xl font-bold mb-2 text-[var(--rh-dark)]">
+                <h2 id="modal-title" class="text-2xl font-bold mb-2 text-[var(--cpp-dark)]">
                     Upgrade Plan
                 </h2>
-                <p id="modal-price" class="text-4xl font-extrabold text-[var(--rh-success)] mb-4"></p>
+                <p id="modal-price" class="text-4xl font-extrabold text-[var(--cpp-success)] mb-4"></p>
                 <p id="modal-description" class="text-slate-600 mb-6"></p>
             </div>
             
@@ -460,7 +461,7 @@
                 <a
                     id="modal-checkout-link"
                     target="_blank"
-                    class="rh-primary-btn w-full inline-block text-white p-3 rounded-xl font-semibold text-center transition"
+                    class="cpp-primary-btn w-full inline-block text-white p-3 rounded-xl font-semibold text-center transition"
                 >
                     Secure Checkout & Unlock Audits
                 </a>
@@ -495,9 +496,9 @@
             </button>
             
             <div class="text-center mb-6">
-                <h2 class="text-3xl font-bold mb-2 text-[var(--rh-dark)] flex items-center justify-center">
+                <h2 class="text-3xl font-bold mb-2 text-[var(--cpp-dark)] flex items-center justify-center">
                     <svg
-                        class="h-8 w-8 text-[var(--rh-success)] mr-3"
+                        class="h-8 w-8 text-[var(--cpp-success)] mr-3"
                         fill="none"
                         viewBox="0 0 24 24"
                         stroke="currentColor"
@@ -510,15 +511,15 @@
                 </h2>
                 <p class="text-xl text-slate-600">
                     You are about to file
-                    <span id="filing-claim-count" class="font-bold text-[var(--rh-primary)]"></span>
+                    <span id="filing-claim-count" class="font-bold text-[var(--cpp-primary)]"></span>
                     claims worth
-                    <span id="filing-claim-value" class="font-bold text-[var(--rh-success)]"></span>.
+                    <span id="filing-claim-value" class="font-bold text-[var(--cpp-success)]"></span>.
                 </p>
             </div>
 
             <div class="grid md:grid-cols-2 gap-6">
                 <div>
-                    <h3 class="text-xl font-bold mb-3 text-[var(--rh-dark)] border-b pb-2">
+                    <h3 class="text-xl font-bold mb-3 text-[var(--cpp-dark)] border-b pb-2">
                         Step 1: Copy Claim Data (JSON)
                     </h3>
                     <p class="text-sm text-slate-600 mb-2">
@@ -537,7 +538,7 @@
                 </div>
 
                 <div>
-                    <h3 class="text-xl font-bold mb-3 text-[var(--rh-dark)] border-b pb-2">
+                    <h3 class="text-xl font-bold mb-3 text-[var(--cpp-dark)] border-b pb-2">
                         Step 2: File on Seller Central
                     </h3>
                     <ol class="list-decimal list-inside space-y-3 text-sm text-slate-700">
@@ -560,7 +561,7 @@
             </div>
 
             <div class="mt-10">
-                <h3 class="text-xl font-bold mb-3 text-[var(--rh-dark)] border-b pb-2">
+                <h3 class="text-xl font-bold mb-3 text-[var(--cpp-dark)] border-b pb-2">
                     Step 3: Copy/Paste Ready-Made Amazon Case Messages
                 </h3>
 
@@ -576,7 +577,7 @@
 
             <button
                 onclick="document.getElementById('claim-filing-modal').classList.add('hidden')"
-                class="rh-primary-btn mt-10 w-full py-3 text-white rounded-xl font-bold shadow-lg transition"
+                class="cpp-primary-btn mt-10 w-full py-3 text-white rounded-xl font-bold shadow-lg transition"
             >
                 I Understand – Close Guide
             </button>
@@ -598,28 +599,28 @@
                 ✕
             </button>
 
-            <h2 class="text-2xl font-bold mb-2 text-[var(--rh-dark)]">Log In</h2>
-            <p class="text-sm text-gray-600 mb-6">Access your FBA Money Scout dashboard</p>
+            <h2 class="text-2xl font-bold mb-2 text-[var(--cpp-dark)]">Log In</h2>
+            <p class="text-sm text-gray-600 mb-6">Access your ClaimPilotPro dashboard</p>
 
             <input id="login-email"
                    type="email"
                    placeholder="Email"
-                   class="w-full mb-3 p-3 rounded-lg border border-gray-300 rh-focus">
+                   class="w-full mb-3 p-3 rounded-lg border border-gray-300 cpp-focus">
 
             <input id="login-password"
                    type="password"
                    placeholder="Password"
-                   class="w-full mb-4 p-3 rounded-lg border border-gray-300 rh-focus">
+                   class="w-full mb-4 p-3 rounded-lg border border-gray-300 cpp-focus">
 
             <button onclick="loginUser()"
-                    class="rh-primary-btn w-full py-3 text-white rounded-xl font-bold">
+                    class="cpp-primary-btn w-full py-3 text-white rounded-xl font-bold">
                 Log In
             </button>
 
             <p class="text-sm mt-4 text-center text-gray-500">
                 Need an account?
                 <span onclick="switchToSignup()"
-                    class="text-[var(--rh-primary)] font-semibold cursor-pointer">
+                    class="text-[var(--cpp-primary)] font-semibold cursor-pointer">
                     Create one
                 </span>
             </p>
@@ -635,28 +636,28 @@
                 ✕
             </button>
 
-            <h2 class="text-2xl font-bold mb-2 text-[var(--rh-dark)]">Create Account</h2>
-            <p class="text-sm text-gray-600 mb-6">Start tracking your reimbursements</p>
+            <h2 class="text-2xl font-bold mb-2 text-[var(--cpp-dark)]">Create Account</h2>
+            <p class="text-sm text-gray-600 mb-6">Start tracking your reimbursements with ClaimPilotPro</p>
 
             <input id="signup-email"
                    type="email"
                    placeholder="Email"
-                   class="w-full mb-3 p-3 rounded-lg border border-gray-300 rh-focus">
+                   class="w-full mb-3 p-3 rounded-lg border border-gray-300 cpp-focus">
 
             <input id="signup-password"
                    type="password"
                    placeholder="Password"
-                   class="w-full mb-4 p-3 rounded-lg border border-gray-300 rh-focus">
+                   class="w-full mb-4 p-3 rounded-lg border border-gray-300 cpp-focus">
 
             <button onclick="signupUser()"
-                    class="rh-primary-btn w-full py-3 text-white rounded-xl font-bold">
+                    class="cpp-primary-btn w-full py-3 text-white rounded-xl font-bold">
                 Create Account
             </button>
 
             <p class="text-sm mt-4 text-center text-gray-500">
                 Already have an account?
                 <span onclick="switchToLogin()"
-                    class="text-[var(--rh-primary)] font-semibold cursor-pointer">
+                    class="text-[var(--cpp-primary)] font-semibold cursor-pointer">
                     Log in
                 </span>
             </p>
@@ -752,8 +753,6 @@
             }
 
             const uid = auth.currentUser.uid;
-
-            // Attach Firebase UID → Stripe Payment Link → Webhook → Firestore upgrade
             const checkoutUrl = `${stripeLink}?client_reference_id=${encodeURIComponent(uid)}`;
 
             console.log("Redirecting to Stripe checkout:", checkoutUrl);
@@ -851,7 +850,6 @@
 
                     if (user) {
                         userId = user.uid;
-                        // Load local usage immediately so UI updates even if Firestore is grumpy
                         auditsUsed = loadLocalAuditUsage(userId);
                         if (loginBtn) loginBtn.classList.add("hidden");
                         if (logoutBtn) logoutBtn.classList.remove("hidden");
@@ -925,14 +923,12 @@
                         const cloudUsed = typeof data.auditsUsed === "number" ? data.auditsUsed : 0;
                         const localUsed = loadLocalAuditUsage(userId);
 
-                        // Prefer the max so we never "lose" used count
                         const finalUsed = Math.max(cloudUsed, localUsed);
                         auditsUsed = finalUsed;
                         saveLocalAuditUsage(userId, finalUsed);
 
                         isPremium = !!data.isPremium;
                     } else {
-                        // If doc doesn't exist, initialize it with our current local usage
                         const startingUsed = loadLocalAuditUsage(userId);
                         auditsUsed = startingUsed;
                         setDoc(
@@ -948,7 +944,6 @@
                     console.error("Error reading limits:", error);
                     document.getElementById("status-message").textContent =
                         "Error reading free uses limit (using local counter only).";
-                    // We still continue with local usage
                     auditsUsed = loadLocalAuditUsage(userId);
                     updateAuditButton();
                     updateProfileDisplay();
@@ -1006,14 +1001,12 @@
                 return false;
             }
 
-            // 1) Local first (this is what drives the UI)
             let newCount = (auditsUsed || 0) + 1;
             auditsUsed = newCount;
             saveLocalAuditUsage(uid, newCount);
             updateAuditButton();
             updateProfileDisplay();
 
-            // 2) Firestore best-effort sync
             try {
                 const limitsDocRef = getLimitsDocRef();
                 if (!limitsDocRef) return true;
@@ -1053,7 +1046,7 @@
 
                 if (subscriptionStatusEl) {
                     subscriptionStatusEl.textContent = isPro
-                        ? "PRO Hunter (Unlimited)"
+                        ? "ClaimPilotPro (Unlimited)"
                         : "Trial User";
                 }
             } catch (err) {
@@ -1095,10 +1088,10 @@
                         </p>
                     </div>
                     <div class="text-right">
-                        <p class="text-lg font-extrabold text-[var(--rh-success)]">
+                        <p class="text-lg font-extrabold text-[var(--cpp-success)]">
                             $${(data.totalEstimatedValue || 0).toFixed(2)}
                         </p>
-                        <span class="text-xs text-[var(--rh-primary)] hover:underline mt-1">
+                        <span class="text-xs text-[var(--cpp-primary)] hover:underline mt-1">
                             View Details
                         </span>
                     </div>
@@ -1146,7 +1139,6 @@
         // ============================
         //  FILE UPLOAD (LOGIN-GATED)
         // ============================
-        // Require login before letting user pick a file
         window.requireLoginThenSelectFile = function (event) {
             if (!auth.currentUser) {
                 event.target.value = null;
@@ -1196,7 +1188,6 @@
                     uploadedFileContent += decoder.decode(value, { stream: true });
                 }
 
-                // finalize decoding
                 uploadedFileContent += decoder.decode();
                 updateAuditButton();
             } catch (e) {
@@ -1223,14 +1214,13 @@
 
             auditButton.onclick = null;
 
-            // Not logged in
             if (!loggedIn) {
                 auditButton.textContent = "Log in to run an audit";
                 auditButton.disabled = false;
                 auditButton.onclick = openLoginModal;
                 if (freeUsesDisplay) {
                     freeUsesDisplay.innerHTML = `
-                        Your first <strong>${AUDIT_LIMIT}</strong> audits are free.
+                        Your first <strong>${AUDIT_LIMIT}</strong> ClaimPilotPro audits are free.
                         Log in to start using them.
                     `;
                 }
@@ -1238,7 +1228,7 @@
             }
 
             if (isPremium) {
-                auditButton.textContent = "Run Audit (PRO Unlimited)";
+                auditButton.textContent = "Run Audit (ClaimPilotPro Unlimited)";
                 auditButton.disabled = !isFileReady;
 
                 if (isFileReady) {
@@ -1247,13 +1237,12 @@
 
                 if (freeUsesDisplay) {
                     freeUsesDisplay.innerHTML =
-                        'You are a <strong>PRO Hunter</strong>. Unlimited audits unlocked!';
+                        'You are on <strong>ClaimPilotPro Monthly</strong>. Unlimited audits unlocked.';
                 }
 
                 return;
             }
 
-            // Free tier
             if (remaining > 0) {
                 auditButton.textContent = `Audit Report (${remaining}/${AUDIT_LIMIT} FREE Uses Remaining)`;
                 auditButton.disabled = !isFileReady;
@@ -1264,7 +1253,7 @@
 
                 if (freeUsesDisplay) {
                     freeUsesDisplay.innerHTML = `
-                        Your first <strong>${AUDIT_LIMIT}</strong> audits are free.
+                        Your first <strong>${AUDIT_LIMIT}</strong> ClaimPilotPro audits are free.
                         You have <strong>${remaining}</strong> remaining.
                     `;
                 }
@@ -1272,7 +1261,6 @@
                 return;
             }
 
-            // Free limit exceeded
             auditButton.textContent = "Audit Report (Upgrade Required)";
             auditButton.disabled = false;
             auditButton.onclick = () => showUpgradeModal("audit_monthly");
@@ -1340,19 +1328,19 @@
             const productDetails =
                 {
                     audit_monthly: {
-                        title: "Unlock Unlimited Audits",
+                        title: "Unlock Unlimited ClaimPilotPro Audits",
                         price: "$199 / Month",
                         description:
-                            "Go Pro and get unlimited access to FBA Money Scout. Never miss a claim again.",
+                            "Go Pro and get unlimited access to ClaimPilotPro. Never miss a reimbursement again.",
                         iconPath:
                             "M12 1c-4.97 0-9 4.03-9 9s4.03 9 9 9 9-4.03 9-9-4.03-9-9-9zM10 13l2-2 2 2M10 11l2-2 2 2",
                         url: `https://buy.stripe.com/bJe3cuarVa2f4Buc2W7EQ00`
                     },
                     audit_single: {
-                        title: "Purchase Single Audit Boost",
+                        title: "Purchase Single Claim Boost",
                         price: "$99 One-Time",
                         description:
-                            "Purchase a single audit report immediately. Great for occasional use or one large report.",
+                            "Purchase a single audit report immediately. Perfect for a one-off deep dive.",
                         iconPath: "M12 6v6m0 0v6m0-6h6m-6 0H6",
                         url: `https://buy.stripe.com/28EbJ0bvZ0rF4BuaYS7EQ01`
                     }
@@ -1365,7 +1353,6 @@
             description.textContent = productDetails.description;
             checkoutLink.href = productDetails.url;
 
-            // Make the CTA use startPurchase so we always send Firebase UID to Stripe
             checkoutLink.onclick = (e) => {
                 e.preventDefault();
                 window.startPurchase(productDetails.url);
@@ -1538,7 +1525,7 @@
             const values = Object.values(data);
             const numBars = reasons.length;
 
-            const colors = ["#FE9900", "#4BB543", "#3498DB", "#E74C3C", "#9B59B6", "#F39C12"];
+            const colors = ["#2563EB", "#22C55E", "#0EA5E9", "#F97316", "#EC4899", "#F59E0B"];
             const darkText = "#1f2937";
             const lightGrey = "#e5e7eb";
 
@@ -1593,7 +1580,7 @@
 
             resultsArea.classList.remove("hidden");
             resultsArea.querySelector("h2").innerHTML = `
-                <span id="claim-count" class="text-4xl text-[var(--rh-success)] mr-4">
+                <span id="claim-count" class="text-4xl text-[var(--cpp-success)] mr-4">
                     ${claims.length}
                 </span>
                 Actionable Reimbursement Claims Found in: ${auditFileName}
@@ -1618,7 +1605,7 @@
                     claimElement.innerHTML = `
                         <div class="flex justify-between items-center mb-2">
                             <span class="text-lg font-bold text-slate-800">${reason}</span>
-                            <span class="text-xl font-extrabold text-[var(--rh-success)]">
+                            <span class="text-xl font-extrabold text-[var(--cpp-success)]">
                                 $${value.toFixed(2)}
                             </span>
                         </div>
@@ -1635,11 +1622,11 @@
 
                 const summaryElement = document.createElement("div");
                 summaryElement.className =
-                    "bg-white p-6 rounded-xl border-4 border-[var(--rh-primary)] shadow-inner mb-6";
+                    "bg-white p-6 rounded-xl border-4 border-[var(--cpp-primary)] shadow-inner mb-6";
                 summaryElement.innerHTML = `
-                    <p class="text-xl font-bold text-[var(--rh-dark)] flex justify-between">
+                    <p class="text-xl font-bold text-[var(--cpp-dark)] flex justify-between">
                         <span>Total Estimated Reimbursement Value:</span> 
-                        <span class="text-3xl text-[var(--rh-success)] font-extrabold">
+                        <span class="text-3xl text-[var(--cpp-success)] font-extrabold">
                             $${totalEstimatedValue.toFixed(2)}
                         </span>
                     </p>
@@ -1652,7 +1639,7 @@
                 const fileClaimsButton = document.createElement("button");
                 fileClaimsButton.id = "file-claims-btn";
                 fileClaimsButton.className =
-                    "rh-primary-btn mt-6 w-full py-3 text-white rounded-xl font-bold shadow-lg transition";
+                    "cpp-primary-btn mt-6 w-full py-3 text-white rounded-xl font-bold shadow-lg transition";
                 fileClaimsButton.textContent = `File ${claims.length} Claims Worth $${totalEstimatedValue.toFixed(2)}`;
                 fileClaimsButton.onclick = () =>
                     showClaimFilingModal(currentClaimsData, currentTotalValue);

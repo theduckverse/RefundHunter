@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>ClaimPilotPro - FBA Reimbursement Audit Tool</title>
+    <title>ClaimPilotPro – Amazon FBA Reimbursement Audit</title>
     
     <!-- Tailwind CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -12,13 +12,13 @@
             theme: {
                 extend: {
                     colors: {
-                        'cpp-primary': '#2563EB',   // primary blue
-                        'cpp-dark': '#0F172A',      // navy / slate-900
-                        'cpp-success': '#22C55E',   // bright green
-                        'cpp-bg-light': '#ffffff',
+                        'rh-primary': '#0F766E',   // teal
+                        'rh-dark': '#020617',      // near-black
+                        'rh-success': '#22C55E',   // green
+                        'rh-bg-light': '#ffffff',
                     },
                     fontFamily: {
-                        sans: ['Inter', 'sans-serif'],
+                        sans: ['Inter', 'system-ui', 'sans-serif'],
                     }
                 },
             },
@@ -27,47 +27,47 @@
 
     <style>
         :root {
-            --cpp-primary: #2563EB;
-            --cpp-success: #22C55E;
-            --cpp-dark: #0F172A;
+            --rh-primary: #0F766E;
+            --rh-success: #22C55E;
+            --rh-dark: #020617;
         }
 
         body {
-            font-family: 'Inter', sans-serif;
+            font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
             background-color: #f8fafc;
         }
 
-        .cpp-primary-btn {
-            background-color: var(--cpp-primary);
-            box-shadow: 0 4px 6px -1px rgba(37, 99, 235, 0.4);
+        .rh-primary-btn {
+            background-color: var(--rh-primary);
+            box-shadow: 0 4px 6px -1px rgba(15, 118, 110, 0.4);
             transition: all 0.2s ease-in-out;
         }
-        .cpp-primary-btn:hover:not(:disabled) {
-            background-color: #1D4ED8;
+        .rh-primary-btn:hover:not(:disabled) {
+            background-color: #115e59;
             transform: translateY(-1px);
         }
 
-        .cpp-secondary-btn {
-            background-color: #0EA5E9;
+        .rh-secondary-btn {
+            background-color: #3b82f6;
             color: white;
             transition: all 0.2s ease-in-out;
         }
-        .cpp-secondary-btn:hover:not(:disabled) {
-            background-color: #0284C7;
+        .rh-secondary-btn:hover:not(:disabled) {
+            background-color: #2563eb;
             transform: translateY(-1px);
         }
 
-        .cpp-focus:focus {
-            border-color: var(--cpp-primary);
-            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.3);
+        .rh-focus:focus {
+            border-color: var(--rh-primary);
+            box-shadow: 0 0 0 3px rgba(15, 118, 110, 0.35);
             outline: none;
         }
 
         .main-card-shadow {
             box-shadow:
-                0 10px 15px -3px rgba(0, 0, 0, 0.1),
-                0 4px 6px -2px rgba(0, 0, 0, 0.05),
-                inset 0 0 10px rgba(0, 0, 0, 0.02);
+                0 10px 15px -3px rgba(15, 23, 42, 0.15),
+                0 4px 6px -2px rgba(15, 23, 42, 0.1),
+                inset 0 0 10px rgba(15, 23, 42, 0.02);
         }
 
         #claim-chart {
@@ -76,7 +76,7 @@
         }
 
         #claim-json-data {
-            font-family: monospace;
+            font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
             white-space: pre-wrap;
             word-wrap: break-word;
             max-height: 200px;
@@ -87,34 +87,39 @@
 <body class="text-slate-800">
 
 <!-- ======= NAVBAR ======= -->
-<nav class="backdrop-blur-lg bg-white/70 border-b border-gray-200/60 shadow-sm sticky top-0 z-50">
+<nav class="backdrop-blur-lg bg-white/80 border-b border-slate-200/70 shadow-sm sticky top-0 z-50">
     <div class="max-w-7xl mx-auto px-4 lg:px-8 py-3 flex items-center justify-between">
-        <div class="flex flex-col leading-tight">
-            <span class="text-2xl font-extrabold text-[var(--cpp-dark)] tracking-tight">
-                ClaimPilotPro
-                <span class="ml-2 h-2 w-2 bg-[var(--cpp-primary)] rounded-full inline-block opacity-80"></span>
-            </span>
-            <span class="text-xs text-gray-500">Your AI co-pilot for lost FBA profit</span>
+        <div class="flex items-center space-x-3 leading-tight">
+            <div class="h-9 w-9 rounded-xl bg-[var(--rh-primary)]/10 border border-[var(--rh-primary)] flex items-center justify-center">
+                <span class="text-[var(--rh-primary)] font-extrabold text-lg tracking-tight">CP</span>
+            </div>
+            <div class="flex flex-col">
+                <span class="text-2xl font-extrabold text-[var(--rh-dark)] tracking-tight">
+                    ClaimPilotPro
+                    <span class="ml-1 h-2 w-2 bg-[var(--rh-success)] rounded-full inline-block opacity-80"></span>
+                </span>
+                <span class="text-xs text-slate-500">AI-powered Amazon FBA reimbursement audits</span>
+            </div>
         </div>
 
         <div class="hidden md:flex items-center space-x-10 font-medium">
-            <a href="#upload-section" class="text-gray-600 hover:text-[var(--cpp-primary)] transition-colors duration-200">
+            <a href="#upload-section" class="text-gray-600 hover:text-[var(--rh-primary)] transition-colors duration-200">
                 Dashboard
             </a>
-            <a href="#history-area" class="text-gray-600 hover:text-[var(--cpp-primary)] transition-colors duration-200">
+            <a href="#history-area" class="text-gray-600 hover:text-[var(--rh-primary)] transition-colors duration-200">
                 History
             </a>
-            <a href="#pricing" class="text-gray-600 hover:text-[var(--cpp-primary)] transition-colors duration-200">
+            <a href="#pricing" class="text-gray-600 hover:text-[var(--rh-primary)] transition-colors duration-200">
                 Pricing
             </a>
-            <a href="#profile-area" class="text-gray-600 hover:text-[var(--cpp-primary)] transition-colors duration-200">
+            <a href="#profile-area" class="text-gray-600 hover:text-[var(--rh-primary)] transition-colors duration-200">
                 Account
             </a>
         </div>
 
         <div class="flex items-center space-x-4">
             <button id="nav-login-btn"
-                    class="text-[var(--cpp-primary)] font-semibold hover:underline"
+                    class="text-[var(--rh-primary)] font-semibold hover:underline"
                     onclick="openLoginModal()">
                 Log In
             </button>
@@ -125,25 +130,97 @@
             </button>
             <button
                 onclick="document.getElementById('pricing').scrollIntoView({ behavior: 'smooth' })"
-                class="bg-gradient-to-r from-blue-500 to-blue-700 text-white px-4 py-2 rounded-xl font-semibold shadow-md hover:shadow-lg transition-all">
-                Upgrade
+                class="bg-gradient-to-r from-emerald-500 to-teal-600 text-white px-4 py-2 rounded-xl font-semibold shadow-md hover:shadow-lg transition-all">
+                View Plans
             </button>
         </div>
     </div>
 </nav>
 
 <!-- HERO SECTION -->
-<section class="w-full bg-white py-16 px-4 md:px-10 border-b border-gray-100">
-  <div class="max-w-6xl mx-auto text-center">
-    <h1 class="text-4xl md:text-6xl font-extrabold text-[var(--cpp-dark)] leading-tight">
-      <span class="text-[var(--cpp-primary)]">ClaimPilotPro</span>
-      <span class="text-[var(--cpp-dark)]"> | FBA Reimbursement Audit</span>
-    </h1>
-    <p class="mt-4 text-lg md:text-xl text-gray-600 max-w-3xl mx-auto">
-      Upload your FBA inventory reports and let ClaimPilotPro surface missed reimbursements
-      with clear, ready-to-file claim packets.
-    </p>
-  </div>
+<section class="w-full bg-white py-14 px-4 md:px-10 border-b border-gray-100">
+    <div class="max-w-6xl mx-auto grid md:grid-cols-[1.2fr,0.9fr] gap-10 items-center">
+        <div class="text-center md:text-left">
+            <p class="inline-flex items-center px-3 py-1 rounded-full bg-teal-50 text-xs font-semibold text-teal-700 border border-teal-100 mb-4">
+                <span class="h-1.5 w-1.5 rounded-full bg-teal-500 mr-2"></span>
+                New · AI-powered FBA reimbursement assistant
+            </p>
+            <h1 class="text-4xl md:text-5xl lg:text-6xl font-extrabold text-[var(--rh-dark)] leading-tight">
+                Recover hidden
+                <span class="text-[var(--rh-primary)]">FBA cash</span>
+                in minutes, not months.
+            </h1>
+            <p class="mt-4 text-lg md:text-xl text-gray-600 max-w-xl">
+                Upload your Amazon FBA inventory report and let ClaimPilotPro surface
+                missed reimbursements – complete with claim-ready case language you can
+                paste straight into Seller Central.
+            </p>
+            <div class="mt-6 flex flex-col sm:flex-row gap-3 sm:gap-4 items-center">
+                <button
+                    onclick="document.getElementById('upload-section').scrollIntoView({ behavior: 'smooth' })"
+                    class="rh-primary-btn px-6 py-3 text-white rounded-xl font-semibold shadow-lg flex items-center justify-center gap-2 w-full sm:w-auto"
+                >
+                    Start Free Audit
+                    <span class="text-xs font-normal bg-white/10 px-2 py-0.5 rounded-full">
+                        No card required · 5 free reports
+                    </span>
+                </button>
+                <button
+                    onclick="document.getElementById('history-area').scrollIntoView({ behavior: 'smooth' })"
+                    class="px-5 py-3 rounded-xl border border-slate-200 bg-slate-50 text-slate-700 font-medium hover:bg-slate-100 transition w-full sm:w-auto"
+                >
+                    View Demo Audit History
+                </button>
+            </div>
+            <p class="mt-3 text-xs text-slate-500 flex items-center gap-2">
+                <span class="inline-flex -space-x-2">
+                    <span class="h-6 w-6 rounded-full bg-teal-500/20 border border-white"></span>
+                    <span class="h-6 w-6 rounded-full bg-emerald-500/20 border border-white"></span>
+                    <span class="h-6 w-6 rounded-full bg-sky-500/20 border border-white"></span>
+                </span>
+                Trusted workflow pattern used by 6- and 7-figure FBA operators
+            </p>
+        </div>
+
+        <div class="hidden md:block">
+            <div class="bg-slate-900 rounded-2xl p-5 shadow-2xl border border-slate-800 relative overflow-hidden">
+                <div class="absolute inset-0 opacity-20 pointer-events-none"
+                     style="background-image: radial-gradient(circle at 10% 20%, rgba(45,212,191,0.35), transparent 55%), radial-gradient(circle at 80% 0%, rgba(56,189,248,0.3), transparent 55%);">
+                </div>
+                <div class="relative">
+                    <div class="flex items-center justify-between mb-4">
+                        <p class="text-xs uppercase tracking-[0.2em] text-teal-300/80">Live Audit Preview</p>
+                        <span class="px-2 py-1 rounded-full bg-emerald-500/20 text-emerald-300 text-[10px] font-semibold border border-emerald-400/40">
+                            +$4,820.17 detected
+                        </span>
+                    </div>
+                    <div class="space-y-3 text-xs text-slate-200/90 font-mono max-h-60 overflow-hidden">
+                        <div class="flex justify-between">
+                            <span class="text-slate-400">SKU-KITCHEN-SET</span>
+                            <span class="text-emerald-400 font-semibold">+$742.80</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-slate-400">SKU-PET-BUNDLE</span>
+                            <span class="text-emerald-400 font-semibold">+$1,203.10</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-slate-400">SKU-OUTDOOR-PRO</span>
+                            <span class="text-emerald-400 font-semibold">+$2,874.27</span>
+                        </div>
+                        <hr class="border-slate-700/70 my-2" />
+                        <p class="text-[11px] text-slate-400">
+                            ClaimPilotPro parses your FBA inventory ledger, flags exceptions, and drafts
+                            Amazon-ready messages referencing exact SKUs, quantities, and reference IDs.
+                        </p>
+                    </div>
+                    <div class="mt-5 flex items-center justify-between text-[11px] text-slate-300/90">
+                        <span>Report type: <span class="font-semibold text-slate-50">Inventory Ledger</span></span>
+                        <span>Avg. time saved per audit: <span class="font-semibold text-emerald-400">2–4 hours</span></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </section>
 
 <!-- MAIN APPLICATION CONTAINER -->
@@ -151,27 +228,32 @@
     <!-- FILE UPLOAD AND ACTION AREA -->
     <main class="w-full max-w-2xl bg-white p-8 rounded-xl mt-10 main-card-shadow border border-gray-200">
         <div id="upload-section">
-            <h2 class="text-2xl font-semibold mb-6 text-slate-800">
+            <h2 class="text-2xl font-semibold mb-1 text-slate-900">
                 1. Upload Your Amazon Report (.CSV)
             </h2>
+            <p class="text-sm text-slate-500 mb-4">
+                ClaimPilotPro currently supports FBA <span class="font-semibold">Inventory Ledger</span> and
+                <span class="font-semibold">Daily Inventory History</span> reports.
+            </p>
             <p id="status-message" class="text-sm text-gray-500 mb-4"></p>
 
-            <div class="mt-4 mb-6 p-4 bg-blue-50 border-l-4 border-blue-400 rounded-lg">
-                <h3 class="font-bold text-blue-800 flex items-center">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
-                        <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd" />
+            <div class="mt-2 mb-6 p-4 bg-teal-50/70 border border-teal-100 rounded-xl">
+                <h3 class="font-semibold text-teal-900 flex items-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2 text-teal-600" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M18 10A8 8 0 114 4.582V4a1 1 0 112 0v4a1 1 0 01-1 1H1a1 1 0 110-2h2.101A6.002 6.002 0 1016 10a1 1 0 112 0z" clip-rule="evenodd" />
                     </svg>
                     Where to find your report:
                 </h3>
-                <ul class="list-disc list-inside text-sm text-blue-700 mt-2 space-y-1">
-                    <li>Go to <strong>Amazon Seller Central</strong> → Reports → Fulfillment.</li>
+                <ul class="list-disc list-inside text-sm text-teal-800 mt-2 space-y-1">
+                    <li>Go to <strong>Amazon Seller Central</strong> → <strong>Reports → Fulfillment</strong>.</li>
                     <li>Download the <strong>Inventory Ledger Report</strong> or <strong>Daily Inventory History Report</strong>.</li>
-                    <li>Ensure the file format is <strong>.CSV</strong> and includes the full transaction history.</li>
+                    <li>Set a reasonable date range; very large files may need to be split.</li>
+                    <li>Ensure the file is saved as <strong>.CSV</strong> before uploading.</li>
                 </ul>
             </div>
 
             <!-- DRAG & DROP FILE AREA -->
-            <div class="mb-6 p-4 border-2 border-dashed border-gray-300 rounded-xl text-center hover:border-[var(--cpp-primary)] transition duration-200">
+            <div class="mb-6 p-4 border-2 border-dashed border-gray-300 rounded-xl text-center hover:border-[var(--rh-primary)] transition duration-200 bg-slate-50/40">
                 <label for="csv-file" class="cursor-pointer block py-4">
                     <svg class="mx-auto h-8 w-8 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -180,7 +262,10 @@
                               d="M15 15l-3-3m0 0l-3 3m3-3v8"/>
                     </svg>
                     <p class="mt-2 text-sm text-gray-600 font-medium" id="file-name-display">
-                        Click to select your FBA Inventory Ledger or Daily Inventory Report (CSV file only)
+                        Click to upload your FBA Inventory Ledger or Daily Inventory History report (.csv)
+                    </p>
+                    <p class="mt-1 text-[11px] text-slate-400">
+                        We never store your raw report – it’s processed on the fly for this audit only.
                     </p>
                 </label>
                 <input 
@@ -192,28 +277,29 @@
                 />
             </div>
 
-            <div class="flex items-center justify-between">
+            <div class="flex items-center justify-between gap-4 flex-wrap">
                 <button
                     id="audit-button"
-                    class="cpp-primary-btn px-8 py-3 text-white rounded-xl font-bold shadow-lg transition disabled:opacity-50"
+                    class="rh-primary-btn px-8 py-3 text-white rounded-xl font-bold shadow-lg transition disabled:opacity-50"
                     disabled
                 >
                     Audit Report (Loading...)
                 </button>
-                <a href="#pricing" class="text-sm text-[var(--cpp-primary)] hover:underline font-medium">
-                    See Pricing Plans
+                <a href="#pricing" class="text-sm text-[var(--rh-primary)] hover:underline font-medium">
+                    See pricing & upgrade options
                 </a>
             </div>
 
             <p class="text-xs text-gray-500 mt-4">
-                Note: No raw data is stored. Your file content is sent directly to the AI for analysis.
+                Note: ClaimPilotPro analyzes patterns to highlight likely reimbursement opportunities. Always review
+                claims and comply with Amazon’s TOS when filing.
             </p>
         </div>
         
         <div id="loading-indicator" class="hidden text-center py-8">
-            <div class="animate-spin rounded-full h-12 w-12 border-4 border-t-4 border-[var(--cpp-primary)] border-t-transparent mx-auto mb-4"></div>
+            <div class="animate-spin rounded-full h-12 w-12 border-4 border-t-4 border-[var(--rh-primary)] border-t-transparent mx-auto mb-4"></div>
             <p class="text-slate-700 font-medium">
-                Analyzing over 10,000 lines of data... this may take a moment.
+                Analyzing thousands of rows for discrepancies... this may take a moment.
             </p>
         </div>
     </main>
@@ -223,8 +309,8 @@
         id="results-area"
         class="hidden w-full max-w-4xl mt-10 bg-white p-6 rounded-xl shadow-xl border border-gray-200"
     >
-        <h2 class="text-3xl font-bold text-[var(--cpp-dark)] mb-4 flex items-center">
-            <span id="claim-count" class="text-4xl text-[var(--cpp-success)] mr-4">0</span>
+        <h2 class="text-3xl font-bold text-[var(--rh-dark)] mb-4 flex items-center">
+            <span id="claim-count" class="text-4xl text-[var(--rh-success)] mr-4">0</span>
             Actionable Reimbursement Claims Found
         </h2>
         
@@ -242,7 +328,7 @@
             class="hidden bg-green-50 p-4 rounded-lg border border-green-200 mt-4"
         >
             <p class="text-green-700 font-medium">
-                Great news! This report shows no obvious missed reimbursement opportunities.
+                Great news! This report shows no obvious discrepancies that warrant a reimbursement claim.
             </p>
         </div>
     </section>
@@ -252,7 +338,7 @@
         id="profile-area"
         class="w-full max-w-4xl mt-10 bg-white p-6 rounded-xl shadow-xl border border-gray-200"
     >
-        <h2 class="text-2xl font-bold text-[var(--cpp-dark)] mb-4 flex items-center">
+        <h2 class="text-2xl font-bold text-[var(--rh-dark)] mb-4 flex items-center">
             <svg class="w-6 h-6 mr-2 text-slate-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                       d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37a1.724 1.724 0 002.572-1.065z"/>
@@ -263,17 +349,17 @@
         </h2>
 
         <div class="grid md:grid-cols-2 gap-6 mt-4">
-            <div class="bg-blue-50 p-5 rounded-xl border border-blue-200">
-                <h3 class="font-semibold text-lg text-blue-800 mb-2">Audit Limits</h3>
-                <p class="text-4xl font-extrabold text-blue-600 mb-3" id="usage-display">
+            <div class="bg-teal-50 p-5 rounded-xl border border-teal-100">
+                <h3 class="font-semibold text-lg text-teal-900 mb-2">Audit Limits</h3>
+                <p class="text-4xl font-extrabold text-teal-700 mb-3" id="usage-display">
                     <span id="audits-used">0</span> / 5
-                    <span class="text-base font-normal text-blue-500">Free Audits Used</span>
+                    <span class="text-base font-normal text-teal-600">Free Audits Used</span>
                 </p>
-                <div id="usage-progress" class="w-full bg-blue-200 rounded-full h-2.5">
-                    <div id="usage-bar" class="bg-blue-600 h-2.5 rounded-full" style="width: 0%"></div>
+                <div id="usage-progress" class="w-full bg-teal-100 rounded-full h-2.5">
+                    <div id="usage-bar" class="bg-teal-600 h-2.5 rounded-full" style="width: 0%"></div>
                 </div>
-                <p class="text-sm text-blue-700 mt-2">
-                    <span id="audits-remaining">5</span> audits remaining before upgrade is suggested.
+                <p class="text-sm text-teal-800 mt-2">
+                    <span id="audits-remaining">5</span> audits remaining before an upgrade is recommended.
                 </p>
             </div>
 
@@ -281,12 +367,12 @@
                 <h3 class="font-semibold text-lg text-slate-800 mb-2">Subscription Status</h3>
                 <p class="text-xl font-bold text-gray-700" id="subscription-status">Trial User</p>
                 <p class="text-sm text-slate-500 mt-1 mb-4">
-                    Your ClaimPilotPro trial includes <strong>5 free audits</strong> so you can see
-                    exactly how much you’ve been leaving on the table.
+                    Your ClaimPilotPro trial includes <strong>5 free audits</strong> so you can validate your recovered cash
+                    before upgrading.
                 </p>
                 <button
                     onclick="showUpgradeModal('audit_monthly')"
-                    class="cpp-primary-btn px-4 py-2 text-sm text-white rounded-lg font-medium"
+                    class="rh-primary-btn px-4 py-2 text-sm text-white rounded-lg font-medium"
                 >
                     Manage Subscription / Upgrade
                 </button>
@@ -296,7 +382,10 @@
 
     <!-- HISTORY DISPLAY AREA -->
     <section id="history-area" class="w-full max-w-4xl mt-10 p-6">
-        <h2 class="text-2xl font-bold text-[var(--cpp-dark)] mb-4">Audit History</h2>
+        <h2 class="text-2xl font-bold text-[var(--rh-dark)] mb-1">Audit History</h2>
+        <p class="text-sm text-slate-500 mb-3">
+            Every completed audit is saved here so you can revisit high-value claims, re-export data, and compare performance over time.
+        </p>
         <div id="history-list" class="space-y-4">
             <p id="history-loading" class="text-slate-500 italic">
                 Loading previous audits...
@@ -311,25 +400,25 @@
                 Stop Letting Amazon Keep Your Money
             </h2>
             <p id="free-uses-display" class="text-xl text-slate-600 mb-12">
-                Your first 5 ClaimPilotPro audits are free.
+                Your first 5 audits with ClaimPilotPro are free.
             </p>
 
             <div class="grid md:grid-cols-3 gap-8 max-w-4xl mx-auto">
                 <!-- Trial Plan -->
-                <div class="bg-gray-50 p-6 rounded-2xl border-2 border-gray-300 flex flex-col justify-between">
+                <div class="bg-gray-50 p-6 rounded-2xl border-2 border-gray-200 flex flex-col justify-between">
                     <div>
-                        <p class="text-lg font-bold text-gray-700 mb-4">Trial Flight</p>
+                        <p class="text-lg font-bold text-gray-700 mb-4">Trial Audit</p>
                         <p class="text-5xl font-extrabold text-slate-900 mb-2">FREE</p>
                         <p class="text-sm font-medium text-slate-500 mb-6">
-                            Scan your first 5 reports on us.
+                            Perfect to validate your first reimbursements
                         </p>
                         <ul class="text-left space-y-3 text-sm text-slate-700">
                             <li class="flex items-center">
-                                <span class="text-[var(--cpp-success)] mr-2 font-bold text-lg">&check;</span>
-                                5 Full-Report Audits
+                                <span class="text-[var(--rh-success)] mr-2 font-bold text-lg">&check;</span>
+                                5 Full-Report AI Audits
                             </li>
                             <li class="flex items-center">
-                                <span class="text-[var(--cpp-success)] mr-2 font-bold text-lg">&check;</span>
+                                <span class="text-[var(--rh-success)] mr-2 font-bold text-lg">&check;</span>
                                 JSON/CSV Claim Export (Mock)
                             </li>
                             <li class="flex items-center text-slate-400">
@@ -347,20 +436,20 @@
                 </div>
 
                 <!-- Single Audit Plan -->
-                <div class="bg-white p-6 rounded-2xl shadow-xl border-2 border-gray-300 flex flex-col justify-between hover:border-blue-400 transition">
+                <div class="bg-white p-6 rounded-2xl shadow-xl border-2 border-gray-200 flex flex-col justify-between hover:border-teal-400 transition">
                     <div>
-                        <p class="text-lg font-bold text-slate-800 mb-4">Single Claim Boost</p>
+                        <p class="text-lg font-bold text-slate-800 mb-4">Single Audit Boost</p>
                         <p class="text-5xl font-extrabold text-slate-900 mb-2">$99</p>
                         <p class="text-sm font-medium text-slate-500 mb-6">
-                            One deep-dive audit for a high-value report.
+                            One-time purchase for a high-stakes report
                         </p>
                         <ul class="text-left space-y-3 text-sm text-slate-700">
                             <li class="flex items-center">
-                                <span class="text-[var(--cpp-success)] mr-2 font-bold text-lg">&check;</span>
+                                <span class="text-[var(--rh-success)] mr-2 font-bold text-lg">&check;</span>
                                 1 Full-Report Audit
                             </li>
                             <li class="flex items-center">
-                                <span class="text-[var(--cpp-success)] mr-2 font-bold text-lg">&check;</span>
+                                <span class="text-[var(--rh-success)] mr-2 font-bold text-lg">&check;</span>
                                 JSON/CSV Claim Export (Mock)
                             </li>
                             <li class="flex items-center text-slate-400">
@@ -372,50 +461,53 @@
 
                     <button
                         onclick="startPurchase('https://buy.stripe.com/28EbJ0bvZ0rF4BuaYS7EQ01')"
-                        class="mt-8 w-full py-3 rounded-xl cpp-secondary-btn font-bold">
+                        class="mt-8 w-full py-3 rounded-xl rh-secondary-btn font-bold">
                         Purchase Single Audit
                     </button>
                 </div>
 
                 <!-- Pro Monthly Plan -->
-                <div class="relative bg-white p-6 rounded-2xl shadow-2xl border-4 border-[var(--cpp-primary)] scale-[1.05] flex flex-col justify-between">
-                    <div class="absolute top-0 right-0 -mt-3 -mr-3 bg-red-500 text-white text-xs font-bold py-1 px-3 rounded-full uppercase shadow-md">
-                        Best Value
+                <div class="relative bg-white p-6 rounded-2xl shadow-2xl border-4 border-[var(--rh-primary)] scale-[1.03] flex flex-col justify-between">
+                    <div class="absolute top-0 right-0 -mt-3 -mr-3 bg-emerald-500 text-white text-xs font-bold py-1 px-3 rounded-full uppercase shadow-md">
+                        Best for Pros
                     </div>
                     <div>
                         <p class="text-lg font-bold text-slate-800 mb-4">ClaimPilotPro Monthly</p>
                         <p class="text-5xl font-extrabold text-slate-900 mb-2">$199</p>
                         <p class="text-sm font-medium text-slate-500 mb-6">
-                            For serious FBA brands who never want to miss a reimbursement again.
+                            For operators who audit regularly and hate leaving money behind
                         </p>
                         <ul class="text-left space-y-3 text-sm text-slate-700">
                             <li class="flex items-center">
-                                <span class="text-[var(--cpp-success)] mr-2 font-bold text-lg">&check;</span>
+                                <span class="text-[var(--rh-success)] mr-2 font-bold text-lg">&check;</span>
                                 <strong>Unlimited</strong> Audits
                             </li>
                             <li class="flex items-center">
-                                <span class="text-[var(--cpp-success)] mr-2 font-bold text-lg">&check;</span>
+                                <span class="text-[var(--rh-success)] mr-2 font-bold text-lg">&check;</span>
                                 JSON/CSV Claim Export (Mock)
                             </li>
                             <li class="flex items-center">
-                                <span class="text-[var(--cpp-success)] mr-2 font-bold text-lg">&check;</span>
+                                <span class="text-[var(--rh-success)] mr-2 font-bold text-lg">&check;</span>
                                 Priority Support
                             </li>
                         </ul>
                     </div>
                     <button
                         onclick="startPurchase('https://buy.stripe.com/bJe3cuarVa2f4Buc2W7EQ00')"
-                        class="mt-8 cpp-primary-btn w-full text-white p-3 rounded-xl font-bold transition"
+                        class="mt-8 rh-primary-btn w-full text-white p-3 rounded-xl font-bold transition"
                     >
-                        Go Pro: Start Unlimited
+                        Go Pro: Unlock Unlimited Audits
                     </button>
                 </div>
             </div>
         </div>
     </section>
     
-    <footer class="py-8 bg-[var(--cpp-dark)] text-center w-full text-slate-400 mt-10">
-        <p>© 2025 ClaimPilotPro. Built for Amazon FBA sellers.</p>
+    <footer class="py-8 bg-[var(--rh-dark)] text-center w-full text-slate-400 mt-10 text-sm">
+        <p>© 2025 ClaimPilotPro. Built for serious Amazon FBA sellers.</p>
+        <p class="mt-1 text-[11px] text-slate-500">
+            ClaimPilotPro is not affiliated with or endorsed by Amazon. Always follow Amazon’s policies when filing claims.
+        </p>
     </footer>
 
     <!-- UPGRADE MODAL -->
@@ -441,7 +533,7 @@
             <div class="text-center">
                 <svg
                     id="modal-icon"
-                    class="h-12 w-12 text-[var(--cpp-primary)] mx-auto mb-4"
+                    class="h-12 w-12 text-[var(--rh-primary)] mx-auto mb-4"
                     fill="none"
                     viewBox="0 0 24 24"
                     stroke="currentColor"
@@ -450,10 +542,10 @@
                     <path stroke-linecap="round" stroke-linejoin="round"
                           d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8V4m0 16v-4m-6-3H4m16 0h-4"/>
                 </svg>
-                <h2 id="modal-title" class="text-2xl font-bold mb-2 text-[var(--cpp-dark)]">
+                <h2 id="modal-title" class="text-2xl font-bold mb-2 text-[var(--rh-dark)]">
                     Upgrade Plan
                 </h2>
-                <p id="modal-price" class="text-4xl font-extrabold text-[var(--cpp-success)] mb-4"></p>
+                <p id="modal-price" class="text-4xl font-extrabold text-[var(--rh-success)] mb-4"></p>
                 <p id="modal-description" class="text-slate-600 mb-6"></p>
             </div>
             
@@ -461,7 +553,7 @@
                 <a
                     id="modal-checkout-link"
                     target="_blank"
-                    class="cpp-primary-btn w-full inline-block text-white p-3 rounded-xl font-semibold text-center transition"
+                    class="rh-primary-btn w-full inline-block text-white p-3 rounded-xl font-semibold text-center transition"
                 >
                     Secure Checkout & Unlock Audits
                 </a>
@@ -496,9 +588,9 @@
             </button>
             
             <div class="text-center mb-6">
-                <h2 class="text-3xl font-bold mb-2 text-[var(--cpp-dark)] flex items-center justify-center">
+                <h2 class="text-3xl font-bold mb-2 text-[var(--rh-dark)] flex items-center justify-center">
                     <svg
-                        class="h-8 w-8 text-[var(--cpp-success)] mr-3"
+                        class="h-8 w-8 text-[var(--rh-success)] mr-3"
                         fill="none"
                         viewBox="0 0 24 24"
                         stroke="currentColor"
@@ -511,26 +603,26 @@
                 </h2>
                 <p class="text-xl text-slate-600">
                     You are about to file
-                    <span id="filing-claim-count" class="font-bold text-[var(--cpp-primary)]"></span>
+                    <span id="filing-claim-count" class="font-bold text-[var(--rh-primary)]"></span>
                     claims worth
-                    <span id="filing-claim-value" class="font-bold text-[var(--cpp-success)]"></span>.
+                    <span id="filing-claim-value" class="font-bold text-[var(--rh-success)]"></span>.
                 </p>
             </div>
 
             <div class="grid md:grid-cols-2 gap-6">
                 <div>
-                    <h3 class="text-xl font-bold mb-3 text-[var(--cpp-dark)] border-b pb-2">
+                    <h3 class="text-xl font-bold mb-3 text-[var(--rh-dark)] border-b pb-2">
                         Step 1: Copy Claim Data (JSON)
                     </h3>
                     <p class="text-sm text-slate-600 mb-2">
-                        Use this structured data to communicate the exact issue, SKU, and transaction ID to Amazon Support.
+                        Use this structured data to reference SKU, quantity, and transaction IDs clearly in your Amazon case.
                     </p>
 
-                    <div class="bg-gray-800 text-green-400 p-4 rounded-lg relative">
+                    <div class="bg-slate-900 text-emerald-400 p-4 rounded-lg relative">
                         <pre id="claim-json-data" class="text-xs"></pre>
                         <button
                             onclick="copyClaimData()"
-                            class="absolute top-2 right-2 p-2 bg-gray-700 rounded-lg text-white hover:bg-gray-600 transition text-xs font-medium"
+                            class="absolute top-2 right-2 p-2 bg-slate-700 rounded-lg text-white hover:bg-slate-600 transition text-xs font-medium"
                         >
                             <span id="copy-btn-text">Copy JSON</span>
                         </button>
@@ -538,7 +630,7 @@
                 </div>
 
                 <div>
-                    <h3 class="text-xl font-bold mb-3 text-[var(--cpp-dark)] border-b pb-2">
+                    <h3 class="text-xl font-bold mb-3 text-[var(--rh-dark)] border-b pb-2">
                         Step 2: File on Seller Central
                     </h3>
                     <ol class="list-decimal list-inside space-y-3 text-sm text-slate-700">
@@ -547,26 +639,27 @@
                             <a
                                 href="https://sellercentral.amazon.com/gp/contact-us/performance/ref=ag_contactus_foot_perfd_cont_201642190"
                                 target="_blank"
-                                class="text-blue-600 hover:underline font-medium"
+                                class="text-teal-700 hover:underline font-medium"
                             >
                                 Contact Us
                             </a>
                         </li>
                         <li>Select “Selling on Amazon Issue” → “FBA Issue” → <strong>Investigate Missing / Damaged Units</strong>.</li>
-                        <li>Paste the JSON directly into the case description.</li>
-                        <li>Attach the original CSV as evidence.</li>
-                        <li>Submit the case and track reimbursements.</li>
+                        <li>Paste the JSON directly into the case description and reference the attached CSV.</li>
+                        <li>Attach the original CSV and any supporting screenshots.</li>
+                        <li>Submit the case and monitor reimbursements in your Amazon payments reports.</li>
                     </ol>
                 </div>
             </div>
 
             <div class="mt-10">
-                <h3 class="text-xl font-bold mb-3 text-[var(--cpp-dark)] border-b pb-2">
+                <h3 class="text-xl font-bold mb-3 text-[var(--rh-dark)] border-b pb-2">
                     Step 3: Copy/Paste Ready-Made Amazon Case Messages
                 </h3>
 
                 <p class="text-sm text-slate-600 mb-4">
-                    These are ready-to-send message templates for each claim. Paste into Seller Central.
+                    ClaimPilotPro can generate case-ready language for each claim. Paste these into Seller Central
+                    and tweak details as needed.
                 </p>
 
                 <div
@@ -577,7 +670,7 @@
 
             <button
                 onclick="document.getElementById('claim-filing-modal').classList.add('hidden')"
-                class="cpp-primary-btn mt-10 w-full py-3 text-white rounded-xl font-bold shadow-lg transition"
+                class="rh-primary-btn mt-10 w-full py-3 text-white rounded-xl font-bold shadow-lg transition"
             >
                 I Understand – Close Guide
             </button>
@@ -599,28 +692,28 @@
                 ✕
             </button>
 
-            <h2 class="text-2xl font-bold mb-2 text-[var(--cpp-dark)]">Log In</h2>
+            <h2 class="text-2xl font-bold mb-2 text-[var(--rh-dark)]">Log In</h2>
             <p class="text-sm text-gray-600 mb-6">Access your ClaimPilotPro dashboard</p>
 
             <input id="login-email"
                    type="email"
                    placeholder="Email"
-                   class="w-full mb-3 p-3 rounded-lg border border-gray-300 cpp-focus">
+                   class="w-full mb-3 p-3 rounded-lg border border-gray-300 rh-focus">
 
             <input id="login-password"
                    type="password"
                    placeholder="Password"
-                   class="w-full mb-4 p-3 rounded-lg border border-gray-300 cpp-focus">
+                   class="w-full mb-4 p-3 rounded-lg border border-gray-300 rh-focus">
 
             <button onclick="loginUser()"
-                    class="cpp-primary-btn w-full py-3 text-white rounded-xl font-bold">
+                    class="rh-primary-btn w-full py-3 text-white rounded-xl font-bold">
                 Log In
             </button>
 
             <p class="text-sm mt-4 text-center text-gray-500">
                 Need an account?
                 <span onclick="switchToSignup()"
-                    class="text-[var(--cpp-primary)] font-semibold cursor-pointer">
+                    class="text-[var(--rh-primary)] font-semibold cursor-pointer">
                     Create one
                 </span>
             </p>
@@ -636,28 +729,28 @@
                 ✕
             </button>
 
-            <h2 class="text-2xl font-bold mb-2 text-[var(--cpp-dark)]">Create Account</h2>
-            <p class="text-sm text-gray-600 mb-6">Start tracking your reimbursements with ClaimPilotPro</p>
+            <h2 class="text-2xl font-bold mb-2 text-[var(--rh-dark)]">Create Account</h2>
+            <p class="text-sm text-gray-600 mb-6">Start recovering missed FBA reimbursements</p>
 
             <input id="signup-email"
                    type="email"
                    placeholder="Email"
-                   class="w-full mb-3 p-3 rounded-lg border border-gray-300 cpp-focus">
+                   class="w-full mb-3 p-3 rounded-lg border border-gray-300 rh-focus">
 
             <input id="signup-password"
                    type="password"
                    placeholder="Password"
-                   class="w-full mb-4 p-3 rounded-lg border border-gray-300 cpp-focus">
+                   class="w-full mb-4 p-3 rounded-lg border border-gray-300 rh-focus">
 
             <button onclick="signupUser()"
-                    class="cpp-primary-btn w-full py-3 text-white rounded-xl font-bold">
+                    class="rh-primary-btn w-full py-3 text-white rounded-xl font-bold">
                 Create Account
             </button>
 
             <p class="text-sm mt-4 text-center text-gray-500">
                 Already have an account?
                 <span onclick="switchToLogin()"
-                    class="text-[var(--cpp-primary)] font-semibold cursor-pointer">
+                    class="text-[var(--rh-primary)] font-semibold cursor-pointer">
                     Log in
                 </span>
             </p>
@@ -688,7 +781,7 @@
         //  CONSTANTS & GLOBAL STATE
         // ============================
         const AUDIT_LIMIT = 5;
-        const LOCAL_USAGE_PREFIX = "fba_audits_used_";
+        const LOCAL_USAGE_PREFIX = "claimpilot_audits_used_";
 
         let db, auth;
         let userId = null;
@@ -720,7 +813,7 @@
         // ============================
         function loadLocalAuditUsage(uid) {
             try {
-                const raw = localStorage.getItem(`${LOCAL_USAGE_PREFIX}${uid}`);
+                const raw = localStorage.getItem(\`\${LOCAL_USAGE_PREFIX}\${uid}\`);
                 const n = parseInt(raw, 10);
                 return Number.isFinite(n) && n >= 0 ? n : 0;
             } catch (_) {
@@ -730,7 +823,7 @@
 
         function saveLocalAuditUsage(uid, used) {
             try {
-                localStorage.setItem(`${LOCAL_USAGE_PREFIX}${uid}`, String(used));
+                localStorage.setItem(\`\${LOCAL_USAGE_PREFIX}\${uid}\`, String(used));
             } catch (e) {
                 console.warn("Failed to persist usage locally:", e);
             }
@@ -753,7 +846,9 @@
             }
 
             const uid = auth.currentUser.uid;
-            const checkoutUrl = `${stripeLink}?client_reference_id=${encodeURIComponent(uid)}`;
+
+            // Attach Firebase UID → Stripe Payment Link → Webhook → Firestore upgrade
+            const checkoutUrl = \`\${stripeLink}?client_reference_id=\${encodeURIComponent(uid)}\`;
 
             console.log("Redirecting to Stripe checkout:", checkoutUrl);
             window.location.href = checkoutUrl;
@@ -850,6 +945,7 @@
 
                     if (user) {
                         userId = user.uid;
+                        // Load local usage immediately so UI updates even if Firestore is grumpy
                         auditsUsed = loadLocalAuditUsage(userId);
                         if (loginBtn) loginBtn.classList.add("hidden");
                         if (logoutBtn) logoutBtn.classList.remove("hidden");
@@ -923,12 +1019,14 @@
                         const cloudUsed = typeof data.auditsUsed === "number" ? data.auditsUsed : 0;
                         const localUsed = loadLocalAuditUsage(userId);
 
+                        // Prefer the max so we never "lose" used count
                         const finalUsed = Math.max(cloudUsed, localUsed);
                         auditsUsed = finalUsed;
                         saveLocalAuditUsage(userId, finalUsed);
 
                         isPremium = !!data.isPremium;
                     } else {
+                        // If doc doesn't exist, initialize it with our current local usage
                         const startingUsed = loadLocalAuditUsage(userId);
                         auditsUsed = startingUsed;
                         setDoc(
@@ -944,6 +1042,7 @@
                     console.error("Error reading limits:", error);
                     document.getElementById("status-message").textContent =
                         "Error reading free uses limit (using local counter only).";
+                    // We still continue with local usage
                     auditsUsed = loadLocalAuditUsage(userId);
                     updateAuditButton();
                     updateProfileDisplay();
@@ -1001,12 +1100,14 @@
                 return false;
             }
 
+            // 1) Local first (this is what drives the UI)
             let newCount = (auditsUsed || 0) + 1;
             auditsUsed = newCount;
             saveLocalAuditUsage(uid, newCount);
             updateAuditButton();
             updateProfileDisplay();
 
+            // 2) Firestore best-effort sync
             try {
                 const limitsDocRef = getLimitsDocRef();
                 if (!limitsDocRef) return true;
@@ -1046,7 +1147,7 @@
 
                 if (subscriptionStatusEl) {
                     subscriptionStatusEl.textContent = isPro
-                        ? "ClaimPilotPro (Unlimited)"
+                        ? "ClaimPilotPro – Unlimited"
                         : "Trial User";
                 }
             } catch (err) {
@@ -1061,7 +1162,7 @@
 
             if (docs.length === 0) {
                 listContainer.innerHTML =
-                    '<p class="text-slate-500 italic">No previous audits found. Upload your first report!</p>';
+                    '<p class="text-slate-500 italic">No previous audits found. Upload your first report to see results here.</p>';
                 return;
             }
 
@@ -1088,10 +1189,10 @@
                         </p>
                     </div>
                     <div class="text-right">
-                        <p class="text-lg font-extrabold text-[var(--cpp-success)]">
+                        <p class="text-lg font-extrabold text-[var(--rh-success)]">
                             $${(data.totalEstimatedValue || 0).toFixed(2)}
                         </p>
-                        <span class="text-xs text-[var(--cpp-primary)] hover:underline mt-1">
+                        <span class="text-xs text-[var(--rh-primary)] hover:underline mt-1">
                             View Details
                         </span>
                     </div>
@@ -1139,6 +1240,7 @@
         // ============================
         //  FILE UPLOAD (LOGIN-GATED)
         // ============================
+        // Require login before letting user pick a file
         window.requireLoginThenSelectFile = function (event) {
             if (!auth.currentUser) {
                 event.target.value = null;
@@ -1173,7 +1275,7 @@
             }
 
             selectedFileName = file.name;
-            fileNameDisplay.textContent = `File Selected: ${selectedFileName}`;
+            fileNameDisplay.textContent = \`File Selected: \${selectedFileName}\`;
             fileNameDisplay.classList.remove("text-red-500");
 
             try {
@@ -1188,6 +1290,7 @@
                     uploadedFileContent += decoder.decode(value, { stream: true });
                 }
 
+                // finalize decoding
                 uploadedFileContent += decoder.decode();
                 updateAuditButton();
             } catch (e) {
@@ -1214,6 +1317,7 @@
 
             auditButton.onclick = null;
 
+            // Not logged in
             if (!loggedIn) {
                 auditButton.textContent = "Log in to run an audit";
                 auditButton.disabled = false;
@@ -1243,6 +1347,7 @@
                 return;
             }
 
+            // Free tier
             if (remaining > 0) {
                 auditButton.textContent = `Audit Report (${remaining}/${AUDIT_LIMIT} FREE Uses Remaining)`;
                 auditButton.disabled = !isFileReady;
@@ -1261,6 +1366,7 @@
                 return;
             }
 
+            // Free limit exceeded
             auditButton.textContent = "Audit Report (Upgrade Required)";
             auditButton.disabled = false;
             auditButton.onclick = () => showUpgradeModal("audit_monthly");
@@ -1268,7 +1374,7 @@
             if (freeUsesDisplay) {
                 freeUsesDisplay.innerHTML = `
                     You have used your <strong>${AUDIT_LIMIT}</strong> free audits.
-                    Please upgrade below for unlimited use.
+                    Upgrade to ClaimPilotPro Monthly for unlimited audits.
                 `;
             }
         }
@@ -1306,12 +1412,12 @@
             uploadedFileContent = null;
             selectedFileName = "";
             document.getElementById("file-name-display").textContent =
-                "Click to select your FBA Inventory Ledger or Daily Inventory Report (CSV file only)";
+                "Click to upload your FBA Inventory Ledger or Daily Inventory History report (.csv)";
             document.getElementById("csv-file").value = "";
             document.getElementById("audit-button").disabled = true;
 
             document.getElementById("status-message").textContent =
-                "Audit Complete. Ready for next report.";
+                "Audit complete. Ready for your next report.";
         }
 
         // ============================
@@ -1328,19 +1434,19 @@
             const productDetails =
                 {
                     audit_monthly: {
-                        title: "Unlock Unlimited ClaimPilotPro Audits",
+                        title: "Unlock ClaimPilotPro Unlimited",
                         price: "$199 / Month",
                         description:
-                            "Go Pro and get unlimited access to ClaimPilotPro. Never miss a reimbursement again.",
+                            "Upgrade to ClaimPilotPro Monthly to run unlimited FBA reimbursement audits and never leave easy money behind.",
                         iconPath:
                             "M12 1c-4.97 0-9 4.03-9 9s4.03 9 9 9 9-4.03 9-9-4.03-9-9-9zM10 13l2-2 2 2M10 11l2-2 2 2",
                         url: `https://buy.stripe.com/bJe3cuarVa2f4Buc2W7EQ00`
                     },
                     audit_single: {
-                        title: "Purchase Single Claim Boost",
+                        title: "Purchase Single Audit Boost",
                         price: "$99 One-Time",
                         description:
-                            "Purchase a single audit report immediately. Perfect for a one-off deep dive.",
+                            "Grab a single ClaimPilotPro audit for a key reporting period without committing to a subscription.",
                         iconPath: "M12 6v6m0 0v6m0-6h6m-6 0H6",
                         url: `https://buy.stripe.com/28EbJ0bvZ0rF4BuaYS7EQ01`
                     }
@@ -1353,6 +1459,7 @@
             description.textContent = productDetails.description;
             checkoutLink.href = productDetails.url;
 
+            // Make the CTA use startPurchase so we always send Firebase UID to Stripe
             checkoutLink.onclick = (e) => {
                 e.preventDefault();
                 window.startPurchase(productDetails.url);
@@ -1373,8 +1480,8 @@
             const copyBtnText = document.getElementById("copy-btn-text");
             const messagesContainer = document.getElementById("claim-messages");
 
-            claimCountDisplay.textContent = `${claims.length}`;
-            claimValueDisplay.textContent = `$${totalValue.toFixed(2)}`;
+            claimCountDisplay.textContent = \`\${claims.length}\`;
+            claimValueDisplay.textContent = \`$\${totalValue.toFixed(2)}\`;
 
             const jsonClaims = JSON.stringify(claims, null, 2);
             jsonDataBlock.textContent = jsonClaims;
@@ -1386,15 +1493,15 @@
 
                 if (!currentClaimMessages || currentClaimMessages.length === 0) {
                     messagesContainer.innerHTML =
-                        "<p class='text-sm text-slate-500 italic'>No pre-written messages were generated for this audit. You can still use the JSON and filing steps above.</p>";
+                        "<p class='text-sm text-slate-500 italic'>No pre-written messages were generated for this audit. You can still use the JSON and steps above to file your claims.</p>";
                 } else {
                     currentClaimMessages.forEach((msg, index) => {
                         const card = document.createElement("div");
                         card.className =
                             "bg-gray-50 border border-gray-200 rounded-lg p-3";
 
-                        const skuLabel = msg.sku ? `SKU: ${msg.sku}` : "";
-                        const reasonLabel = msg.reason ? `Reason: ${msg.reason}` : "";
+                        const skuLabel = msg.sku ? \`SKU: \${msg.sku}\` : "";
+                        const reasonLabel = msg.reason ? \`Reason: \${msg.reason}\` : "";
 
                         card.innerHTML = `
                           <div class="flex justify-between items-center mb-2">
@@ -1456,10 +1563,10 @@
             document.getElementById("loading-indicator").classList.remove("hidden");
             document.getElementById("results-area").classList.add("hidden");
             document.getElementById("status-message").textContent =
-                `Analyzing ${fileName}...`;
+                \`Analyzing \${fileName}...\`;
 
             try {
-                const response = await fetch(`${API_BASE_URL}/api/audit`, {
+                const response = await fetch(\`\${API_BASE_URL}/api/audit\`, {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
                     body: JSON.stringify({
@@ -1470,7 +1577,7 @@
                 });
 
                 if (!response.ok) {
-                    throw new Error(`Backend responded with status ${response.status}`);
+                    throw new Error(\`Backend responded with status \${response.status}\`);
                 }
 
                 const data = await response.json();
@@ -1485,7 +1592,7 @@
                 await saveAuditResult(fileName, currentClaimsData, currentTotalValue);
             } catch (err) {
                 console.error("BACKEND ERROR:", err);
-                alert("Error analyzing your report. Please try again with a smaller date range if the file is very large.");
+                alert("Error analyzing your report. If the file is extremely large, try a smaller date range and re-upload.");
 
                 currentClaimsData = [];
                 currentTotalValue = 0;
@@ -1493,7 +1600,7 @@
                 document.getElementById("loading-indicator").classList.add("hidden");
                 document.getElementById("upload-section").classList.remove("hidden");
                 document.getElementById("status-message").textContent =
-                    "Audit Failed: Connection or server error.";
+                    "Audit failed: connection or server error.";
                 return;
             }
 
@@ -1525,8 +1632,8 @@
             const values = Object.values(data);
             const numBars = reasons.length;
 
-            const colors = ["#2563EB", "#22C55E", "#0EA5E9", "#F97316", "#EC4899", "#F59E0B"];
-            const darkText = "#1f2937";
+            const colors = ["#0F766E", "#22C55E", "#0EA5E9", "#F97316", "#6366F1", "#E11D48"];
+            const darkText = "#0f172a";
             const lightGrey = "#e5e7eb";
 
             const padding = 30;
@@ -1561,7 +1668,7 @@
 
                 ctx.fillStyle = darkText;
                 ctx.font = "14px Inter bold";
-                ctx.fillText(`$${value.toFixed(0)}`, barXCenter, y - 5);
+                ctx.fillText(\`$\${value.toFixed(0)}\`, barXCenter, y - 5);
             }
         }
 
@@ -1580,7 +1687,7 @@
 
             resultsArea.classList.remove("hidden");
             resultsArea.querySelector("h2").innerHTML = `
-                <span id="claim-count" class="text-4xl text-[var(--cpp-success)] mr-4">
+                <span id="claim-count" class="text-4xl text-[var(--rh-success)] mr-4">
                     ${claims.length}
                 </span>
                 Actionable Reimbursement Claims Found in: ${auditFileName}
@@ -1605,7 +1712,7 @@
                     claimElement.innerHTML = `
                         <div class="flex justify-between items-center mb-2">
                             <span class="text-lg font-bold text-slate-800">${reason}</span>
-                            <span class="text-xl font-extrabold text-[var(--cpp-success)]">
+                            <span class="text-xl font-extrabold text-[var(--rh-success)]">
                                 $${value.toFixed(2)}
                             </span>
                         </div>
@@ -1622,16 +1729,16 @@
 
                 const summaryElement = document.createElement("div");
                 summaryElement.className =
-                    "bg-white p-6 rounded-xl border-4 border-[var(--cpp-primary)] shadow-inner mb-6";
+                    "bg-white p-6 rounded-xl border-4 border-[var(--rh-primary)] shadow-inner mb-6";
                 summaryElement.innerHTML = `
-                    <p class="text-xl font-bold text-[var(--cpp-dark)] flex justify-between">
+                    <p class="text-xl font-bold text-[var(--rh-dark)] flex justify-between">
                         <span>Total Estimated Reimbursement Value:</span> 
-                        <span class="text-3xl text-[var(--cpp-success)] font-extrabold">
+                        <span class="text-3xl text-[var(--rh-success)] font-extrabold">
                             $${totalEstimatedValue.toFixed(2)}
                         </span>
                     </p>
                     <p class="text-sm text-slate-500 mt-2">
-                        This is the cash you can claim back by filing these reports.
+                        This is the cash you can potentially recover by filing these claims through Amazon Seller Central.
                     </p>
                 `;
                 listContainer.prepend(summaryElement);
@@ -1639,7 +1746,7 @@
                 const fileClaimsButton = document.createElement("button");
                 fileClaimsButton.id = "file-claims-btn";
                 fileClaimsButton.className =
-                    "cpp-primary-btn mt-6 w-full py-3 text-white rounded-xl font-bold shadow-lg transition";
+                    "rh-primary-btn mt-6 w-full py-3 text-white rounded-xl font-bold shadow-lg transition";
                 fileClaimsButton.textContent = `File ${claims.length} Claims Worth $${totalEstimatedValue.toFixed(2)}`;
                 fileClaimsButton.onclick = () =>
                     showClaimFilingModal(currentClaimsData, currentTotalValue);

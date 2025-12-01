@@ -1253,15 +1253,31 @@ window.startPurchase = function (stripeLink) {
         // ============================
         //  FILE UPLOAD (LOGIN-GATED)
         // ============================
-        // Require login before letting user pick a file
-        window.requireLoginThenSelectFile = function (event) {
-            if (!auth.currentUser) {
-                event.target.value = null;
-                openLoginModal();
-                return;
-            }
-            handleFileSelect(event);
-        };
+       window.requireLoginThenSelectFile = function (event) {
+    console.log("[CPP] requireLoginThenSelectFile fired");
+
+    if (!auth.currentUser) {
+        console.log("[CPP] No user – forcing login before upload");
+
+        // Clear the chosen file so the browser doesn't think it's selected
+        event.target.value = null;
+
+        // Tell the user what’s happening
+        const statusEl = document.getElementById("status-message");
+        if (statusEl) {
+            statusEl.textContent = "Please log in or create an account before uploading a report.";
+            statusEl.classList.remove("text-green-600");
+            statusEl.classList.add("text-red-500");
+        }
+
+        // Open the login popup
+        openLoginModal();
+        return;
+    }
+
+    // If logged in, proceed to read the file normally
+    handleFileSelect(event);
+};
 
         // STREAMING FILE READER (better for big CSVs)
         window.handleFileSelect = async function (event) {
@@ -1839,6 +1855,7 @@ window.addEventListener("load", () => {
 </script>
 </body>
 </html>
+
 
 
 

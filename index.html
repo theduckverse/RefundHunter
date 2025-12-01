@@ -1331,18 +1331,25 @@ window.startPurchase = function (stripeLink) {
             auditButton.onclick = null;
 
             // Not logged in
-            if (!loggedIn) {
-                auditButton.textContent = "Log in to run an audit";
-                auditButton.disabled = false;
-                auditButton.onclick = openLoginModal;
-                if (freeUsesDisplay) {
-                    freeUsesDisplay.innerHTML = `
-                        Your first <strong>${AUDIT_LIMIT}</strong> ClaimPilotPro audits are free.
-                        Log in to start using them.
-                    `;
-                }
-                return;
-            }
+           if (!loggedIn) {
+    auditButton.textContent = "Log in to run an audit";
+    auditButton.disabled = false;
+    auditButton.onclick = openLoginModal;
+
+    const statusEl = document.getElementById("status-message");
+    if (statusEl) {
+        statusEl.textContent = "Log in or create a free ClaimPilotPro account to upload your first report.";
+        statusEl.classList.remove("text-red-500");
+        statusEl.classList.add("text-slate-500");
+    }
+
+    const fileNameDisplay = document.getElementById("file-name-display");
+    if (fileNameDisplay) {
+        fileNameDisplay.textContent = "Login required before uploading a CSV report.";
+    }
+
+    return;
+}
 
             if (isPremium) {
                 auditButton.textContent = "Run Audit (ClaimPilotPro Unlimited)";
@@ -1832,6 +1839,7 @@ window.addEventListener("load", () => {
 </script>
 </body>
 </html>
+
 
 
 

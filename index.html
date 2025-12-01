@@ -837,22 +837,25 @@
         db = getFirestore(firebaseApp);
 
         // -------------------------
-        // STRIPE PURCHASE HANDLER
-        // -------------------------
-        window.startPurchase = function (stripeLink) {
-            if (!auth.currentUser) {
-                alert("Please log in first to upgrade.");
-                return;
-            }
+// STRIPE PURCHASE HANDLER
+// -------------------------
+window.startPurchase = function (stripeLink) {
+    // Make sure auth exists and user is logged in
+    if (!auth || !auth.currentUser) {
+        // Use your existing login modal instead of a plain alert
+        openLoginModal();
+        return;
+    }
 
-            const uid = auth.currentUser.uid;
+    const uid = auth.currentUser.uid;
 
-            // Attach Firebase UID → Stripe Payment Link → Webhook → Firestore upgrade
-            const checkoutUrl = \`\${stripeLink}?client_reference_id=\${encodeURIComponent(uid)}\`;
+    // Attach Firebase UID → Stripe → Webhook → Firestore upgrade
+    const checkoutUrl = `${stripeLink}?client_reference_id=${encodeURIComponent(uid)}`;
 
-            console.log("Redirecting to Stripe checkout:", checkoutUrl);
-            window.location.href = checkoutUrl;
-        };
+    console.log("Redirecting to Stripe checkout:", checkoutUrl);
+    window.location.href = checkoutUrl;
+};
+
 
         // ============================
         //  AUTH MODAL HANDLERS (GLOBAL)
@@ -1761,3 +1764,4 @@
     </script>
 </body>
 </html>
+

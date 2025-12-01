@@ -1399,7 +1399,30 @@ window.startPurchase = function (stripeLink) {
                 auditButton.onclick = processAuditWrapper;
             }
         });
+window.addEventListener("load", () => {
+    console.log("[FBA] window load - wiring nav buttons");
 
+    const navLoginBtn = document.getElementById("nav-login-btn");
+    const navLogoutBtn = document.getElementById("nav-logout-btn");
+
+    if (navLoginBtn) {
+        navLoginBtn.addEventListener("click", (e) => {
+            e.preventDefault();
+            console.log("[FBA] Nav login clicked");
+            window.openLoginModal();
+        });
+    }
+
+    if (navLogoutBtn) {
+        navLogoutBtn.addEventListener("click", async (e) => {
+            e.preventDefault();
+            console.log("[FBA] Nav logout clicked");
+            if (window.logoutUser) {
+                await window.logoutUser();
+            }
+        });
+    }
+});
         function processAuditWrapper() {
             if (!auth.currentUser && !userId) {
                 openLoginModal();
@@ -1774,5 +1797,6 @@ window.startPurchase = function (stripeLink) {
     </script>
 </body>
 </html>
+
 
 

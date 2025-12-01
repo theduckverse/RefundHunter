@@ -861,10 +861,20 @@ window.startPurchase = function (stripeLink) {
         //  AUTH MODAL HANDLERS (GLOBAL)
         // ============================
         window.openLoginModal = function () {
-            document.getElementById("auth-overlay").classList.remove("hidden");
-            document.getElementById("login-modal").classList.remove("hidden");
-            document.getElementById("signup-modal").classList.add("hidden");
-        };
+    console.log("[FBA] openLoginModal called");
+    const overlay = document.getElementById("auth-overlay");
+    const loginModal = document.getElementById("login-modal");
+    const signupModal = document.getElementById("signup-modal");
+
+    if (!overlay || !loginModal || !signupModal) {
+        console.warn("[FBA] Auth modal elements not found in DOM");
+        return;
+    }
+
+    overlay.classList.remove("hidden");
+    loginModal.classList.remove("hidden");
+    signupModal.classList.add("hidden");
+};
 
         window.openSignupModal = function () {
             document.getElementById("auth-overlay").classList.remove("hidden");
@@ -1764,4 +1774,5 @@ window.startPurchase = function (stripeLink) {
     </script>
 </body>
 </html>
+
 
